@@ -43,8 +43,10 @@ public class ShiroConfig {
         map.put("/user/login", "anon");
         for (int i = 0; i < t.length; i++) {
 			for (int j = 0; j < t1.length; j++) {
-				if(t1[i] == "permiss") {
-					map.put("/"+t[i]+"/**/"+t1[j], "perms["+t[i]+":"+t1[j]+"]");
+				if(t[i].equals("permiss")) {
+					map.put("/"+t[i]+"/**/**", "perms["+t[i]+"]");
+					System.out.println("key: " + "/"+t[i]+"/**/**");
+					System.out.println("value: " + "perms["+t[i]+"]");
 				}else {
 					map.put("/"+t[i]+"/"+t1[j], "perms["+t[i]+":"+t1[j]+"]");
 				}
