@@ -12,5 +12,5 @@ entity_package: com.example.demo.entity
 
 # 权限菜单配置
 permission:
-  menusModel: task,activity,permiss
+  menusModel: task,activity
   operation: query,add,del,update

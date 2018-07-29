@@ -1,6 +1,9 @@
 package com.xl.backen.dao;
 
 import com.xl.backen.entity.Menus;
+
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,4 +19,6 @@ public interface MenusMapper {
     int updateByPrimaryKeySelective(Menus record);
 
     int updateByPrimaryKey(Menus record);
+    
+    List<Menus> queryAll();
 }

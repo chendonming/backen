@@ -1,6 +1,9 @@
 package com.xl.backen.dao;
 
 import com.xl.backen.entity.Powers;
+
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,4 +19,6 @@ public interface PowersMapper {
     int updateByPrimaryKeySelective(Powers record);
 
     int updateByPrimaryKey(Powers record);
+    
+    List<Powers> queryAll();
 }

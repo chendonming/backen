@@ -11,6 +11,12 @@
   <sql id="Base_Column_List">
     uuid, name, code, create_time, update_time
   </sql>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from tb_menus
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
