@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
@@ -58,6 +55,12 @@ public class PermissController {
     @RequestMapping(value = "/role/update", method = RequestMethod.POST)
     public Result RoleUpdate(@RequestBody @Valid Roles role) {
         rs.updateRole(role);
+        return new Result(BusinessStatus.SUCCESS);
+    }
+
+    @RequestMapping(value = "/role/del", method = RequestMethod.GET)
+    public Result RoleDel(@RequestParam String roleId) {
+	    //TODO 角色删除  需要查询角色下的用户
         return new Result(BusinessStatus.SUCCESS);
     }
 	
