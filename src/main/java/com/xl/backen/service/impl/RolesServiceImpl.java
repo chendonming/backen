@@ -40,5 +40,14 @@ public class RolesServiceImpl implements RolesService{
 	public List<Roles> queryAll() {
 		return rm.queryAll();
 	}
-	
+
+	/**
+	 * 修改角色
+	 * @param role
+	 * @return
+	 */
+	@Override
+	public int updateRole(Roles role) {
+		return rm.updateByPrimaryKeySelective(role);
+	}
 }

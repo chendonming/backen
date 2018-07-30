@@ -54,6 +54,12 @@ public class PermissController {
 		 rs.insertSelective(role);
 		 return new Result(BusinessStatus.SUCCESS);
 	}
+
+    @RequestMapping(value = "/role/update", method = RequestMethod.POST)
+    public Result RoleUpdate(@RequestBody @Valid Roles role) {
+        rs.updateRole(role);
+        return new Result(BusinessStatus.SUCCESS);
+    }
 	
 	@RequestMapping(value = "/rolepower/givePermiss", method = RequestMethod.POST)
 	public Result RolepowerAdd(@RequestBody @Valid List<RolesPower> rp) throws Exception {

@@ -114,7 +114,7 @@
         LEFT join tb_powers pos on pos.uuid = rp.power_id
         LEFT JOIN tb_menus me on me.uuid = pos.meun_id
         LEFT JOIN tb_parent_menus pm on me.up_menu_id = pm.uuid
-        WHERE u.status=1 and u.mobile=#{mobile} and ur.status=1
+        WHERE u.status=1 and u.mobile=#{mobile} and ur.status=1 and r.status=1
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

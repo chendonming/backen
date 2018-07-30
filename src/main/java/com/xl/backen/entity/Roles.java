@@ -2,6 +2,8 @@ package com.xl.backen.entity;
 
 import java.util.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 public class Roles {
@@ -15,6 +17,18 @@ public class Roles {
     private Date createTime;
 
     private Date updateTime;
+
+    @Max(value = 2)
+    @Min(value = 1)
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public String getUuid() {
         return uuid;
