@@ -13,9 +13,14 @@ public class RolesPower {
     
     private Integer status;
 
-    @Override
+	@Override
 	public String toString() {
-		return "RolesPower [uuid=" + uuid + ", powerId=" + powerId + ", roleId=" + roleId + ", status=" + status + "]";
+		return "{" +
+			" uuid='" + getUuid() + "'" +
+			", powerId='" + getPowerId() + "'" +
+			", roleId='" + getRoleId() + "'" +
+			", status='" + getStatus() + "'" +
+			"}";
 	}
 
     @Override

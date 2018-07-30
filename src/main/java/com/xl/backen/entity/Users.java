@@ -40,6 +40,27 @@ public class Users implements Serializable{
 
     private Date updateTime;
 
+	@Override
+	public String toString() {
+		return "{" +
+			" uuid='" + getUuid() + "'" +
+			", nickname='" + getNickname() + "'" +
+			", truename='" + getTruename() + "'" +
+			", headPic='" + getHeadPic() + "'" +
+			", mobile='" + getMobile() + "'" +
+			", sex='" + getSex() + "'" +
+			", isRealName='" + getIsRealName() + "'" +
+			", idCard='" + getIdCard() + "'" +
+			", password='" + getPassword() + "'" +
+			", communityId='" + getCommunityId() + "'" +
+			", totalIntegral='" + getTotalIntegral() + "'" +
+			", integral='" + getIntegral() + "'" +
+			", status='" + getStatus() + "'" +
+			", createTime='" + getCreateTime() + "'" +
+			", updateTime='" + getUpdateTime() + "'" +
+			"}";
+	}
+
     public String getPassword() {
 		return password;
 	}

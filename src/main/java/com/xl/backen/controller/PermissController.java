@@ -53,12 +53,14 @@ public class PermissController {
 
     @RequestMapping(value = "/role/add", method = RequestMethod.POST)
     public Result RoleAdd(@RequestBody @Valid Roles role) {
+        log.info("角色新增接口参数: {}", role);
         rs.insertSelective(role);
         return new Result(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/role/update", method = RequestMethod.POST)
     public Result RoleUpdate(@RequestBody @Valid Roles role) {
+        log.info("角色update接口参数: {}", role);
         rs.updateRole(role);
         return new Result(BusinessStatus.SUCCESS);
     }
@@ -66,6 +68,7 @@ public class PermissController {
     @RequestMapping(value = "/role/del", method = RequestMethod.GET)
     @Transactional
     public Result RoleDel(@RequestParam("uuid") String roleId) {
+        log.info("角色删除接口参数: {}", roleId);
         List<Users> users = urs.findByRoleId(roleId);
         if (users == null) {
             Roles r = new Roles();
@@ -80,12 +83,14 @@ public class PermissController {
 
     @RequestMapping(value = "/rolepower/givePermiss", method = RequestMethod.POST)
     public Result RolepowerAdd(@RequestBody @Valid List<RolesPower> rp) throws Exception {
+        log.info("给角色赋权接口参数: {}", rp);
         rps.givePermiss(rp);
         return new Result(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/role/allocationRole", method = RequestMethod.POST)
     public Result allocationRole(@RequestBody @Valid List<UsersRole> ur) throws Exception {
+        log.info("给用户赋予角色接口参数: {}", ur);
         urs.allocationRole(ur);
         return new Result(BusinessStatus.SUCCESS);
     }
@@ -117,8 +122,10 @@ public class PermissController {
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
     public Result register(@RequestBody @Valid UsersRegisterRoleModel model) {
+        log.info("注册并赋予初始权限接口参数: {}", model);
         //注册
         String uuid = usersService.Register(model.getUser());
+        log.info("注册成功！uuid为: {}", uuid);
         //赋权
         List<UsersRole> usersRoleList = new ArrayList<UsersRole>();
         UsersRole ur = new UsersRole();

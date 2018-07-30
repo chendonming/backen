@@ -24,6 +24,18 @@ public class Roles implements Serializable {
     @Min(value = 1)
     private Integer status;
 
+	@Override
+	public String toString() {
+		return "{" +
+			" uuid='" + getUuid() + "'" +
+			", name='" + getName() + "'" +
+			", description='" + getDescription() + "'" +
+			", createTime='" + getCreateTime() + "'" +
+			", updateTime='" + getUpdateTime() + "'" +
+			", status='" + getStatus() + "'" +
+			"}";
+	}
+
     public Integer getStatus() {
         return status;
     }
