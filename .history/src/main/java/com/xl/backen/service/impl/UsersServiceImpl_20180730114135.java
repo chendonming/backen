@@ -61,10 +61,7 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public int Register(Users users) {
 		Users us = usersMapper.findByMobile(users.getMobile());
-		if(us == null) {
-			return usersMapper.insertSelective(users);
-		}else{
-			throw new BusinessException(BusinessStatus.MOBILE_ERROR);
-		}
+
+		return usersMapper.insertSelective(users);
 	}
 }

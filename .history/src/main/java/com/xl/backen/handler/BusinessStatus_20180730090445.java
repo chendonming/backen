@@ -23,7 +23,6 @@ public enum BusinessStatus {
     POWER_ERROR(2003,"没有操作权限"),
     LOGIN_ERROR(2004, "必须登陆"),
     UUID_REQ(2005, "uuid是必须的"),
-    MOBILE_ERROR(2006, "手机号码已注册"),
 
     //工具类异常
     MD5_ERROR(5000, "MD5加密异常"),

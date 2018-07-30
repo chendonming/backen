@@ -28,6 +28,7 @@
         <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="is_real_name" jdbcType="INTEGER" property="isRealName"/>
         <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
         <result column="total_integral" jdbcType="INTEGER" property="totalIntegral"/>
         <result column="integral" jdbcType="INTEGER" property="integral"/>

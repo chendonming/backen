@@ -4,6 +4,7 @@ import com.xl.backen.dao.UsersMapper;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
+import com.xl.backen.model.UsersLoginModel;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.UsersService;
 import com.xl.backen.util.MD5;
@@ -60,11 +61,6 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public int Register(Users users) {
-		Users us = usersMapper.findByMobile(users.getMobile());
-		if(us == null) {
-			return usersMapper.insertSelective(users);
-		}else{
-			throw new BusinessException(BusinessStatus.MOBILE_ERROR);
-		}
+		return usersMapper.insertSelective(users);
 	}
 }

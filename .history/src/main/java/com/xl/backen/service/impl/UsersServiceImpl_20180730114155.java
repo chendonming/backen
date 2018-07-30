@@ -64,7 +64,7 @@ public class UsersServiceImpl implements UsersService {
 		if(us == null) {
 			return usersMapper.insertSelective(users);
 		}else{
-			throw new BusinessException(BusinessStatus.MOBILE_ERROR);
+			
 		}
 	}
 }

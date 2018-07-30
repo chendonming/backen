@@ -3,8 +3,6 @@ package com.xl.backen.controller;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
@@ -35,10 +33,9 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public Result register(@RequestBody @Valid Users user) {
+	public Result register(@RequestBody Users user) {
 		user.setUuid(UUID.randomUUID().toString().replace("-", ""));
 		user.setCreateTime(new Date());
-		user.setUpdateTime(new Date());
 		usersService.Register(user);
 		return new Result(BusinessStatus.SUCCESS);
 	}
