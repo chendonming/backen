@@ -1,33 +1,23 @@
 package com.xl.backen.entity;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-public class Menus implements Serializable{
-    private static final long serialVersionUID = 9188101729579594291L;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-	private String uuid;
+public class Roles {
+    private String uuid;
 
+    @NotEmpty
     private String name;
 
-    private String code;
+    private String description;
 
     private Date createTime;
 
     private Date updateTime;
-    
-    private List<Powers> powers;
 
-    public List<Powers> getPowers() {
-		return powers;
-	}
-
-	public void setPowers(List<Powers> powers) {
-		this.powers = powers;
-	}
-
-	public String getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
@@ -43,12 +33,12 @@ public class Menus implements Serializable{
         this.name = name == null ? null : name.trim();
     }
 
-    public String getCode() {
-        return code;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public Date getCreateTime() {

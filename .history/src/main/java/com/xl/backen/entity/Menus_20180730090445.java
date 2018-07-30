@@ -1,13 +1,10 @@
 package com.xl.backen.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Menus implements Serializable{
-    private static final long serialVersionUID = 9188101729579594291L;
-
-	private String uuid;
+public class Menus {
+    private String uuid;
 
     private String name;
 

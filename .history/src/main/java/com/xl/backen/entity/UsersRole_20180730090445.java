@@ -1,13 +1,10 @@
 package com.xl.backen.entity;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-public class UsersRole implements Serializable{
-    private static final long serialVersionUID = 7760486178367649329L;
-
-	private String uuid;
+public class UsersRole {
+    private String uuid;
 
     @NotEmpty
     private String userId;

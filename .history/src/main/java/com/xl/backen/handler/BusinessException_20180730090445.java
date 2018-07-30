@@ -2,9 +2,7 @@ package com.xl.backen.handler;
 
 public class BusinessException extends RuntimeException {
 	
-    private static final long serialVersionUID = 1770144313787602732L;
-
-	private Integer code;
+    private Integer code;
 
     private String msg;
 
