@@ -7,7 +7,6 @@ import com.xl.backen.dao.UsersMapper;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
-import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.UsersService;
 import com.xl.backen.util.MD5;
@@ -69,7 +68,6 @@ public class UsersServiceImpl implements UsersService {
 			users.setUuid(UUID.randomUUID().toString().replace("-", ""));
 			users.setCreateTime(new Date());
 			users.setUpdateTime(new Date());
-			users.setStatus(CommonConst.NORMAL_STATUS);
 			return usersMapper.insertSelective(users);
 		}else{
 			throw new BusinessException(BusinessStatus.MOBILE_ERROR);
