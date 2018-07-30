@@ -6,7 +6,7 @@ spring:
     time-zone: GMT+8
 server:
   session:
-    timeout: 86400
+    timeout: 7200
 # mybatis
 mybatis_config_file: mybatis-config.xml
 mapper_path: /mapper/**.xml

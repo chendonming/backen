@@ -59,7 +59,7 @@ public class UsersServiceImpl implements UsersService {
 
 		try {
 			subject.login(token);
-			subject.getSession().setTimeout(sessionTimeOut);
+			subject.getSession().setTimeout(86400);
 			UsersModel usersModel = (UsersModel) subject.getPrincipal();
 			return usersModel;
 		} catch (UnknownAccountException e) {

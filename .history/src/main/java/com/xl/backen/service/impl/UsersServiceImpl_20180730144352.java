@@ -19,15 +19,11 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service
 public class UsersServiceImpl implements UsersService {
-
-	@Value("${server.session.timeout}")
-	private Long sessionTimeOut;
 
 	@Autowired
 	private UsersMapper usersMapper;
@@ -59,7 +55,7 @@ public class UsersServiceImpl implements UsersService {
 
 		try {
 			subject.login(token);
-			subject.getSession().setTimeout(sessionTimeOut);
+			subject.getSession().setTimeout(86400);
 			UsersModel usersModel = (UsersModel) subject.getPrincipal();
 			return usersModel;
 		} catch (UnknownAccountException e) {

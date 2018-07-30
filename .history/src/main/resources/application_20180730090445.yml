@@ -4,9 +4,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-server:
-  session:
-    timeout: 86400
+
 # mybatis
 mybatis_config_file: mybatis-config.xml
 mapper_path: /mapper/**.xml
