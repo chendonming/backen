@@ -6,6 +6,6 @@ import com.xl.backen.entity.Users;
  * @author Administrator
  *
  */
-public class UsersLoginModel<T> extends Users{
+public class UsersLoginModel extends Users{
 	private static final long serialVersionUID = 1350295179114099509L;
 }

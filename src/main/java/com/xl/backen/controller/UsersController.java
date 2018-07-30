@@ -31,10 +31,4 @@ public class UsersController {
 		usersModel.setPassword("");
 		return new Result(BusinessStatus.SUCCESS, usersModel);
 	}
-
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public Result register(@RequestBody @Valid Users user) {
-		usersService.Register(user);
-		return new Result(BusinessStatus.SUCCESS);
-	}
 }

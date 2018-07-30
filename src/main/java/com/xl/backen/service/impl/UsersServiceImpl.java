@@ -1,11 +1,10 @@
 package com.xl.backen.service.impl;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import com.xl.backen.dao.UsersMapper;
-import com.xl.backen.entity.Menus;
+import com.xl.backen.dao.UsersRoleMapper;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
@@ -13,6 +12,7 @@ import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.UsersService;
 import com.xl.backen.util.MD5;
+import com.xl.backen.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -21,6 +21,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
@@ -70,14 +71,33 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public int Register(Users users) {
+	@Transactional
+	public String Register(Users users) {
+	    if(StringUtils.isEmpty(users.getMobile())) {
+	        throw new BusinessException(BusinessStatus.USER_ERROR);
+        }
 		Users us = usersMapper.findByMobile(users.getMobile());
 		if(us == null) {
-			users.setUuid(UUID.randomUUID().toString().replace("-", ""));
+			String uuid = UUID.randomUUID().toString().replace("-", "");
+			users.setUuid(uuid);
 			users.setCreateTime(new Date());
 			users.setUpdateTime(new Date());
 			users.setStatus(CommonConst.NORMAL_STATUS);
-			return usersMapper.insertSelective(users);
+
+			if(StringUtil.isEmpty(users.getPassword())) {
+			    try{
+                    users.setPassword(MD5.md5("123456"));
+                }catch (Exception e){
+			        throw new BusinessException(BusinessStatus.MD5_ERROR);
+                }
+            }
+
+			int i = usersMapper.insertSelective(users);
+			if(i > 0) {
+				return uuid;
+			}else{
+				throw new BusinessException(BusinessStatus.INSERT_ERROR);
+			}
 		}else{
 			throw new BusinessException(BusinessStatus.MOBILE_ERROR);
 		}
