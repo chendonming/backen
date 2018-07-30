@@ -1,5 +1,6 @@
 package com.xl.backen.dao;
 
+import com.github.pagehelper.Page;
 import com.xl.backen.entity.Users;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,9 @@ public interface UsersMapper {
     int updateByPrimaryKeySelective(Users record);
 
     int updateByPrimaryKey(Users record);
+
+    /**
+     * 查询所有的用户
+     */
+    Page<Users> queryAll(int pageSize, int pageNum);
 }

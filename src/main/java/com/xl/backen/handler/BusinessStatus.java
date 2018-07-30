@@ -24,6 +24,7 @@ public enum BusinessStatus {
     LOGIN_ERROR(2004, "必须登陆"),
     UUID_REQ(2005, "uuid是必须的"),
     MOBILE_ERROR(2006, "手机号码已注册"),
+    ROLE_ERROR(2007,"角色下面存在用户，不能进行删除"),
 
     //工具类异常
     MD5_ERROR(5000, "MD5加密异常"),
