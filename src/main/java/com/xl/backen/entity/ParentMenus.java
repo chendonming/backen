@@ -7,21 +7,21 @@ import java.util.List;
 /**
  * ParentMenus
  */
-public class ParentMenus implements Serializable{
+public class ParentMenus implements Serializable {
 
-    private static final long serialVersionUID = 1295270799660326885L;
+	private static final long serialVersionUID = 1295270799660326885L;
 
 	private String uuid;
 
-    private String name;
+	private String name;
 
-    private String code;
+	private String code;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date updateTime;
 
-    private List<Menus> menus;
+	private List<Menus> menus;
 
 	/**
 	 * @return the uuid
@@ -106,6 +106,5 @@ public class ParentMenus implements Serializable{
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-
 
 }
