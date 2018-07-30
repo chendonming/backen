@@ -28,25 +28,63 @@
         <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="is_real_name" jdbcType="INTEGER" property="isRealName"/>
         <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="total_integral" jdbcType="INTEGER" property="totalIntegral"/>
         <result column="integral" jdbcType="INTEGER" property="integral"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <collection property="menus" ofType="com.xl.backen.entity.Menus">
-            <id column="me_uuid" property="uuid"/>
-            <result column="me_code" property="code"/>
-            <result column="me_name" property="name"/>
-            <collection property="powers" ofType="com.xl.backen.entity.Powers">
-	            <id column="power_uuid" property="uuid"/>
-	            <result column="power_code" property="code"/>
-       		</collection>
+        <collection property="parentMenus" ofType="com.xl.backen.entity.ParentMenus">
+            <id column="pm_uuid" property="uuid"/>
+            <result column="pm_name" property="name"/>
+            <result column="pm_code" property="code"/>
+            <collection property="menus" ofType="com.xl.backen.entity.Menus">
+                <id column="me_uuid" property="uuid"/>
+                <result column="me_code" property="code"/>
+                <result column="me_name" property="name"/>
+                <collection property="powers" ofType="com.xl.backen.entity.Powers">
+                    <id column="power_uuid" property="uuid"/>
+                    <result column="power_code" property="code"/>
+                </collection>
+            </collection>
         </collection>
         <collection property="roles" ofType="com.xl.backen.entity.Roles">
-        	<id column="r_uuid" property="uuid"/>
-        	<result column="r_name" property="name"/>
+            <id column="r_uuid" property="uuid"/>
+            <result column="r_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    
+    <resultMap id="UsersModelQuery" type="com.xl.backen.model.UsersModel">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="truename" jdbcType="VARCHAR" property="truename"/>
+        <result column="head_pic" jdbcType="VARCHAR" property="headPic"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="is_real_name" jdbcType="INTEGER" property="isRealName"/>
+        <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="total_integral" jdbcType="INTEGER" property="totalIntegral"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <collection property="parentMenus" ofType="com.xl.backen.entity.ParentMenus">
+            <id column="pm_uuid" property="uuid"/>
+            <result column="pm_name" property="name"/>
+            <result column="pm_code" property="code"/>
+            <collection property="menus" ofType="com.xl.backen.entity.Menus">
+                <id column="me_uuid" property="uuid"/>
+                <result column="me_code" property="code"/>
+                <result column="me_name" property="name"/>
+                <collection property="powers" ofType="com.xl.backen.entity.Powers">
+                    <id column="power_uuid" property="uuid"/>
+                    <result column="power_code" property="code"/>
+                </collection>
+            </collection>
         </collection>
     </resultMap>
 
@@ -65,14 +103,18 @@
             pos.uuid as power_uuid,
             me.uuid as me_uuid,
             me.name as me_name,
-            me.code as me_code
+            me.code as me_code,
+            pm.uuid as pm_uuid,
+            pm.name as pm_name,
+            pm.code as pm_code
         FROM tb_users u
         LEFT JOIN tb_users_role ur on ur.user_id = u.uuid
         LEFT JOIN tb_roles r on r.uuid = ur.role_id
         LEFT join tb_roles_power rp on rp.role_id = r.uuid
         LEFT join tb_powers pos on pos.uuid = rp.power_id
         LEFT JOIN tb_menus me on me.uuid = pos.meun_id
-        WHERE u.status=1 and u.mobile=#{mobile} and ur.status=1
+        LEFT JOIN tb_parent_menus pm on me.up_menu_id = pm.uuid
+        WHERE u.status=1 and u.mobile=#{mobile} and ur.status=1 and r.status=1
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -89,14 +131,10 @@
     insert into tb_users (uuid, nickname, truename, 
       head_pic, mobile, sex, 
       is_real_name, id_card, community_id, 
-      total_integral, integral, status, 
+      total_integral, integral, status,
       create_time, update_time)
-    values (#{uuid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, 
-      #{headPic,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
-      #{isRealName,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, 
-      #{totalIntegral,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
+    values (#{uuid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, #{headPic,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{isRealName,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{totalIntegral,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.xl.backen.entity.Users">
         insert into tb_users
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -142,49 +180,40 @@
             <if test="updateTime != null">
                 update_time,
             </if>
+            <if test="password != null">
+                password,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uuid != null">
-                #{uuid,jdbcType=VARCHAR},
+            <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
             </if>
-            <if test="nickname != null">
-                #{nickname,jdbcType=VARCHAR},
+            <if test="nickname != null"> #{nickname,jdbcType=VARCHAR},
             </if>
-            <if test="truename != null">
-                #{truename,jdbcType=VARCHAR},
+            <if test="truename != null"> #{truename,jdbcType=VARCHAR},
             </if>
-            <if test="headPic != null">
-                #{headPic,jdbcType=VARCHAR},
+            <if test="headPic != null"> #{headPic,jdbcType=VARCHAR},
             </if>
-            <if test="mobile != null">
-                #{mobile,jdbcType=VARCHAR},
+            <if test="mobile != null"> #{mobile,jdbcType=VARCHAR},
             </if>
-            <if test="sex != null">
-                #{sex,jdbcType=INTEGER},
+            <if test="sex != null"> #{sex,jdbcType=INTEGER},
             </if>
-            <if test="isRealName != null">
-                #{isRealName,jdbcType=INTEGER},
+            <if test="isRealName != null"> #{isRealName,jdbcType=INTEGER},
             </if>
-            <if test="idCard != null">
-                #{idCard,jdbcType=VARCHAR},
+            <if test="idCard != null"> #{idCard,jdbcType=VARCHAR},
             </if>
-            <if test="communityId != null">
-                #{communityId,jdbcType=VARCHAR},
+            <if test="communityId != null"> #{communityId,jdbcType=VARCHAR},
             </if>
-            <if test="totalIntegral != null">
-                #{totalIntegral,jdbcType=INTEGER},
+            <if test="totalIntegral != null"> #{totalIntegral,jdbcType=INTEGER},
             </if>
-            <if test="integral != null">
-                #{integral,jdbcType=INTEGER},
+            <if test="integral != null"> #{integral,jdbcType=INTEGER},
             </if>
-            <if test="status != null">
-                #{status,jdbcType=INTEGER},
+            <if test="status != null"> #{status,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
+            <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
+            <if test="updateTime != null"> #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="password != null"> #{password,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -230,6 +259,9 @@
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
         </set>
         where uuid = #{uuid,jdbcType=VARCHAR}
     </update>
@@ -247,7 +279,8 @@
       integral = #{integral,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      password = #{password,jdbcType=VARCHAR}
     where uuid = #{uuid,jdbcType=VARCHAR}
-  </update>
+    </update>
 </mapper>

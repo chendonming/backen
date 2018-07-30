@@ -2,6 +2,7 @@ package com.xl.backen.config;
 
 import com.xl.backen.dao.UsersMapper;
 import com.xl.backen.entity.Menus;
+import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.Powers;
 import com.xl.backen.model.UsersModel;
 
@@ -29,19 +30,21 @@ public class UserRealm extends AuthorizingRealm {
     	
     	if(us != null) {
     		Set<String> permis = new HashSet<String>();
-    		
-    		List<Menus> mes = us.getMenus();
-    		
-    		for(Menus i: mes) {
-    			if(!StringUtils.isEmpty(i.getUuid())) {
-    				for(Powers j: i.getPowers()) {
-    					if(!StringUtils.isEmpty(j.getUuid())) {
-    						permis.add(j.getCode());
-    					}
-    				}
-    			}
-    		}
-    		
+			
+			List<ParentMenus> pms = us.getParentMenus();
+
+			for(ParentMenus pm : pms) {
+				List<Menus> ms = pm.getMenus();
+				for(Menus i : ms) {
+					if (!StringUtils.isEmpty(i.getUuid())) {
+						for (Powers j : i.getPowers()) {
+							if (!StringUtils.isEmpty(j.getUuid())) {
+								permis.add(j.getCode());
+							}
+						}
+					}
+				}
+			}
     		info.addStringPermissions(permis);;
     	}
     	

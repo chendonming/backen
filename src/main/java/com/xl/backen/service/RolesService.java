@@ -13,4 +13,9 @@ public interface RolesService {
 	int insertSelective(Roles role);
 	
 	List<Roles> queryAll();
+
+	/**
+	 * 修改
+	 */
+	int updateRole(Roles role);
 }

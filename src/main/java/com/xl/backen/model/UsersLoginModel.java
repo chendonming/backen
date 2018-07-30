@@ -1,7 +1,4 @@
 package com.xl.backen.model;
-
-import java.util.List;
-
 import com.xl.backen.entity.Users;
 
 /**
@@ -9,9 +6,6 @@ import com.xl.backen.entity.Users;
  * @author Administrator
  *
  */
-public class UsersLoginModel<T> extends Users{
-	/**
-	 * 整合菜单和权限返回
-	 */
-	private List<T> permis;
+public class UsersLoginModel extends Users{
+	private static final long serialVersionUID = 1350295179114099509L;
 }

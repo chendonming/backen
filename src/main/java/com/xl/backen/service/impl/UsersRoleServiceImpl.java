@@ -103,7 +103,7 @@ public class UsersRoleServiceImpl implements UsersRoleService{
 				 i.setStatus(CommonConst.NORMAL_STATUS);
 				 i.setUuid(UUID.randomUUID().toString().replace("-", ""));
 				 System.out.println("执行新增:" + i);
-				 urm.updateByPrimaryKeySelective(i);
+				 urm.insertSelective(i);
 			 }
 			 
 			 
@@ -128,5 +128,4 @@ public class UsersRoleServiceImpl implements UsersRoleService{
 		}
 		return 1;
 	}
-	
 }

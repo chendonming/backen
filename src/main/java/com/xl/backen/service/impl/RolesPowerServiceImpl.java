@@ -101,7 +101,7 @@ public class RolesPowerServiceImpl implements RolesPowerService{
 				 i.setStatus(CommonConst.NORMAL_STATUS);
 				 i.setUuid(UUID.randomUUID().toString().replace("-", ""));
 				 System.out.println("执行新增:" + i);
-				 rpm.updateByPrimaryKeySelective(i);
+				 rpm.insertSelective(i);
 			 }
 			 
 			 

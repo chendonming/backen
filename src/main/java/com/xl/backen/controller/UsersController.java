@@ -1,5 +1,7 @@
 package com.xl.backen.controller;
 
+import javax.validation.Valid;
+
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
@@ -26,6 +28,7 @@ public class UsersController {
 		String password = user.getPassword();
 		log.info("登录方法: mobile={},password={}", mobile, password);
 		UsersModel usersModel = usersService.login(mobile, password);
+		usersModel.setPassword("");
 		return new Result(BusinessStatus.SUCCESS, usersModel);
 	}
 }

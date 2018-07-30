@@ -6,6 +6,8 @@ import com.xl.backen.model.UsersModel;
 
 public interface UsersService {
 
+    String Register(Users users);
+
     Users findByMobile(String uuid);
 
     /**

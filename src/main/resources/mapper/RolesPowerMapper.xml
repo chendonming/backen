@@ -8,7 +8,7 @@
     <result column="status" jdbcType="INTEGER" property="status"/>
   </resultMap>
   <sql id="Base_Column_List">
-    uuid, power_id, role_id
+    uuid, power_id, role_id, status
   </sql>
   <!--根据角色id找到所有的rolespower  -->
   <select id="queryByRoleId" resultMap="BaseResultMap">
