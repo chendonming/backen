@@ -35,18 +35,16 @@
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <collection property="parentMenus" ofType="com.xl.backen.entity.ParentMenus">
-            <id column="pm_uuid" property="uuid"/>
-            <result column="pm_name" property="name"/>
-            <result column="pm_code" property="code"/>
-            <collection property="menus" ofType="com.xl.backen.entity.Menus">
-                <id column="me_uuid" property="uuid"/>
-                <result column="me_code" property="code"/>
-                <result column="me_name" property="name"/>
-                <collection property="powers" ofType="com.xl.backen.entity.Powers">
-                    <id column="power_uuid" property="uuid"/>
-                    <result column="power_code" property="code"/>
-                </collection>
+        <collection property="parentMenus" ofType="com.xl.backen.entity">
+        
+        </collection>
+        <collection property="menus" ofType="com.xl.backen.entity.Menus">
+            <id column="me_uuid" property="uuid"/>
+            <result column="me_code" property="code"/>
+            <result column="me_name" property="name"/>
+            <collection property="powers" ofType="com.xl.backen.entity.Powers">
+                <id column="power_uuid" property="uuid"/>
+                <result column="power_code" property="code"/>
             </collection>
         </collection>
         <collection property="roles" ofType="com.xl.backen.entity.Roles">
@@ -71,16 +69,12 @@
             me.uuid as me_uuid,
             me.name as me_name,
             me.code as me_code,
-            pm.uuid as pm_uuid,
-            pm.name as pm_name,
-            pm.code as pm_code
         FROM tb_users u
         LEFT JOIN tb_users_role ur on ur.user_id = u.uuid
         LEFT JOIN tb_roles r on r.uuid = ur.role_id
         LEFT join tb_roles_power rp on rp.role_id = r.uuid
         LEFT join tb_powers pos on pos.uuid = rp.power_id
         LEFT JOIN tb_menus me on me.uuid = pos.meun_id
-        LEFT JOIN tb_parent_menus pm on me.up_menu_id = pm.uuid
         WHERE u.status=1 and u.mobile=#{mobile} and ur.status=1
     </select>
 

@@ -56,6 +56,12 @@ public class UsersServiceImpl implements UsersService {
 		try {
 			subject.login(token);
 			UsersModel usersModel = (UsersModel) subject.getPrincipal();
+
+			List<Menus> menus = usersModel.getMenus();
+			for(Menus i : menus) {
+				
+			}
+
 			return usersModel;
 		} catch (UnknownAccountException e) {
 			throw new BusinessException(BusinessStatus.USER_ERROR);

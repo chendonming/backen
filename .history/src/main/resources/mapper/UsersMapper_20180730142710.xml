@@ -73,7 +73,7 @@
             me.code as me_code,
             pm.uuid as pm_uuid,
             pm.name as pm_name,
-            pm.code as pm_code
+            pm.code as pm.code
         FROM tb_users u
         LEFT JOIN tb_users_role ur on ur.user_id = u.uuid
         LEFT JOIN tb_roles r on r.uuid = ur.role_id
