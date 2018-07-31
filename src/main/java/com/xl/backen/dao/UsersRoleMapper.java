@@ -1,9 +1,11 @@
 package com.xl.backen.dao;
 
+import com.xl.backen.entity.Users;
 import com.xl.backen.entity.UsersRole;
 
 import java.util.List;
 
+import com.xl.backen.model.RolesModel;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -28,4 +30,6 @@ public interface UsersRoleMapper {
      * 根据userId找到List对象
      */
     List<UsersRole> queryByUserId(String userId);
+
+    RolesModel findByRoleId(String roleId);
 }

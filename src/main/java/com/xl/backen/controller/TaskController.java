@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
     private static Logger log = LoggerFactory.getLogger(TaskController.class);
 
-
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     public String login() {
         return "task查询接口";

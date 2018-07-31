@@ -2,9 +2,9 @@ package com.xl.backen.dao;
 
 import com.xl.backen.entity.Powers;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface PowersMapper {

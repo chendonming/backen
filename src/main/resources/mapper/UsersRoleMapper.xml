@@ -7,6 +7,18 @@
     <result column="role_id" jdbcType="VARCHAR" property="roleId" />
     <result column="status" jdbcType="INTEGER" property="status"/>
   </resultMap>
+  <resultMap id="UsersRole" type="com.xl.backen.model.RolesModel">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="status" jdbcType="INTEGER" property="status"/>
+    <collection property="users" ofType="com.xl.backen.entity.Users">
+      <id column="u_uuid" property="uuid"/>
+      <result column="mobile" property="mobile"/>
+      <result column="nickname" property="nickname"/>
+      <result column="truename" property="truename"/>
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List">
     uuid, user_id, role_id
   </sql>
@@ -22,6 +34,13 @@
   	select <include refid="Base_Column_List"></include>
   	from tb_users_role
   	where user_id=#{userId}
+  </select>
+
+  <!--根据角色id查找所有的用户-->
+  <select id="findByRoleId" resultMap="UsersRole">
+    select u.*, ur.uuid as u_uuid, ur.nickname, ur.truename
+    from tb_users_role ur left join tb_users u on ur.user_id = u.uuid
+    where ur.role_id=#{roleId}
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

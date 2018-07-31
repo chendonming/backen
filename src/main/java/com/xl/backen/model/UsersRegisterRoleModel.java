@@ -8,6 +8,14 @@ public class UsersRegisterRoleModel{
 
     private String roleId;
 
+	@Override
+	public String toString() {
+		return "{" +
+			" user='" + getUser() + "'" +
+			", roleId='" + getRoleId() + "'" +
+			"}";
+	}
+
     public Users getUser() {
         return user;
     }

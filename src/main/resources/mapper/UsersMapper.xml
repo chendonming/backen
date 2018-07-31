@@ -92,6 +92,14 @@
     uuid, nickname, truename, head_pic, mobile, sex, is_real_name, id_card, community_id, 
     total_integral, integral, status, create_time, update_time
     </sql>
+    <!--queryAll分页-->
+    <select id="queryAll" resultMap="UsersModel">
+      select u.*,r.uuid as r_uuid,r.name as r_name
+      from
+      tb_users u
+      left join tb_users_role ur on u.uuid = ur.user_id
+      left join tb_roles r on r.uuid = ur.role_id
+    </select>
 
     <!--根据手机号码查找user(登录)-->
     <select id="findByMobile" resultMap="UsersModel">

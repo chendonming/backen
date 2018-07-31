@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.xl.backen.entity.Users;
+import com.xl.backen.model.RolesModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,5 +129,20 @@ public class UsersRoleServiceImpl implements UsersRoleService{
 			 }
 		}
 		return 1;
+	}
+
+	/**
+	 * 查询角色下的所有用户
+	 * @param roleId
+	 * @return
+	 */
+	@Override
+	public List<Users> findByRoleId(String roleId) {
+		RolesModel rolesModel = urm.findByRoleId(roleId);
+		if(rolesModel != null) {
+			return rolesModel.getUsers();
+		}else{
+			return null;
+		}
 	}
 }

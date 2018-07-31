@@ -1,12 +1,14 @@
 package com.xl.backen.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
-public class Roles {
+public class Roles implements Serializable {
+    private static final long serialVersionUID = -7196094634505335416L;
     private String uuid;
 
     @NotEmpty
@@ -21,6 +23,18 @@ public class Roles {
     @Max(value = 2)
     @Min(value = 1)
     private Integer status;
+
+	@Override
+	public String toString() {
+		return "{" +
+			" uuid='" + getUuid() + "'" +
+			", name='" + getName() + "'" +
+			", description='" + getDescription() + "'" +
+			", createTime='" + getCreateTime() + "'" +
+			", updateTime='" + getUpdateTime() + "'" +
+			", status='" + getStatus() + "'" +
+			"}";
+	}
 
     public Integer getStatus() {
         return status;

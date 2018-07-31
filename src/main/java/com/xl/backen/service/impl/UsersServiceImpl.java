@@ -1,10 +1,12 @@
 package com.xl.backen.service.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.UsersMapper;
-import com.xl.backen.dao.UsersRoleMapper;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
@@ -101,5 +103,12 @@ public class UsersServiceImpl implements UsersService {
 		}else{
 			throw new BusinessException(BusinessStatus.MOBILE_ERROR);
 		}
+	}
+
+	@Override
+	public Page<Users> queryAll(int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		Page<Users> users = usersMapper.queryAll(pageSize, pageNum);
+		return users;
 	}
 }
