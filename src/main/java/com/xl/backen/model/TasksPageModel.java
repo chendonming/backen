@@ -13,6 +13,9 @@ public class TasksPageModel extends Tasks{
 
 	private int pageNum;
 	
+	/**
+	 * 1.未开始 2.进行中 3. 已结束
+	 */
 	private Integer flag;
 
 	public Integer getPageSize() {

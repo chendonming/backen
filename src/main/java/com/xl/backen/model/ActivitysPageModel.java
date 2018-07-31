@@ -13,6 +13,13 @@ public class ActivitysPageModel extends Activitys {
 
   private int pageNum;
 
+	/**
+	 * 1.报名未开始
+	 * 2.报名进行中
+	 * 3.报名已结束  活动未开始
+	 * 4.活动进行中
+	 * 5.活动已结束
+	 */
   private Integer flag;
 
 	@Override
