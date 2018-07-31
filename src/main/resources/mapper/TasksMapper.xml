@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.TasksMapper">
+  <resultMap id="BaseResultMap" type="com.xl.backen.entity.Tasks">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="limit_people" jdbcType="INTEGER" property="limitPeople" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="join_people" jdbcType="INTEGER" property="joinPeople" />
+    <result column="data_form" jdbcType="INTEGER" property="dataForm" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="coverpic" jdbcType="VARCHAR" property="coverpic" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, name, community_id, start_time, end_time, location, limit_people, integral, 
+    join_people, data_form, create_user, coverpic, description, create_time, update_time,status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_tasks
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询列表 -->
+  <select id="query" resultMap="BaseResultMap">
+    select    <include refid="Base_Column_List"/>
+    from tb_tasks
+    where
+    <trim  suffixOverrides="and">
+      <if test="name != null and name != ''">
+        name like CONCAT(#{name},'%') and
+      </if>
+      <if test="flag != null and flag == 1">
+          <!-- 未开始 -->
+          now() < start_time
+      </if>
+       <if test="flag != null and flag == 2">
+          <!-- 进行中 -->
+          now() between  start_time  and  end_time
+      </if>
+      <if test="flag != null and flag == 3">
+          <!-- 已结束 -->
+          now() > end_time
+      </if>
+    </trim>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_tasks
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xl.backen.entity.Tasks">
+    insert into tb_tasks (uuid, name, community_id, 
+      start_time, end_time, location, 
+      limit_people, integral, join_people, 
+      data_form, create_user, coverpic, 
+      description, create_time, update_time,status
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{location,jdbcType=VARCHAR}, #{limitPeople,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{joinPeople,jdbcType=INTEGER}, #{dataForm,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{coverpic,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.backen.entity.Tasks">
+    insert into tb_tasks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="communityId != null">
+        community_id,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="limitPeople != null">
+        limit_people,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="joinPeople != null">
+        join_people,
+      </if>
+      <if test="dataForm != null">
+        data_form,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="coverpic != null">
+        coverpic,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null"> #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null"> #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null"> #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null"> #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="location != null"> #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="limitPeople != null"> #{limitPeople,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null"> #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="joinPeople != null"> #{joinPeople,jdbcType=INTEGER},
+      </if>
+      <if test="dataForm != null"> #{dataForm,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null"> #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="coverpic != null"> #{coverpic,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null"> #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null"> #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null"> #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Tasks">
+    update tb_tasks
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="limitPeople != null">
+        limit_people = #{limitPeople,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="joinPeople != null">
+        join_people = #{joinPeople,jdbcType=INTEGER},
+      </if>
+      <if test="dataForm != null">
+        data_form = #{dataForm,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="coverpic != null">
+        coverpic = #{coverpic,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Tasks">
+    update tb_tasks
+    set name = #{name,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      location = #{location,jdbcType=VARCHAR},
+      limit_people = #{limitPeople,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      join_people = #{joinPeople,jdbcType=INTEGER},
+      data_form = #{dataForm,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      coverpic = #{coverpic,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status= #{status,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

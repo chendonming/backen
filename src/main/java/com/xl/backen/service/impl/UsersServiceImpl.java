@@ -1,7 +1,6 @@
 package com.xl.backen.service.impl;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import com.github.pagehelper.Page;
@@ -75,32 +74,32 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	@Transactional
 	public String Register(Users users) {
-	    if(StringUtils.isEmpty(users.getMobile())) {
-	        throw new BusinessException(BusinessStatus.USER_ERROR);
-        }
+		if (StringUtils.isEmpty(users.getMobile())) {
+			throw new BusinessException(BusinessStatus.USER_ERROR);
+		}
 		Users us = usersMapper.findByMobile(users.getMobile());
-		if(us == null) {
+		if (us == null) {
 			String uuid = UUID.randomUUID().toString().replace("-", "");
 			users.setUuid(uuid);
 			users.setCreateTime(new Date());
 			users.setUpdateTime(new Date());
 			users.setStatus(CommonConst.NORMAL_STATUS);
 
-			if(StringUtil.isEmpty(users.getPassword())) {
-			    try{
-                    users.setPassword(MD5.md5("123456"));
-                }catch (Exception e){
-			        throw new BusinessException(BusinessStatus.MD5_ERROR);
-                }
-            }
+			if (StringUtil.isEmpty(users.getPassword())) {
+				try {
+					users.setPassword(MD5.md5("123456"));
+				} catch (Exception e) {
+					throw new BusinessException(BusinessStatus.MD5_ERROR);
+				}
+			}
 
 			int i = usersMapper.insertSelective(users);
-			if(i > 0) {
+			if (i > 0) {
 				return uuid;
-			}else{
+			} else {
 				throw new BusinessException(BusinessStatus.INSERT_ERROR);
 			}
-		}else{
+		} else {
 			throw new BusinessException(BusinessStatus.MOBILE_ERROR);
 		}
 	}

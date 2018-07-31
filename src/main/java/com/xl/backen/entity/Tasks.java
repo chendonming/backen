@@ -1,0 +1,207 @@
+package com.xl.backen.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+public class Tasks implements Serializable{
+
+    private static final long serialVersionUID = -186100421421128053L;
+
+	private String uuid;
+
+    @NotNull
+    @NotEmpty
+    private String name;
+
+    private String communityId;
+
+    @NotNull
+    @NotEmpty
+    private Date startTime;
+
+    @NotNull
+    @NotEmpty
+    private Date endTime;
+
+    @NotNull
+    @NotEmpty
+    private String location;
+
+    private Integer limitPeople;
+
+    private Integer integral;
+
+    private Integer joinPeople;
+
+    @NotNull
+    @NotEmpty
+    private Integer dataForm;
+
+    private String createUser;
+
+    private String coverpic;
+
+    private String description;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Integer status;
+
+	@Override
+	public String toString() {
+		return "{" +
+			" uuid='" + getUuid() + "'" +
+			", name='" + getName() + "'" +
+			", communityId='" + getCommunityId() + "'" +
+			", startTime='" + getStartTime() + "'" +
+			", endTime='" + getEndTime() + "'" +
+			", location='" + getLocation() + "'" +
+			", limitPeople='" + getLimitPeople() + "'" +
+			", integral='" + getIntegral() + "'" +
+			", joinPeople='" + getJoinPeople() + "'" +
+			", dataForm='" + getDataForm() + "'" +
+			", createUser='" + getCreateUser() + "'" +
+			", coverpic='" + getCoverpic() + "'" +
+			", description='" + getDescription() + "'" +
+			", createTime='" + getCreateTime() + "'" +
+			", updateTime='" + getUpdateTime() + "'" +
+			", status='" + getStatus() + "'" +
+			"}";
+	}
+
+
+
+	public Integer getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+    public String getUuid() {
+        return uuid;
+    }
+
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid == null ? null : uuid.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId == null ? null : communityId.trim();
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location == null ? null : location.trim();
+    }
+
+    public Integer getLimitPeople() {
+        return limitPeople;
+    }
+
+    public void setLimitPeople(Integer limitPeople) {
+        this.limitPeople = limitPeople;
+    }
+
+    public Integer getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(Integer integral) {
+        this.integral = integral;
+    }
+
+    public Integer getJoinPeople() {
+        return joinPeople;
+    }
+
+    public void setJoinPeople(Integer joinPeople) {
+        this.joinPeople = joinPeople;
+    }
+
+    public Integer getDataForm() {
+        return dataForm;
+    }
+
+    public void setDataForm(Integer dataForm) {
+        this.dataForm = dataForm;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser == null ? null : createUser.trim();
+    }
+
+    public String getCoverpic() {
+        return coverpic;
+    }
+
+    public void setCoverpic(String coverpic) {
+        this.coverpic = coverpic == null ? null : coverpic.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+}

@@ -25,6 +25,13 @@ public enum BusinessStatus {
     UUID_REQ(2005, "uuid是必须的"),
     MOBILE_ERROR(2006, "手机号码已注册"),
     ROLE_ERROR(2007,"角色下面存在用户，不能进行删除"),
+    DEL_OPEAR_ERROR(2008, "不能通过修改接口直接更改status状态"),
+
+    /**
+     * 任务活动模块异常
+     */
+    TIME_ERROR(3001, "结束时间不能小于等于开始时间"),
+    TIME_NOW_ERROR(3001, "时间不能小于等于目前时间"),
 
     //工具类异常
     MD5_ERROR(5000, "MD5加密异常"),
