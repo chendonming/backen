@@ -11,6 +11,7 @@ public enum BusinessStatus {
     USERNAME_REQ(400, "用户名是必须的"),
     PASSWORD_REQ(401, "密码是必须的"),
     TYPE_ERROR(402, "表单方式提交是不支持的"),
+    VOLID_ERROR(402, "字段校验未通过"),
     PARAMETER_ERROR(499, "参数异常"),
     
     //5开头后台错误

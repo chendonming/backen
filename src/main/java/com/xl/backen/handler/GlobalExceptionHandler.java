@@ -1,5 +1,7 @@
 package com.xl.backen.handler;
 
+import javax.validation.UnexpectedTypeException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -8,30 +10,44 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-@ControllerAdvice(basePackages = "com.xl.volunteer.controller")
+@ControllerAdvice(basePackages = "com.xl.backen.controller")
 public class GlobalExceptionHandler {
     private static Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = BusinessException.class)
     @ResponseBody
     public Result handlerBusinessException(Exception e) {
-        log.info("异常参数: {}", e);
-        if(e instanceof BusinessException) {
-            BusinessException businessException = (BusinessException)e;
-            log.warn("业务异常: {}", e);
-            return new Result(businessException.getCode(), businessException.getMsg());
-        } else if(e instanceof HttpMediaTypeNotSupportedException){
-            return new Result(BusinessStatus.TYPE_ERROR);
-        } else if(e instanceof MethodArgumentNotValidException) {
-            log.warn("异常: {}", e);
-            return new Result(BusinessStatus.PARAMETER_ERROR);
-        }else if(e instanceof NullPointerException) {
-        	log.warn("空指针异常");
-        	return new Result(BusinessStatus.SERVER_ERROR5);
-        }else {
-            log.warn("异常: {}", e);
-            return new Result(BusinessStatus.ERROR);
-        }
+        BusinessException businessException = (BusinessException) e;
+        log.warn("业务异常: {}", e);
+        return new Result(businessException.getCode(), businessException.getMsg());
+    }
+
+    @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
+    @ResponseBody
+    public Result handlerHttpMediaTypeNotSupportedException(Exception e) {
+        HttpMediaTypeNotSupportedException exception = (HttpMediaTypeNotSupportedException) e;
+        return new Result(BusinessStatus.TYPE_ERROR);
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    @ResponseBody
+    public Result handlerMethodArgumentNotValidException(Exception e) {
+        MethodArgumentNotValidException exception = (MethodArgumentNotValidException) e;
+        return new Result(BusinessStatus.PARAMETER_ERROR);
+    }
+
+    @ExceptionHandler(value = UnexpectedTypeException.class)
+    @ResponseBody
+    public Result handlerUnexpectedTypeException(Exception e) {
+        UnexpectedTypeException exception = (UnexpectedTypeException) e;
+        log.warn("字段校验异常",e);
+        return new Result(BusinessStatus.VOLID_ERROR);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public Result handler(Exception e) {
+        log.warn("未知异常",e);
+        return new Result(BusinessStatus.ERROR);
     }
 }

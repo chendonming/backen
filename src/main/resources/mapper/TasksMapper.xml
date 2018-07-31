@@ -32,23 +32,23 @@
   <!-- 查询列表 -->
   <select id="query" resultMap="BaseResultMap">
     select    <include refid="Base_Column_List"/>
-    from tb_tasks
+    from tb_tasks t
     where
-    <trim  suffixOverrides="and">
+    <trim suffixOverrides="and">
       <if test="name != null and name != ''">
         name like CONCAT(#{name},'%') and
       </if>
       <if test="flag != null and flag == 1">
-          <!-- 未开始 -->
-          now() < start_time
+        <!-- 未开始 -->
+          now() &lt; t.start_time
       </if>
-       <if test="flag != null and flag == 2">
-          <!-- 进行中 -->
-          now() between  start_time  and  end_time
+      <if test="flag != null and flag == 2">
+        <!-- 进行中 -->
+          now() between  t.start_time  and  t.end_time
       </if>
       <if test="flag != null and flag == 3">
-          <!-- 已结束 -->
-          now() > end_time
+        <!-- 已结束 -->
+          now() &gt; t.end_time
       </if>
     </trim>
   </select>
@@ -199,7 +199,7 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-       <if test="status != null">
+      <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
     </set>
@@ -220,8 +220,7 @@
       coverpic = #{coverpic,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      status= #{status,jdbcType=INTEGER}
+      update_time = #{updateTime,jdbcType=TIMESTAMP}, status= #{status,jdbcType=INTEGER}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -38,7 +38,7 @@
       </if>
       <if test="flag != null and flag == 1">
           <!-- 报名未开始 -->
-          now() < join_start_time
+          now() &lt; join_start_time
       </if>
       <if test="flag != null and flag == 2">
           <!-- 报名未开始 -->
@@ -46,7 +46,7 @@
       </if>
       <if test="flag != null and flag == 3">
           <!-- 活动未开始 -->
-          now() < start_time
+          now() &gt; start_time
       </if>
        <if test="flag != null and flag == 4">
           <!-- 活动进行中 -->
@@ -54,7 +54,7 @@
       </if>
       <if test="flag != null and flag == 5">
           <!-- 活动已结束 -->
-          now() > end_time
+          now() &gt; end_time
       </if>
     </trim>
   </select>

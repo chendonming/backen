@@ -39,6 +39,9 @@ public class TasksServiceImpl implements TasksService {
         Date eDate = tasks.getEndTime();
         TimeUtil.volidTime(sDate, eDate);
         tasks.setStatus(CommonConst.NORMAL_STATUS);
+
+        tasks.setCreateTime(new Date());
+        tasks.setUpdateTime(new Date());
         return tm.insertSelective(tasks);
     }
 

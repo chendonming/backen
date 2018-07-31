@@ -42,6 +42,9 @@ public class ActivitysServiceImpl implements ActivitysService {
     TimeUtil.volidTime(jsdDate, jseDate);
     TimeUtil.volidTime(sDate, eDate);
     activitys.setStatus(CommonConst.NORMAL_STATUS);
+
+    activitys.setCreateTime(new Date());
+    activitys.setUpdateTime(new Date());
     return as.insertSelective(activitys);
   }
 

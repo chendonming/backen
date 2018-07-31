@@ -3,31 +3,20 @@ package com.xl.backen.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class Tasks implements Serializable{
 
     private static final long serialVersionUID = -186100421421128053L;
 
-	private String uuid;
-
-    @NotNull
-    @NotEmpty
+    private String uuid;
+    
     private String name;
 
     private String communityId;
 
-    @NotNull
-    @NotEmpty
     private Date startTime;
 
-    @NotNull
-    @NotEmpty
     private Date endTime;
 
-    @NotNull
-    @NotEmpty
     private String location;
 
     private Integer limitPeople;
@@ -36,8 +25,6 @@ public class Tasks implements Serializable{
 
     private Integer joinPeople;
 
-    @NotNull
-    @NotEmpty
     private Integer dataForm;
 
     private String createUser;
