@@ -1,9 +1,13 @@
 package com.xl.backen.entity;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotEmpty;
 
-public class RolesPower {
-    private String uuid;
+public class RolesPower implements Serializable{
+    private static final long serialVersionUID = 135783863513366425L;
+
+	private String uuid;
 
     @NotEmpty
     private String powerId;

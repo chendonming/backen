@@ -1,7 +1,5 @@
 package com.xl.backen.controller;
 
-import javax.validation.Valid;
-
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;

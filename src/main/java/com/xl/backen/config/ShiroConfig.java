@@ -17,13 +17,13 @@ import javax.servlet.Filter;
 
 @Configuration
 public class ShiroConfig {
-	
-	@Value("${permission.menusModel}")
-	private String menus;
-	
-	@Value("${permission.operation}")
-	private String operation;
-	
+
+    @Value("${permission.menusModel}")
+    private String menus;
+
+    @Value("${permission.operation}")
+    private String operation;
+
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -31,37 +31,36 @@ public class ShiroConfig {
         Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
         filters.put("authc", new LoginVolidFilter());
         filters.put("perms", new PermissionsVolidFilter());
-        
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
 
         Map<String, String> map = new LinkedHashMap<String,String>();
         
         String[] t = menus.split(",");
         String[] t1 = operation.split(",");
-        
+
         map.put("/user/login", "anon");
+        map.put("/**", "authc");
         for (int i = 0; i < t.length; i++) {
 			for (int j = 0; j < t1.length; j++) {
 				map.put("/"+t[i]+"/"+t1[j], "perms["+t[i]+":"+t1[j]+"]");
 			}
 		}
         map.put("/permiss/**/**", "perms[permiss]");
-        map.put("/**", "authc");
-
+        
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
         return shiroFilterFactoryBean;
     }
 
-    @Bean(name="defaultWebSecurityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm")UserRealm userRealm) {
+    @Bean(name = "defaultWebSecurityManager")
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        //关联realm
+        // 关联realm
         securityManager.setRealm(userRealm);
         return securityManager;
     }
 
-    @Bean(name="userRealm")
+    @Bean(name = "userRealm")
     public UserRealm getRealm() {
         return new UserRealm();
     }
