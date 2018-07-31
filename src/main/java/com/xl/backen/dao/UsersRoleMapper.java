@@ -1,6 +1,5 @@
 package com.xl.backen.dao;
 
-import com.xl.backen.entity.Users;
 import com.xl.backen.entity.UsersRole;
 
 import java.util.List;
