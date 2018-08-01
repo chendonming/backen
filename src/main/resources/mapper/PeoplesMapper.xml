@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.PeoplesMapper">
+  <resultMap id="BaseResultMap" type="com.xl.backen.entity.Peoples">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="truename" jdbcType="VARCHAR" property="truename" />
+    <result column="head_pic" jdbcType="VARCHAR" property="headPic" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="is_real_name" jdbcType="INTEGER" property="isRealName" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="total_integral" jdbcType="INTEGER" property="totalIntegral" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, nickname, truename, head_pic, mobile, sex, password, is_real_name, id_card, 
+    community_id, total_integral, integral, status, create_time, update_time
+  </sql>
+
+  <!-- 条件分页查询 -->
+  <select id="query" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from tb_peoples
+    <if test="truename != null and truename != ''">
+        truename like CONCAT(#{truename},'%') and
+    </if>
+    <if test="sex != null and sex != ''">
+        sex=#{sex} and
+    </if>
+    <if test="communityId != null and communityId  != ''">
+        community_id=#{communityId} and
+    </if>
+    <if test="isRealName != null and isRealName != ''">
+        is_real_name=#{isRealName} and
+    </if>
+    status=1
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_peoples
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_peoples
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xl.backen.entity.Peoples">
+    insert into tb_peoples (uuid, nickname, truename, 
+      head_pic, mobile, sex, 
+      password, is_real_name, id_card, 
+      community_id, total_integral, integral, 
+      status, create_time, update_time
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, 
+      #{headPic,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{password,jdbcType=VARCHAR}, #{isRealName,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, 
+      #{communityId,jdbcType=VARCHAR}, #{totalIntegral,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.backen.entity.Peoples">
+    insert into tb_peoples
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="truename != null">
+        truename,
+      </if>
+      <if test="headPic != null">
+        head_pic,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="isRealName != null">
+        is_real_name,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="communityId != null">
+        community_id,
+      </if>
+      <if test="totalIntegral != null">
+        total_integral,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null">
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="headPic != null">
+        #{headPic,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="isRealName != null">
+        #{isRealName,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalIntegral != null">
+        #{totalIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Peoples">
+    update tb_peoples
+    <set>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null">
+        truename = #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="headPic != null">
+        head_pic = #{headPic,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="isRealName != null">
+        is_real_name = #{isRealName,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalIntegral != null">
+        total_integral = #{totalIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Peoples">
+    update tb_peoples
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      truename = #{truename,jdbcType=VARCHAR},
+      head_pic = #{headPic,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      is_real_name = #{isRealName,jdbcType=INTEGER},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR},
+      total_integral = #{totalIntegral,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

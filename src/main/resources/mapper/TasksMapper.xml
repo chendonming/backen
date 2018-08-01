@@ -34,23 +34,22 @@
     select    <include refid="Base_Column_List"/>
     from tb_tasks t
     where
-    <trim suffixOverrides="and">
-      <if test="name != null and name != ''">
-        name like CONCAT(#{name},'%') and
-      </if>
-      <if test="flag != null and flag == 1">
-        <!-- 未开始 -->
-          now() &lt; t.start_time
-      </if>
-      <if test="flag != null and flag == 2">
-        <!-- 进行中 -->
-          now() between  t.start_time  and  t.end_time
-      </if>
-      <if test="flag != null and flag == 3">
-        <!-- 已结束 -->
-          now() &gt; t.end_time
-      </if>
-    </trim>
+    <if test="name != null and name != ''">
+      name like CONCAT(#{name},'%') and
+    </if>
+    <if test="flag != null and flag == 1">
+      <!-- 未开始 -->
+        now() &lt; t.start_time
+    </if>
+    <if test="flag != null and flag == 2">
+      <!-- 进行中 -->
+        now() between  t.start_time  and  t.end_time
+    </if>
+    <if test="flag != null and flag == 3">
+      <!-- 已结束 -->
+        now() &gt; t.end_time and
+    </if>
+    status=1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

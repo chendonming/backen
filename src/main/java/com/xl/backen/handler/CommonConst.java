@@ -16,4 +16,8 @@ public class CommonConst {
     public static final int IN_START = 2; //正在进行中
 
     public static final int OUT_START = 3; //已结束
+
+    //居民
+    public static final int IS_REAL_NAME = 1; //已经实名
+    public static final int NO_REAL_NAME = 2; //未实名
 }

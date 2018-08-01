@@ -13,7 +13,12 @@ public class BusinessException extends RuntimeException {
         this.msg = businessStatus.getMsg();
     }
 
-    public Integer getCode() {
+    public BusinessException(Integer code2, String string) {
+    	this.code = code2;
+    	this.msg = string;
+	}
+
+	public Integer getCode() {
         return code;
     }
 
