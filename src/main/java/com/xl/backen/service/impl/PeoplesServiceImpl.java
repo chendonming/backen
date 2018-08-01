@@ -63,8 +63,8 @@ public class PeoplesServiceImpl implements PeoplesService {
 		List<Peoples> peoplesList =  p.getResult();
 		
 		File file = new File(filePath + UUID.randomUUID().toString().replace("-", "") + ".xlsx");
-		
-		return nginxPath + PeoplesPOI.exportUser(file, peoplesList) + ".xlsx";
+
+		return nginxPath + PeoplesPOI.exportUser(file, peoplesList);
 	}
 
 	@Override

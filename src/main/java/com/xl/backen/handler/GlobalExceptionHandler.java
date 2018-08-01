@@ -2,6 +2,7 @@ package com.xl.backen.handler;
 
 import javax.validation.UnexpectedTypeException;
 
+import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -42,6 +43,14 @@ public class GlobalExceptionHandler {
         UnexpectedTypeException exception = (UnexpectedTypeException) e;
         log.warn("字段校验异常",e);
         return new Result(BusinessStatus.VOLID_ERROR);
+    }
+
+    @ExceptionHandler(value = NotOfficeXmlFileException.class)
+    @ResponseBody
+    public Result handlerNotOfficeXmlFileException(Exception e) {
+        log.warn("导入excel错误",e);
+        NotOfficeXmlFileException notOfficeXmlFileException = (NotOfficeXmlFileException)e;
+        return new Result(BusinessStatus.FILE_EXCEL_ERROR);
     }
 
     @ExceptionHandler(value = Exception.class)

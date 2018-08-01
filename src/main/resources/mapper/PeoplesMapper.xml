@@ -28,6 +28,7 @@
   	select
   	<include refid="Base_Column_List" />
   	from tb_peoples
+    where
     <if test="truename != null and truename != ''">
         truename like CONCAT(#{truename},'%') and
     </if>

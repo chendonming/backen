@@ -38,6 +38,7 @@ public enum BusinessStatus {
     MD5_ERROR(5000, "MD5加密异常"),
     VERIFY_ERROR(5001, "MD5解密异常"),
     IMPORT_ERROR(5002, "excel导入格式异常"),
+    FILE_EXCEL_ERROR(5003,"不是excel文件！"),
 
     //数据库异常
     UPDATE_ERROR(10001, "数据库修改异常"),

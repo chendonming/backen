@@ -8,5 +8,5 @@ jdbc:
   username: root
   password: 123456
 
-filePath: C:\Users\chendm\Documents\font\
-nginxPath:  http://localhost:8060/
+filePath: D:/codeplace/view/static/
+nginxPath:  http://localhost/static/
