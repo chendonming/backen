@@ -38,7 +38,7 @@ public class ActivitysServiceImpl implements ActivitysService {
     Date sDate = activitys.getStartTime();
     Date eDate = activitys.getEndTime();
     Date jsdDate = activitys.getJoinStartTime();
-    Date jseDate = activitys.getEndTime();
+    Date jseDate = activitys.getJoinEndTime();
     TimeUtil.volidTime(jsdDate, jseDate);
     TimeUtil.volidTime(sDate, eDate);
     activitys.setStatus(CommonConst.NORMAL_STATUS);
