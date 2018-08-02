@@ -13,4 +13,6 @@ public interface TasksService {
   Page<Tasks> query(TasksPageModel model);
 
   int update(Tasks tasks);
+
+  Tasks findById(String uuid);
 }

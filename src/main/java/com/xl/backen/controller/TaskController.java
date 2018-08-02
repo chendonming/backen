@@ -62,4 +62,10 @@ public class TaskController {
         ts.update(t);
         return new Result(BusinessStatus.SUCCESS);
     }
+
+    @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
+    public Result queryOne(@RequestParam("uuid") String uuid) {
+        Tasks tasks = ts.findById(uuid);
+        return new Result(BusinessStatus.SUCCESS, tasks);
+    }
 }

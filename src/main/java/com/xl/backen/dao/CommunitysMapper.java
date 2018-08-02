@@ -1,6 +1,8 @@
 package com.xl.backen.dao;
 
+import com.github.pagehelper.Page;
 import com.xl.backen.entity.Communitys;
+import com.xl.backen.model.CommunitysPageModel;
 
 public interface CommunitysMapper {
     int deleteByPrimaryKey(String uuid);
@@ -14,4 +16,6 @@ public interface CommunitysMapper {
     int updateByPrimaryKeySelective(Communitys record);
 
     int updateByPrimaryKey(Communitys record);
+
+    Page<Communitys> query(CommunitysPageModel model);
 }

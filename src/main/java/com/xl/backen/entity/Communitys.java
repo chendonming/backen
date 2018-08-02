@@ -1,8 +1,10 @@
 package com.xl.backen.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Communitys {
+public class Communitys implements Serializable {
+    private static final long serialVersionUID = -6580297936050468566L;
     private String uuid;
 
     private String name;
@@ -15,9 +17,19 @@ public class Communitys {
 
     private String remark;
 
+    private Integer status;
+
     private Date createTime;
 
     private Date updateTime;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public String getUuid() {
         return uuid;

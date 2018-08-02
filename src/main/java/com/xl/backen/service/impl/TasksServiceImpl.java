@@ -63,4 +63,9 @@ public class TasksServiceImpl implements TasksService {
         return tm.updateByPrimaryKeySelective(tasks);
     }
 
+    @Override
+    public Tasks findById(String uuid) {
+        return tm.selectByPrimaryKey(uuid);
+    }
+
 }

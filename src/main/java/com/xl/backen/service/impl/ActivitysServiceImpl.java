@@ -63,4 +63,10 @@ public class ActivitysServiceImpl implements ActivitysService {
   public int update(Activitys tasks) {
     return as.updateByPrimaryKeySelective(tasks);
   }
+
+  @Override
+  public Activitys findById(String uuid) {
+    return as.selectByPrimaryKey(uuid);
+  }
+
 }
