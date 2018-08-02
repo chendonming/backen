@@ -20,8 +20,6 @@ public class ActivitysPageModel extends Activitys {
 	 * 4.活动进行中
 	 * 5.活动已结束
 	 */
-  private Integer flag;
-
 	@Override
 	public String toString() {
 		return "{" +
@@ -30,9 +28,6 @@ public class ActivitysPageModel extends Activitys {
 			", flag='" + getFlag() + "'" +
 			"}";
 	}
-
-
-
 	public int getPageSize() {
 		return this.pageSize;
 	}
@@ -48,13 +43,4 @@ public class ActivitysPageModel extends Activitys {
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
 	}
-
-	public Integer getFlag() {
-		return this.flag;
-	}
-
-	public void setFlag(Integer flag) {
-		this.flag = flag;
-	}
-
 }

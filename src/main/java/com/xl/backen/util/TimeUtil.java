@@ -37,4 +37,33 @@ public class TimeUtil {
       return CommonConst.OUT_START;
     }
   }
+
+  /**
+   *
+   * @param sDate 报名开始
+   * @param eDate 报名结束
+   * @param bsData 活动开始
+   * @param beData 活动结束
+   * @return
+   */
+  public static int compareTime(Date sDate, Date eDate, Date bsData, Date beData) {
+    Long startTime = sDate.getTime();
+    Long endTime = eDate.getTime();
+    Long nowTime = new Date().getTime();
+
+    Long bsTime = bsData.getTime();
+    Long beTime = beData.getTime();
+
+    if(nowTime < startTime) {
+      return CommonConst.NO_START;
+    }else if(nowTime > startTime && nowTime < endTime) {
+      return CommonConst.IN_START;
+    }else if(nowTime > endTime && nowTime < bsTime) {
+      return CommonConst.OUT_START;
+    }else if(nowTime > bsTime && nowTime <beTime) {
+      return CommonConst.ACTIVITY_IN_START;
+    }else{
+      return CommonConst.ACTIVITY_OUT_START;
+    }
+  }
 }

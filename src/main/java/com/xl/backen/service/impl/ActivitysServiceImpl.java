@@ -38,7 +38,7 @@ public class ActivitysServiceImpl implements ActivitysService {
     Date sDate = activitys.getStartTime();
     Date eDate = activitys.getEndTime();
     Date jsdDate = activitys.getJoinStartTime();
-    Date jseDate = activitys.getEndTime();
+    Date jseDate = activitys.getJoinEndTime();
     TimeUtil.volidTime(jsdDate, jseDate);
     TimeUtil.volidTime(sDate, eDate);
     activitys.setStatus(CommonConst.NORMAL_STATUS);
@@ -52,6 +52,10 @@ public class ActivitysServiceImpl implements ActivitysService {
   public Page<Activitys> query(ActivitysPageModel model) {
     PageHelper.startPage(model.getPageNum(), model.getPageSize());
     Page<Activitys> activitys = as.query(model);
+    for(Activitys i : activitys) {
+      int flag = TimeUtil.compareTime(i.getStartTime(),i.getEndTime(),i.getJoinStartTime(),i.getJoinEndTime());
+      i.setFlag(flag);
+    }
     return activitys;
   }
 

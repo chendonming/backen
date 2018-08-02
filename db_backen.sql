@@ -63,9 +63,9 @@ CREATE TABLE `tb_menus` (
 -- ----------------------------
 -- Records of tb_menus
 -- ----------------------------
-INSERT INTO `tb_menus` VALUES ('2ec6095845eb4b00b9df3069244d84a8', '任务管理', 'task', '2018-07-28 20:52:46', '2018-07-28 20:52:48', 'cf6ac315faf048f7bb9016726914b8c4\r');
-INSERT INTO `tb_menus` VALUES ('c3d436685e1c493fa2554c87a21dec89', ' 权限管理', 'permiss', '2018-07-29 18:11:41', '2018-07-29 18:11:43', 'cf6ac315faf048f7bb9016726914b8c4\r');
-INSERT INTO `tb_menus` VALUES ('f8c2d15acb374a16a03cc881548fbd14', '活动管理', 'activity', '2018-07-28 20:53:14', '2018-07-28 20:53:17', 'cf6ac315faf048f7bb9016726914b8c4\r');
+INSERT INTO `tb_menus` VALUES ('2ec6095845eb4b00b9df3069244d84a8', '任务管理', 'task', '2018-07-28 20:52:46', '2018-07-28 20:52:48', 'cf6ac315faf048f7bb9016726914b8c4');
+INSERT INTO `tb_menus` VALUES ('c3d436685e1c493fa2554c87a21dec89', ' 权限管理', 'permiss', '2018-07-29 18:11:41', '2018-07-29 18:11:43', 'cf6ac315faf048f7bb9016726914b8c4');
+INSERT INTO `tb_menus` VALUES ('f8c2d15acb374a16a03cc881548fbd14', '活动管理', 'activity', '2018-07-28 20:53:14', '2018-07-28 20:53:17', 'cf6ac315faf048f7bb9016726914b8c4');
 
 -- ----------------------------
 -- Table structure for `tb_parent_menus`
@@ -83,7 +83,7 @@ CREATE TABLE `tb_parent_menus` (
 -- ----------------------------
 -- Records of tb_parent_menus
 -- ----------------------------
-INSERT INTO `tb_parent_menus` VALUES ('cf6ac315faf048f7bb9016726914b8c4\r', '内容管理', 'content', '2018-07-30 14:24:16', '2018-07-30 14:24:19');
+INSERT INTO `tb_parent_menus` VALUES ('cf6ac315faf048f7bb9016726914b8c4', '内容管理', 'content', '2018-07-30 14:24:16', '2018-07-30 14:24:19');
 
 -- ----------------------------
 -- Table structure for `tb_peoples`
@@ -218,7 +218,7 @@ CREATE TABLE `tb_tasks` (
 -- Records of tb_tasks
 -- ----------------------------
 INSERT INTO `tb_tasks` VALUES ('6240a019e17349d3b7b5730304fdf9e4', '新建的任务', null, '2018-08-01 12:00:00', '2018-08-02 02:00:00', '湖南申', null, null, null, '1', '47c0562c5e744776b61f3489c1e5b1bf', null, null, null, null, '1');
-INSERT INTO `tb_tasks` VALUES ('819146d6015e4026bc1e7a7fd52f636d\r', '任务一', '1', '2018-07-31 21:28:00', '2018-10-18 21:28:09', '1', '1', '1', '1', '1', '1', '1', '1', '2018-07-31 21:28:27', '2018-07-31 21:28:30', '1');
+INSERT INTO `tb_tasks` VALUES ('819146d6015e4026bc1e7a7fd52f636d', '任务一', '1', '2018-07-31 21:28:00', '2018-10-18 21:28:09', '1', '1', '1', '1', '1', '1', '1', '1', '2018-07-31 21:28:27', '2018-07-31 21:28:30', '1');
 
 -- ----------------------------
 -- Table structure for `tb_users`

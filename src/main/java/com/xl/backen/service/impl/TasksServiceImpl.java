@@ -49,6 +49,9 @@ public class TasksServiceImpl implements TasksService {
     public Page<Tasks> query(TasksPageModel model) {
         PageHelper.startPage(model.getPageNum(), model.getPageSize());
         Page<Tasks> tasks = tm.query(model);
+        for(Tasks i : tasks) {
+            i.setFlag(TimeUtil.compareTime(i.getStartTime(),i.getEndTime()));
+        }
         return tasks;
     }
 
