@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/Community")
+@RequestMapping("/community")
 public class CommunitysController {
 	private static Logger log = LoggerFactory.getLogger(CommunitysController.class);
 
