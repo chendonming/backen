@@ -40,7 +40,7 @@ public class TaskController {
     public ResultForPage query(@RequestBody @Valid TasksPageModel model) {
         Page<Tasks> tasks = ts.query(model);
 
-        PageInfo<Tasks> info = new PageInfo<Tasks>(tasks);
+        PageInfo<Tasks> info = new PageInfo<>(tasks);
 
         return new ResultForPage(BusinessStatus.SUCCESS,info);
     }

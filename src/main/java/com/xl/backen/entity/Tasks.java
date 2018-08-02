@@ -39,6 +39,8 @@ public class Tasks implements Serializable{
 
     private Integer status;
 
+    private Integer flag;
+
 	@Override
 	public String toString() {
 		return "{" +
@@ -61,9 +63,15 @@ public class Tasks implements Serializable{
 			"}";
 	}
 
+    public Integer getFlag() {
+        return flag;
+    }
 
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
-	public Integer getStatus() {
+    public Integer getStatus() {
 		return this.status;
 	}
 

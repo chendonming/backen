@@ -9,31 +9,12 @@ public class TasksPageModel extends Tasks{
 
 	private static final long serialVersionUID = 617271621304258547L;
   
-  private int pageSize;
+ 	 private int pageSize;
 
 	private int pageNum;
-	
-	/**
-	 * 1.未开始 2.进行中 3. 已结束
-	 */
-	private Integer flag;
 
 	public Integer getPageSize() {
 		return this.pageSize;
-	}
-
-	/**
-	 * @return the flag
-	 */
-	public Integer getFlag() {
-		return flag;
-	}
-
-	/**
-	 * @param flag the flag to set
-	 */
-	public void setFlag(int flag) {
-		this.flag = flag;
 	}
 
 	public void setPageSize(int pageSize) {

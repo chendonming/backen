@@ -52,6 +52,10 @@ public class ActivitysServiceImpl implements ActivitysService {
   public Page<Activitys> query(ActivitysPageModel model) {
     PageHelper.startPage(model.getPageNum(), model.getPageSize());
     Page<Activitys> activitys = as.query(model);
+    for(Activitys i : activitys) {
+      int flag = TimeUtil.compareTime(i.getStartTime(),i.getEndTime(),i.getJoinStartTime(),i.getJoinEndTime());
+      i.setFlag(flag);
+    }
     return activitys;
   }
 

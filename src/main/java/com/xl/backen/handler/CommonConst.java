@@ -17,6 +17,10 @@ public class CommonConst {
 
     public static final int OUT_START = 3; //已结束
 
+    public static final int ACTIVITY_IN_START = 4; //活动已开始
+
+    public static final int ACTIVITY_OUT_START = 5; //活动结束
+
     //居民
     public static final int IS_REAL_NAME = 1; //已经实名
     public static final int NO_REAL_NAME = 2; //未实名
