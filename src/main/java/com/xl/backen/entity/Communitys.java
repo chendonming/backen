@@ -23,6 +23,21 @@ public class Communitys implements Serializable {
 
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "Communitys{" +
+          "uuid='" + uuid + '\'' +
+          ", name='" + name + '\'' +
+          ", integral=" + integral +
+          ", createUser='" + createUser + '\'' +
+          ", totalIntegral=" + totalIntegral +
+          ", remark='" + remark + '\'' +
+          ", status=" + status +
+          ", createTime=" + createTime +
+          ", updateTime=" + updateTime +
+          '}';
+    }
+
     public Integer getStatus() {
         return status;
     }

@@ -32,12 +32,14 @@ public class TaskController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result add(@RequestBody @Valid Tasks tasks) {
+        log.info("任务新增，参数tasks={}", tasks);
         ts.add(tasks);
         return new Result(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public ResultForPage query(@RequestBody @Valid TasksPageModel model) {
+        log.info("任务分页条件查询，参数model={}", model);
         Page<Tasks> tasks = ts.query(model);
 
         PageInfo<Tasks> info = new PageInfo<>(tasks);
@@ -47,6 +49,7 @@ public class TaskController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Result update(@RequestBody @Valid Tasks tasks) {
+        log.info("任务修改接口: {}", tasks);
         if(tasks.getStatus() != null) {
             throw new BusinessException(BusinessStatus.DEL_OPEAR_ERROR);
         }
@@ -56,6 +59,7 @@ public class TaskController {
 
     @RequestMapping(value = "/del", method = RequestMethod.GET)
     public Result del(@RequestParam("uuid") String uuid) {
+        log.info("任务删除接口: uuid={}", uuid);
         Tasks t = new Tasks();
         t.setUuid(uuid);
         t.setStatus(CommonConst.DEL_STATUS);
@@ -65,6 +69,7 @@ public class TaskController {
 
     @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
     public Result queryOne(@RequestParam("uuid") String uuid) {
+        log.info("查询单个任务,uuid={}", uuid);
         Tasks tasks = ts.findById(uuid);
         return new Result(BusinessStatus.SUCCESS, tasks);
     }
