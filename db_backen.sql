@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-08-01 22:41:03
+Date: 2018-08-02 23:12:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,6 +45,30 @@ CREATE TABLE `tb_activitys` (
 -- ----------------------------
 -- Records of tb_activitys
 -- ----------------------------
+INSERT INTO `tb_activitys` VALUES ('c5c3d92d40e54d09bf81ada990858e47', '新建活动', null, '2018-08-01 12:00:00', '2018-08-02 02:00:00', '2018-08-03 00:00:00', '2018-08-04 00:00:00', '湖南申', null, null, null, '1', '47c0562c5e744776b61f3489c1e5b1bf', null, null, '2018-08-02 20:54:34', '2018-08-02 20:54:34', '1');
+
+-- ----------------------------
+-- Table structure for `tb_communitys`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_communitys`;
+CREATE TABLE `tb_communitys` (
+  `uuid` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL COMMENT '社区名称',
+  `integral` int(1) DEFAULT NULL COMMENT '当前积分',
+  `create_user` varchar(255) DEFAULT NULL COMMENT '发布者',
+  `total_integral` int(1) DEFAULT NULL COMMENT '总积分',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '是否有效 1正常 2删除',
+  PRIMARY KEY (`uuid`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_communitys
+-- ----------------------------
+INSERT INTO `tb_communitys` VALUES ('efd630deba124713bc45082ec6cda0e5', '新建的社区', null, '47c0562c5e744776b61f3489c1e5b1bf', null, null, '2018-08-02 23:11:07', '2018-08-02 23:11:07', '1');
 
 -- ----------------------------
 -- Table structure for `tb_menus`
@@ -63,9 +87,9 @@ CREATE TABLE `tb_menus` (
 -- ----------------------------
 -- Records of tb_menus
 -- ----------------------------
-INSERT INTO `tb_menus` VALUES ('2ec6095845eb4b00b9df3069244d84a8', '任务管理', 'task', '2018-07-28 20:52:46', '2018-07-28 20:52:48', 'cf6ac315faf048f7bb9016726914b8c4');
-INSERT INTO `tb_menus` VALUES ('c3d436685e1c493fa2554c87a21dec89', ' 权限管理', 'permiss', '2018-07-29 18:11:41', '2018-07-29 18:11:43', 'cf6ac315faf048f7bb9016726914b8c4');
-INSERT INTO `tb_menus` VALUES ('f8c2d15acb374a16a03cc881548fbd14', '活动管理', 'activity', '2018-07-28 20:53:14', '2018-07-28 20:53:17', 'cf6ac315faf048f7bb9016726914b8c4');
+INSERT INTO `tb_menus` VALUES ('2ec6095845eb4b00b9df3069244d84a8', '任务管理', 'task', '2018-07-28 20:52:46', '2018-07-28 20:52:48', 'cf6ac315faf048f7bb9016726914b8c4\r');
+INSERT INTO `tb_menus` VALUES ('c3d436685e1c493fa2554c87a21dec89', ' 权限管理', 'permiss', '2018-07-29 18:11:41', '2018-07-29 18:11:43', 'cf6ac315faf048f7bb9016726914b8c4\r');
+INSERT INTO `tb_menus` VALUES ('f8c2d15acb374a16a03cc881548fbd14', '活动管理', 'activity', '2018-07-28 20:53:14', '2018-07-28 20:53:17', 'cf6ac315faf048f7bb9016726914b8c4\r');
 
 -- ----------------------------
 -- Table structure for `tb_parent_menus`
@@ -105,14 +129,18 @@ CREATE TABLE `tb_peoples` (
   `status` int(1) DEFAULT NULL COMMENT ' 状态 1正常 2.禁用',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `identity_flag` int(1) DEFAULT '0' COMMENT '身份标识 0 居民 1.志愿者  2社工',
   PRIMARY KEY (`uuid`),
   KEY `mobile` (`mobile`),
-  KEY `status` (`status`)
+  KEY `status` (`status`),
+  KEY `identity_flag` (`identity_flag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_peoples
 -- ----------------------------
+INSERT INTO `tb_peoples` VALUES ('123', 'zhangsan ', '0', null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `tb_peoples` VALUES ('123213', 'lisi', '1', null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `tb_powers`
@@ -174,9 +202,7 @@ CREATE TABLE `tb_roles_power` (
   PRIMARY KEY (`uuid`),
   KEY `power_id` (`power_id`),
   KEY `role_id` (`role_id`),
-  KEY `status` (`status`),
-  CONSTRAINT `tb_roles_power_ibfk_1` FOREIGN KEY (`power_id`) REFERENCES `tb_powers` (`uuid`),
-  CONSTRAINT `tb_roles_power_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `tb_roles` (`uuid`)
+  KEY `status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -249,7 +275,7 @@ CREATE TABLE `tb_users` (
 -- Records of tb_users
 -- ----------------------------
 INSERT INTO `tb_users` VALUES ('47c0562c5e744776b61f3489c1e5b1bf', '测试1', '大张伟', null, '15974253641', '1', '202cb962ac59075b964b07152d234b70', '1', '430725199610197119', '1', '20', '20', '1', '2018-07-28 20:48:24', '2018-07-28 20:48:27');
-INSERT INTO `tb_users` VALUES ('7fb3f785eedf4a9ebd7c2e9ba47a0634', null, null, null, '18588773304', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, null, null, null, '1', '2018-07-30 17:17:39', '2018-07-30 17:17:39');
+INSERT INTO `tb_users` VALUES ('7fb3f785eedf4a9ebd7c2e9ba47a0634', null, null, null, '18588773304', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, '1', null, null, '1', '2018-07-30 17:17:39', '2018-07-30 17:17:39');
 
 -- ----------------------------
 -- Table structure for `tb_users_role`
