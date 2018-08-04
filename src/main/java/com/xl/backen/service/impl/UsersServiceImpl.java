@@ -107,7 +107,10 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Page<Users> queryAll(int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		Page<Users> users = usersMapper.queryAll(pageSize, pageNum);
+
+		UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+
+		Page<Users> users = usersMapper.queryAll(pageSize, pageNum, usersModel.getSysType());
 		return users;
 	}
 }

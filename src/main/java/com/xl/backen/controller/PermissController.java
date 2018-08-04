@@ -81,6 +81,16 @@ public class PermissController {
         }
     }
 
+    /**
+     * 根据角色id查找权限菜单
+     */
+    @RequestMapping(value = "/menus/queryByRoleId", method = RequestMethod.POST)
+    public Result queryByRoleId(@RequestBody Menus menus) {
+        String uuid = menus.getUuid();
+        List<Menus> menusList = ms.findByRoleId(uuid);
+        return new Result(BusinessStatus.SUCCESS,menusList);
+    }
+
     @RequestMapping(value = "/rolepower/givePermiss", method = RequestMethod.POST)
     public Result RolepowerAdd(@RequestBody @Valid List<RolesPower> rp) throws Exception {
         log.info("给角色赋权接口参数: {}", rp);

@@ -1,4 +1,4 @@
-package com.xl.backen.config;
+package com.xl.backen.shiro;
 
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;

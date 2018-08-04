@@ -22,7 +22,8 @@
 	<select id="queryAll" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from tb_roles where status=1
+		from tb_roles
+		where status=1 and sys_type=#{sysType}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from tb_roles
@@ -30,9 +31,9 @@
 	</delete>
 	<insert id="insert" parameterType="com.xl.backen.entity.Roles">
 		insert into tb_roles (uuid, name, description,
-		create_time, update_time,status)
+		create_time, update_time,status,sys_type)
 		values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}),#{status,jdbcType=INTEGER}
+		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}),#{status,jdbcType=INTEGER},#{sysType,jdbcType=VARCHAR}
 	</insert>
 	<insert id="insertSelective" parameterType="com.xl.backen.entity.Roles">
 		insert into tb_roles

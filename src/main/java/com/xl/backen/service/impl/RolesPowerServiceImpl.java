@@ -6,14 +6,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.RealmSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.xl.backen.config.UserRealm;
 import com.xl.backen.dao.RolesPowerMapper;
 import com.xl.backen.entity.RolesPower;
 import com.xl.backen.handler.CommonConst;
@@ -135,5 +132,4 @@ public class RolesPowerServiceImpl implements RolesPowerService{
 		List<RolesPower> list = rpm.queryByRoleId(roleId);
 		return list;
 	}
-
 }

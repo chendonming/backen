@@ -1,9 +1,5 @@
-package com.xl.backen.config;
+package com.xl.backen.shiro;
 
-import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
-import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
-import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
-import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,9 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import com.xl.backen.filter.LoginVolidFilter;
 import com.xl.backen.filter.PermissionsVolidFilter;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -26,9 +20,6 @@ public class ShiroConfig {
 
 	@Value("${permission.menusModel}")
 	private String menus;
-
-	@Value("${permission.operation}")
-	private String operation;
 
 	@Bean
 	public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
@@ -42,16 +33,15 @@ public class ShiroConfig {
 		Map<String, String> map = new LinkedHashMap<String, String>();
 
 		String[] t = menus.split(",");
-		String[] t1 = operation.split(",");
 
 		map.put("/user/login", "anon");
-		map.put("/**", "authc");
+
 		for (int i = 0; i < t.length; i++) {
-			for (int j = 0; j < t1.length; j++) {
-				map.put("/" + t[i] + "/" + t1[j], "perms[" + t[i] + ":" + t1[j] + "]");
-			}
+			map.put("/"+t[i]+"/**", "perms["+t[i]+"]");
 		}
+
 		map.put("/permiss/**/**", "perms[permiss]");
+		map.put("/**", "authc");
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 

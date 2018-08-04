@@ -21,4 +21,9 @@ public interface MenusMapper {
     int updateByPrimaryKey(Menus record);
     
     List<Menus> queryAll();
+
+    /**
+     * 根据角色id查找菜单
+     */
+    List<Menus> findByRoleId(String roleId);
 }

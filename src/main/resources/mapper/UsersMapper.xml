@@ -17,6 +17,7 @@
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
     </resultMap>
 
     <resultMap id="UsersModel" type="com.xl.backen.model.UsersModel">
@@ -35,6 +36,7 @@
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
         <collection property="parentMenus" ofType="com.xl.backen.entity.ParentMenus">
             <id column="pm_uuid" property="uuid"/>
             <result column="pm_name" property="name"/>
@@ -72,6 +74,7 @@
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
         <collection property="parentMenus" ofType="com.xl.backen.entity.ParentMenus">
             <id column="pm_uuid" property="uuid"/>
             <result column="pm_name" property="name"/>
@@ -99,6 +102,7 @@
       tb_users u
       left join tb_users_role ur on u.uuid = ur.user_id
       left join tb_roles r on r.uuid = ur.role_id
+      where u.sys_type=#{sysType} and status=1
     </select>
 
     <!--根据手机号码查找user(登录)-->

@@ -3,7 +3,9 @@ package com.xl.backen.dao;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Communitys;
 import com.xl.backen.model.CommunitysPageModel;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CommunitysMapper {
     int deleteByPrimaryKey(String uuid);
 

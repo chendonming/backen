@@ -4,12 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.xl.backen.model.UsersModel;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.RealmSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xl.backen.config.UserRealm;
 import com.xl.backen.dao.RolesMapper;
 import com.xl.backen.entity.Roles;
 import com.xl.backen.handler.BusinessException;
@@ -25,9 +24,13 @@ public class RolesServiceImpl implements RolesService{
 	@Override
 	public int insertSelective(Roles role) {
 		Date d = new Date();
+		UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+
 		role.setUuid(UUID.randomUUID().toString().replace("-", ""));
 		role.setCreateTime(d);
 		role.setUpdateTime(d);
+		role.setSysType(usersModel.getSysType());
+
 		int i = rm.insertSelective(role);
 		if(i > 0) {
 			return i;
@@ -38,7 +41,10 @@ public class RolesServiceImpl implements RolesService{
 
 	@Override
 	public List<Roles> queryAll() {
-		return rm.queryAll();
+
+		UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+
+		return rm.queryAll(usersModel.getSysType());
 	}
 
 	/**

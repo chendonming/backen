@@ -1,6 +1,5 @@
 package com.xl.backen.common;
 
-import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.util.MD5;

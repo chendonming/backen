@@ -24,6 +24,8 @@ public class Roles implements Serializable {
     @Min(value = 1)
     private Integer status;
 
+    private String sysType;
+
 	@Override
 	public String toString() {
 		return "{" +
@@ -35,6 +37,14 @@ public class Roles implements Serializable {
 			", status='" + getStatus() + "'" +
 			"}";
 	}
+
+    public String getSysType() {
+        return sysType;
+    }
+
+    public void setSysType(String sysType) {
+        this.sysType = sysType;
+    }
 
     public Integer getStatus() {
         return status;

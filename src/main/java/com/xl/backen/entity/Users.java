@@ -40,6 +40,11 @@ public class Users implements Serializable{
 
     private Date updateTime;
 
+    /**
+     * 系统的标识
+     */
+    private String sysType;
+
 	@Override
 	public String toString() {
 		return "{" +
@@ -60,6 +65,14 @@ public class Users implements Serializable{
 			", updateTime='" + getUpdateTime() + "'" +
 			"}";
 	}
+
+    public String getSysType() {
+        return sysType;
+    }
+
+    public void setSysType(String sysType) {
+        this.sysType = sysType;
+    }
 
     public String getPassword() {
 		return password;

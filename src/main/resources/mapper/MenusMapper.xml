@@ -12,6 +12,14 @@
     uuid, name, code, create_time, update_time
   </sql>
 
+  <!--根据角色id查找对应的菜单-->
+  <select id="findByRoleId" resultMap="BaseResultMap">
+    select m.*
+    from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
+    left join tb_menus m on m.uuid = p.meun_id
+    where rp.role_id=#{roleId}
+  </select>
+
   <select id="queryAll" resultMap="BaseResultMap">
   	select    <include refid="Base_Column_List" />
   	from tb_menus

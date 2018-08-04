@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.xl.backen.entity.Activitys;
 import com.xl.backen.entity.Communitys;
 import com.xl.backen.handler.*;
+import com.xl.backen.model.CommunitysForAddModel;
 import com.xl.backen.model.CommunitysPageModel;
 import com.xl.backen.service.CommunitysService;
 import org.slf4j.Logger;
@@ -22,9 +23,9 @@ public class CommunitysController {
 	private CommunitysService cs;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Result add(@RequestBody Communitys communitys) {
-		log.info("新增社区接口，参数: {}",communitys);
-		cs.add(communitys);
+	public Result add(@RequestBody CommunitysForAddModel communitysForAddModel) throws Exception {
+		log.info("新增社区接口，参数: {}",communitysForAddModel);
+		cs.add(communitysForAddModel);
 		return new Result(BusinessStatus.SUCCESS);
 	}
 

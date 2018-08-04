@@ -20,5 +20,5 @@ public interface RolesMapper {
 
     int updateByPrimaryKey(Roles record);
     
-    List<Roles> queryAll();
+    List<Roles> queryAll(String sysType);
 }

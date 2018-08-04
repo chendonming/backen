@@ -28,5 +28,5 @@ public interface UsersMapper {
     /**
      * 查询所有的用户
      */
-    Page<Users> queryAll(int pageSize, int pageNum);
+    Page<Users> queryAll(int pageSize, int pageNum, String sysType);
 }
