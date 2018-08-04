@@ -32,7 +32,7 @@
     select    <include refid="Base_Column_List"/>
     from tb_activitys
     where
-    <trim  suffixOverrides="and">
+    <trim>
       <if test="name != null and name != ''">
         name like CONCAT(#{name},'%') and
       </if>
@@ -54,9 +54,10 @@
       </if>
       <if test="flag != null and flag == 5">
           <!-- 活动已结束 -->
-          now() &gt; end_time
+          now() &gt; end_time and
       </if>
     </trim>
+    status = 1
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
