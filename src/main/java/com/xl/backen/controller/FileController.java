@@ -33,7 +33,7 @@ public class FileController {
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         try {
-            FileUtil.uploadFile(file.getBytes(), filePath, newFileName);
+            FileUtil.uploadFile(file.getBytes(), filePath, newFileName+ "." + suffix);
             return new Result(BusinessStatus.SUCCESS, nginxPath + newFileName + "." + suffix);
         } catch (Exception e) {
             throw new BusinessException(BusinessStatus.FILEUPLOAD_ERROR);
