@@ -32,4 +32,10 @@ public interface PeoplesService {
    * 条件查询居民分页
    */
   Page<Peoples> query(PeoplesPageModel model);
+
+
+  /**
+   * 登录接口
+   */
+  Peoples login(String username, String password);
 }

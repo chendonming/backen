@@ -7,15 +7,15 @@ import com.xl.backen.entity.Users;
 import java.util.List;
 
 public class UsersModel extends Users {
-    private static final long serialVersionUID = 8667663881929794946L;
+	private static final long serialVersionUID = 8667663881929794946L;
 	private List<Roles> roles;
 	private List<ParentMenus> parentMenus;
 
-    public List<Roles> getRoles() {
-        return roles;
-    }
+	public List<Roles> getRoles() {
+		return roles;
+	}
 
-    /**
+	/**
 	 * @return the parentMenus
 	 */
 	public List<ParentMenus> getParentMenus() {
@@ -30,6 +30,6 @@ public class UsersModel extends Users {
 	}
 
 	public void setRoles(List<Roles> roles) {
-        this.roles = roles;
-    }
+		this.roles = roles;
+	}
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-08-02 23:12:04
+Date: 2018-08-04 10:32:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,7 +40,7 @@ CREATE TABLE `tb_activitys` (
   `status` int(1) DEFAULT NULL COMMENT '1.正常2.删除',
   PRIMARY KEY (`uuid`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动表';
 
 -- ----------------------------
 -- Records of tb_activitys
@@ -63,7 +63,7 @@ CREATE TABLE `tb_communitys` (
   `status` int(1) DEFAULT NULL COMMENT '是否有效 1正常 2删除',
   PRIMARY KEY (`uuid`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='社区表';
 
 -- ----------------------------
 -- Records of tb_communitys
@@ -82,7 +82,7 @@ CREATE TABLE `tb_menus` (
   `update_time` datetime DEFAULT NULL,
   `up_menu_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of tb_menus
@@ -102,7 +102,7 @@ CREATE TABLE `tb_parent_menus` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='父级菜单表';
 
 -- ----------------------------
 -- Records of tb_parent_menus
@@ -131,16 +131,16 @@ CREATE TABLE `tb_peoples` (
   `update_time` datetime DEFAULT NULL,
   `identity_flag` int(1) DEFAULT '0' COMMENT '身份标识 0 居民 1.志愿者  2社工',
   PRIMARY KEY (`uuid`),
-  KEY `mobile` (`mobile`),
+  UNIQUE KEY `mobile` (`mobile`) USING BTREE,
   KEY `status` (`status`),
   KEY `identity_flag` (`identity_flag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of tb_peoples
 -- ----------------------------
 INSERT INTO `tb_peoples` VALUES ('123', 'zhangsan ', '0', null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `tb_peoples` VALUES ('123213', 'lisi', '1', null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `tb_peoples` VALUES ('123213', 'lisi', '1', null, '18588773304', null, '202cb962ac59075b964b07152d234b70', null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `tb_powers`
@@ -154,9 +154,8 @@ CREATE TABLE `tb_powers` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`uuid`),
-  KEY `meun_id` (`meun_id`),
-  CONSTRAINT `tb_powers_ibfk_1` FOREIGN KEY (`meun_id`) REFERENCES `tb_menus` (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `meun_id` (`meun_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of tb_powers
@@ -181,7 +180,7 @@ CREATE TABLE `tb_roles` (
   `status` int(1) DEFAULT NULL COMMENT '1正常 2删除',
   PRIMARY KEY (`uuid`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Records of tb_roles
@@ -203,7 +202,7 @@ CREATE TABLE `tb_roles_power` (
   KEY `power_id` (`power_id`),
   KEY `role_id` (`role_id`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限表';
 
 -- ----------------------------
 -- Records of tb_roles_power
@@ -238,7 +237,7 @@ CREATE TABLE `tb_tasks` (
   `status` int(1) DEFAULT NULL COMMENT '1.正常2.删除',
   PRIMARY KEY (`uuid`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='任务表';
 
 -- ----------------------------
 -- Records of tb_tasks
@@ -267,9 +266,9 @@ CREATE TABLE `tb_users` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`uuid`),
-  KEY `mobile` (`mobile`),
+  UNIQUE KEY `mobile` (`mobile`) USING BTREE,
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of tb_users
@@ -289,10 +288,8 @@ CREATE TABLE `tb_users_role` (
   PRIMARY KEY (`uuid`),
   KEY `user_id` (`user_id`),
   KEY `role_id` (`role_id`),
-  KEY `status` (`status`),
-  CONSTRAINT `tb_users_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tb_users` (`uuid`),
-  CONSTRAINT `tb_users_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `tb_roles` (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员角色关系表';
 
 -- ----------------------------
 -- Records of tb_users_role

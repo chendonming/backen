@@ -23,6 +23,14 @@
     community_id, total_integral, integral, status, create_time, update_time
   </sql>
 
+  <!--通过手机号码查找用户信息-->
+  <select id="findByMobile" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_peoples
+    where mobile=#{mobile} and status=1
+  </select>
+
   <!-- 条件分页查询 -->
   <select id="query" resultMap="BaseResultMap">
   	select
