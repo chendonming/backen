@@ -24,9 +24,10 @@ public class CommonConst {
     public static final int NO_REAL_NAME = 2; //未实名
 
     //登录
-    public static final int LOGIN_TYPE_PC = 1; //pc登录
+    public static final int LOGIN_TYPE_PC = 1; //pc后台登录
+    public static final int LOGIN_TYPE_COMMUNITY = 2; //pc社区
 
-    public static final int LOGIN_TYPE_APP = 2; //app登录
+    public static final int LOGIN_TYPE_APP = 3; //app登录
 
     //社区默认的密码
     public static final String PASSWORD = "123";

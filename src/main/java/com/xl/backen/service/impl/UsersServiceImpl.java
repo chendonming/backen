@@ -14,6 +14,7 @@ import com.xl.backen.model.UsersModel;
 import com.xl.backen.model.UsersPageModel;
 import com.xl.backen.model.UsersRegisterRoleModel;
 import com.xl.backen.service.UsersService;
+import com.xl.backen.shiro.CustomizedToken;
 import com.xl.backen.util.MD5;
 import com.xl.backen.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
@@ -54,10 +55,13 @@ public class UsersServiceImpl implements UsersService {
 		}
 
 		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = null;
+		CustomizedToken token = null;
 
 		try {
-			token = new UsernamePasswordToken(username, MD5.md5(password));
+			token = new CustomizedToken();
+			token.setUserName(username);
+			token.setPassWord(MD5.md5(password));
+			token.setLoginType(CommonConst.LOGIN_TYPE_PC);
 		} catch (Exception e) {
 			throw new BusinessException(BusinessStatus.MD5_ERROR);
 		}

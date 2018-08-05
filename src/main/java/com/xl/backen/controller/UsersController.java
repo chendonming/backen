@@ -4,6 +4,7 @@ import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
+import com.xl.backen.model.PeopleCodeModel;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.PeoplesService;
 import com.xl.backen.service.UsersService;
@@ -11,10 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * shiro不做任何拦截的控制器
@@ -49,14 +47,8 @@ public class UsersController {
 	 * 小程序登录接口
 	 */
 	@RequestMapping(value = "/loginApp", method = RequestMethod.POST)
-	public Result loginApp(@RequestBody Peoples peoples) {
-		String mobile = peoples.getMobile();
-		String password = peoples.getPassword();
-		log.info("小程序登录接口: mobile={}, password={}",mobile,password);
-
-		Peoples peopless = ps.login(mobile,password);
-
-		return new Result(BusinessStatus.SUCCESS,peopless);
+	public Result loginApp(@RequestBody PeopleCodeModel model) {
+		return new Result(BusinessStatus.SUCCESS,ps.login(model));
 	}
 
 	/**

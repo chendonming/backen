@@ -3,6 +3,7 @@ package com.xl.backen.service;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Peoples;
+import com.xl.backen.model.PeopleCodeModel;
 import com.xl.backen.model.PeoplesPageModel;
 
 import java.io.IOException;
@@ -37,5 +38,5 @@ public interface PeoplesService {
   /**
    * 登录接口
    */
-  Peoples login(String username, String password);
+  String login(PeopleCodeModel peopleCodeModel);
 }

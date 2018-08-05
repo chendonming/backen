@@ -2,6 +2,7 @@ package com.xl.backen.shiro;
 
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
+import com.xl.backen.handler.CommonConst;
 import com.xl.backen.service.PeoplesService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -26,16 +27,15 @@ public class PeopleRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-		UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+		CustomizedToken token = (CustomizedToken) authenticationToken;
 
-		Peoples peoples = (Peoples) pm.findByMobile(token.getUsername());
-
-		System.out.println("peoples: " + peoples);
-
-		if (peoples == null) {
-			return null;
-		} else {
-			return new SimpleAuthenticationInfo(peoples,peoples.getPassword(),this.getName());
+		if(token.getLoginType() == CommonConst.LOGIN_TYPE_APP) {
+			System.out.println("APP登录");
+			Peoples p = new Peoples();
+			p.setAppId(token.getAppId());
+			p.setOpenId(token.getOpenId());
+			return new SimpleAuthenticationInfo(p,p.getAppId(),this.getName());
 		}
+		return null;
 	}
 }

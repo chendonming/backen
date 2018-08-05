@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.common.LoginService;
@@ -14,9 +15,12 @@ import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
+import com.xl.backen.model.PeopleCodeModel;
 import com.xl.backen.model.PeoplesPageModel;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.PeoplesService;
+import com.xl.backen.shiro.CustomizedToken;
+import com.xl.backen.util.HttpUrlUtil;
 import com.xl.backen.util.MD5;
 import com.xl.backen.util.PeoplesPOI;
 
@@ -54,6 +58,10 @@ public class PeoplesServiceImpl implements PeoplesService {
 
 	@Value("${server.session.timeout}")
 	private Long sessionTimeOut;
+
+	private final String appId = "wx886ac99b96a07e94";
+
+	private final String appSecret = "4c2dce496c53dc2d655822ae25bebd8b";
 
 	@Override
 	public int add(Peoples peoples) {
@@ -105,15 +113,19 @@ public class PeoplesServiceImpl implements PeoplesService {
 	/**
 	 * 小程序登录接口
 	 *
-	 * @param username 用户名（手机号码）
-	 * @param password 密码
 	 * @return 用户对象
 	 */
 	@Override
-	public Peoples login(String username, String password) {
-		LoginService.Login(username, password);
+	public String login(PeopleCodeModel model) {
+//		String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+appId+"&secret="+appSecret+"&js_code="+model.getCode()+"&grant_type=authorization_code";
+//		String content = HttpUrlUtil.httpURLConectionGET(url);
+//		Peoples peoples = (Peoples)JSON.parse(content);
 
-		Peoples peoples = (Peoples)SecurityUtils.getSubject().getPrincipal();
-		return peoples;
+		Subject subject = SecurityUtils.getSubject();
+		CustomizedToken token = new CustomizedToken(model.getOpenId(),model.getAppId(),CommonConst.LOGIN_TYPE_APP);
+
+		subject.login(token);
+
+		return "1";
 	}
 }
