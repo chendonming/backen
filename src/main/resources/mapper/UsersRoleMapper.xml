@@ -38,7 +38,7 @@
 
   <!--根据角色id查找所有的用户-->
   <select id="findByRoleId" resultMap="UsersRole">
-    select u.*, ur.uuid as u_uuid, ur.nickname, ur.truename
+    select u.*, ur.uuid as u_uuid
     from tb_users_role ur left join tb_users u on ur.user_id = u.uuid
     where ur.role_id=#{roleId}
   </select>

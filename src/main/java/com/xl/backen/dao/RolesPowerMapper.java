@@ -24,4 +24,9 @@ public interface RolesPowerMapper {
      * 根据角色id找到所有的rolesPower
      */
     List<RolesPower> queryByRoleId(String roleId);
+
+    /**
+     * 根据userId  roleId进行删除
+     */
+    int delByUserAndRole(String powerId, String roleId);
 }

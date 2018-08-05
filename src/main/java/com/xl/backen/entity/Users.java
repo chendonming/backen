@@ -5,45 +5,49 @@ import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 
-public class Users implements Serializable{
-	
-    private static final long serialVersionUID = -6786945409233275148L;
+public class Users implements Serializable {
+
+	private static final long serialVersionUID = -6786945409233275148L;
 
 	private String uuid;
 
-    private String nickname;
+	private String nickname;
 
-    private String truename;
+	private String truename;
 
-    private String headPic;
+	private String headPic;
 
-    @NotEmpty
-    private String mobile;
+	@NotEmpty
+	private String mobile;
 
-    private Integer sex;
+	private Integer sex;
 
-    private Integer isRealName;
+	private Integer isRealName;
 
-    private String idCard;
-    
-    private String password;
+	private String idCard;
 
-    private String communityId;
+	private String password;
 
-    private Integer totalIntegral;
+	private String communityId;
 
-    private Integer integral;
+	private Integer totalIntegral;
 
-    private Integer status;
+	private Integer integral;
 
-    private Date createTime;
+	private Integer status;
 
-    private Date updateTime;
+	private Date createTime;
 
-    /**
-     * 系统的标识
-     */
-    private String sysType;
+	private Date updateTime;
+
+	private String roleId;
+
+	private String roleName;
+
+	/**
+	 * 系统的标识
+	 */
+	private String sysType;
 
 	@Override
 	public String toString() {
@@ -66,15 +70,31 @@ public class Users implements Serializable{
 			"}";
 	}
 
-    public String getSysType() {
-        return sysType;
-    }
+	public String getRoleId() {
+		return roleId;
+	}
 
-    public void setSysType(String sysType) {
-        this.sysType = sysType;
-    }
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
 
-    public String getPassword() {
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getSysType() {
+		return sysType;
+	}
+
+	public void setSysType(String sysType) {
+		this.sysType = sysType;
+	}
+
+	public String getPassword() {
 		return password;
 	}
 
@@ -83,114 +103,114 @@ public class Users implements Serializable{
 	}
 
 	public String getUuid() {
-        return uuid;
-    }
+		return uuid;
+	}
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid == null ? null : uuid.trim();
-    }
+	public void setUuid(String uuid) {
+		this.uuid = uuid == null ? null : uuid.trim();
+	}
 
-    public String getNickname() {
-        return nickname;
-    }
+	public String getNickname() {
+		return nickname;
+	}
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
-    }
+	public void setNickname(String nickname) {
+		this.nickname = nickname == null ? null : nickname.trim();
+	}
 
-    public String getTruename() {
-        return truename;
-    }
+	public String getTruename() {
+		return truename;
+	}
 
-    public void setTruename(String truename) {
-        this.truename = truename == null ? null : truename.trim();
-    }
+	public void setTruename(String truename) {
+		this.truename = truename == null ? null : truename.trim();
+	}
 
-    public String getHeadPic() {
-        return headPic;
-    }
+	public String getHeadPic() {
+		return headPic;
+	}
 
-    public void setHeadPic(String headPic) {
-        this.headPic = headPic == null ? null : headPic.trim();
-    }
+	public void setHeadPic(String headPic) {
+		this.headPic = headPic == null ? null : headPic.trim();
+	}
 
-    public String getMobile() {
-        return mobile;
-    }
+	public String getMobile() {
+		return mobile;
+	}
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
-    }
+	public void setMobile(String mobile) {
+		this.mobile = mobile == null ? null : mobile.trim();
+	}
 
-    public Integer getSex() {
-        return sex;
-    }
+	public Integer getSex() {
+		return sex;
+	}
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
 
-    public Integer getIsRealName() {
-        return isRealName;
-    }
+	public Integer getIsRealName() {
+		return isRealName;
+	}
 
-    public void setIsRealName(Integer isRealName) {
-        this.isRealName = isRealName;
-    }
+	public void setIsRealName(Integer isRealName) {
+		this.isRealName = isRealName;
+	}
 
-    public String getIdCard() {
-        return idCard;
-    }
+	public String getIdCard() {
+		return idCard;
+	}
 
-    public void setIdCard(String idCard) {
-        this.idCard = idCard == null ? null : idCard.trim();
-    }
+	public void setIdCard(String idCard) {
+		this.idCard = idCard == null ? null : idCard.trim();
+	}
 
-    public String getCommunityId() {
-        return communityId;
-    }
+	public String getCommunityId() {
+		return communityId;
+	}
 
-    public void setCommunityId(String communityId) {
-        this.communityId = communityId == null ? null : communityId.trim();
-    }
+	public void setCommunityId(String communityId) {
+		this.communityId = communityId == null ? null : communityId.trim();
+	}
 
-    public Integer getTotalIntegral() {
-        return totalIntegral;
-    }
+	public Integer getTotalIntegral() {
+		return totalIntegral;
+	}
 
-    public void setTotalIntegral(Integer totalIntegral) {
-        this.totalIntegral = totalIntegral;
-    }
+	public void setTotalIntegral(Integer totalIntegral) {
+		this.totalIntegral = totalIntegral;
+	}
 
-    public Integer getIntegral() {
-        return integral;
-    }
+	public Integer getIntegral() {
+		return integral;
+	}
 
-    public void setIntegral(Integer integral) {
-        this.integral = integral;
-    }
+	public void setIntegral(Integer integral) {
+		this.integral = integral;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

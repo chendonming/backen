@@ -4,18 +4,27 @@
   <resultMap id="BaseResultMap" type="com.xl.backen.entity.Powers">
     <id column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="meun_id" jdbcType="VARCHAR" property="meunId" />
+    <result column="meun_name" jdbcType="VARCHAR" property="meunName" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="up_menus_id" jdbcType="VARCHAR" property="upMenusId"/>
+    <result column="up_menus_name" jdbcType="VARCHAR" property="upMenusName"/>
   </resultMap>
   <sql id="Base_Column_List">
-    uuid, code, meun_id, description, create_time, update_time
+    uuid, code, meun_name, description, create_time, update_time
   </sql>
-  
+
+  <!--根据角色id查找对应的菜单-->
+  <select id="queryByRoleId" resultMap="BaseResultMap">
+    select p.*
+    from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
+    where rp.role_id=#{roleId} and rp.status=1
+  </select>
+
   <select id="queryAll" resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List"/>
-  	from tb_powers
+  	select p.*,pm.name as up_menus_name
+  	from tb_powers p left join  tb_parent_menus pm on pm.uuid = p.up_menus_id
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -29,10 +38,10 @@
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.xl.backen.entity.Powers">
-    insert into tb_powers (uuid, code, meun_id, 
+    insert into tb_powers (uuid, code, meun_name, 
       description, create_time, update_time
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{meunId,jdbcType=VARCHAR}, 
+    values (#{uuid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{meunName,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -45,8 +54,8 @@
       <if test="code != null">
         code,
       </if>
-      <if test="meunId != null">
-        meun_id,
+      <if test="meunName != null">
+        meun_name,
       </if>
       <if test="description != null">
         description,
@@ -65,8 +74,8 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="meunId != null">
-        #{meunId,jdbcType=VARCHAR},
+      <if test="meunName != null">
+        #{meunName,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -85,8 +94,8 @@
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="meunId != null">
-        meun_id = #{meunId,jdbcType=VARCHAR},
+      <if test="meunName != null">
+        meun_name = #{meunName,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
@@ -103,7 +112,7 @@
   <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Powers">
     update tb_powers
     set code = #{code,jdbcType=VARCHAR},
-      meun_id = #{meunId,jdbcType=VARCHAR},
+      meun_name = #{meunName,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

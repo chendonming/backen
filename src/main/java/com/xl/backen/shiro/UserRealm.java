@@ -40,14 +40,9 @@ public class UserRealm extends AuthorizingRealm {
 			List<ParentMenus> pms = us.getParentMenus();
 
 			for (ParentMenus pm : pms) {
-				List<Menus> ms = pm.getMenus();
-				for (Menus i : ms) {
-					if (!StringUtils.isEmpty(i.getUuid())) {
-						for (Powers j : i.getPowers()) {
-							if (!StringUtils.isEmpty(j.getUuid())) {
-								permis.add(j.getCode());
-							}
-						}
+				for (Powers j : pm.getPowers()) {
+					if (!StringUtils.isEmpty(j.getUuid())) {
+						permis.add(j.getCode());
 					}
 				}
 			}

@@ -7,18 +7,15 @@
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <collection property="powers" ofType="com.xl.backen.entity.Powers">
+      <id column="p_uuid" property="uuid"/>
+      <result column="p_code" property="code"/>
+      <result column="p_meun_name" property="meunName"/>
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     uuid, name, code, create_time, update_time
   </sql>
-
-  <!--根据角色id查找对应的菜单-->
-  <select id="findByRoleId" resultMap="BaseResultMap">
-    select m.*
-    from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
-    left join tb_menus m on m.uuid = p.meun_id
-    where rp.role_id=#{roleId}
-  </select>
 
   <select id="queryAll" resultMap="BaseResultMap">
   	select    <include refid="Base_Column_List" />

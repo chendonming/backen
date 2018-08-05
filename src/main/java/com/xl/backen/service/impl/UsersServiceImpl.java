@@ -11,6 +11,8 @@ import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.UsersModel;
+import com.xl.backen.model.UsersPageModel;
+import com.xl.backen.model.UsersRegisterRoleModel;
 import com.xl.backen.service.UsersService;
 import com.xl.backen.util.MD5;
 import com.xl.backen.util.StringUtil;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
+@Transactional
 public class UsersServiceImpl implements UsersService {
 
 	@Value("${server.session.timeout}")
@@ -79,11 +82,14 @@ public class UsersServiceImpl implements UsersService {
 		}
 		Users us = usersMapper.findByMobile(users.getMobile());
 		if (us == null) {
+			UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
 			String uuid = UUID.randomUUID().toString().replace("-", "");
 			users.setUuid(uuid);
 			users.setCreateTime(new Date());
 			users.setUpdateTime(new Date());
 			users.setStatus(CommonConst.NORMAL_STATUS);
+			users.setSysType(usersModel.getSysType());
+			users.setCommunityId(usersModel.getCommunityId());
 
 			if (StringUtil.isEmpty(users.getPassword())) {
 				try {
@@ -105,12 +111,23 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public Page<Users> queryAll(int pageNum, int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+	public Page<Users> queryAll(UsersPageModel model) {
+		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
 		UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
 
-		Page<Users> users = usersMapper.queryAll(pageSize, pageNum, usersModel.getSysType());
+		Page<Users> users = usersMapper.queryAll(model);
 		return users;
+	}
+
+	@Override
+	public int update(UsersRegisterRoleModel model) {
+		usersMapper.updateByPrimaryKeySelective(model.getUser());
+		return 1;
+	}
+
+	@Override
+	public Users findById(String uuid) {
+		return usersMapper.selectByPrimaryKey(uuid);
 	}
 }

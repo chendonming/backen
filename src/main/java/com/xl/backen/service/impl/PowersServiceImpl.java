@@ -2,6 +2,7 @@ package com.xl.backen.service.impl;
 
 import java.util.List;
 
+import com.xl.backen.entity.RolesPower;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,11 @@ public class PowersServiceImpl implements PowersService {
 	@Override
 	public List<Powers> queryAll() {
 		return pm.queryAll();
+	}
+
+	@Override
+	public List<Powers> queryByRoleId(String roleId) {
+		return pm.queryByRoleId(roleId);
 	}
 
 }

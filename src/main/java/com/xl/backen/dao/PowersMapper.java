@@ -2,6 +2,7 @@ package com.xl.backen.dao;
 
 import com.xl.backen.entity.Powers;
 
+import com.xl.backen.entity.RolesPower;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface PowersMapper {
     int updateByPrimaryKey(Powers record);
     
     List<Powers> queryAll();
+
+    List<Powers> queryByRoleId(String roleId);
 }

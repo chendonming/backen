@@ -17,6 +17,7 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
   </resultMap>
   <sql id="Base_Column_List">
     uuid, nickname, truename, head_pic, mobile, sex, password, is_real_name, id_card, 

@@ -10,8 +10,13 @@ import com.xl.backen.entity.*;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.handler.PageInfo;
+import com.xl.backen.model.RolesPowerModel;
+import com.xl.backen.model.UsersModel;
+import com.xl.backen.model.UsersPageModel;
 import com.xl.backen.model.UsersRegisterRoleModel;
 import com.xl.backen.service.*;
+import com.xl.backen.util.StringUtil;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +51,11 @@ public class PermissController {
     private UsersService usersService;
 
     @RequestMapping(value = "/role/query", method = RequestMethod.POST)
-    public Result RoleQuery() {
-        List<Roles> roles = rs.queryAll();
-        return new Result(BusinessStatus.SUCCESS, roles);
+    public ResultForPage RoleQuery(@RequestBody UsersPageModel model) {
+        Page<Roles> roles = rs.queryAll(model);
+        PageInfo<Roles> pageInfo = new PageInfo<>(roles);
+
+        return new ResultForPage(BusinessStatus.SUCCESS, pageInfo);
     }
 
     @RequestMapping(value = "/role/add", method = RequestMethod.POST)
@@ -65,14 +72,20 @@ public class PermissController {
         return new Result(BusinessStatus.SUCCESS);
     }
 
-    @RequestMapping(value = "/role/del", method = RequestMethod.GET)
+    @RequestMapping(value = "/role/queryOne", method = RequestMethod.POST)
+    public Result queryOne(@RequestBody Roles role) {
+        log.info("角色update接口参数: {}", role);
+        return new Result(BusinessStatus.SUCCESS,rs.findById(role));
+    }
+
+    @RequestMapping(value = "/role/del", method = RequestMethod.POST)
     @Transactional
-    public Result RoleDel(@RequestParam("uuid") String roleId) {
-        log.info("角色删除接口参数: {}", roleId);
-        List<Users> users = urs.findByRoleId(roleId);
+    public Result RoleDel(@RequestBody Roles roles) {
+        log.info("角色删除接口参数: {}", roles.getUuid());
+        List<Users> users = urs.findByRoleId(roles.getUuid());
         if (users == null) {
             Roles r = new Roles();
-            r.setUuid(roleId);
+            r.setUuid(roles.getUuid());
             r.setStatus(CommonConst.DEL_STATUS);
             rs.updateRole(r);
             return new Result(BusinessStatus.SUCCESS);
@@ -87,19 +100,19 @@ public class PermissController {
     @RequestMapping(value = "/menus/queryByRoleId", method = RequestMethod.POST)
     public Result queryByRoleId(@RequestBody Menus menus) {
         String uuid = menus.getUuid();
-        List<Menus> menusList = ms.findByRoleId(uuid);
-        return new Result(BusinessStatus.SUCCESS,menusList);
+        List<Powers> powers = ps.queryByRoleId(uuid);
+        return new Result(BusinessStatus.SUCCESS,powers);
     }
 
     @RequestMapping(value = "/rolepower/givePermiss", method = RequestMethod.POST)
-    public Result RolepowerAdd(@RequestBody @Valid List<RolesPower> rp) throws Exception {
-        log.info("给角色赋权接口参数: {}", rp);
-        rps.givePermiss(rp);
+    public Result RolepowerAdd(@RequestBody RolesPowerModel model) throws Exception {
+        log.info("给角色赋权接口参数: {}", model);
+        rps.givePermiss(model);
         return new Result(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/role/allocationRole", method = RequestMethod.POST)
-    public Result allocationRole(@RequestBody @Valid List<UsersRole> ur) throws Exception {
+    public Result allocationRole(@RequestBody UsersRole ur) throws Exception {
         log.info("给用户赋予角色接口参数: {}", ur);
         urs.allocationRole(ur);
         return new Result(BusinessStatus.SUCCESS);
@@ -113,8 +126,7 @@ public class PermissController {
      */
     @RequestMapping(value = "/menus/queryAll", method = RequestMethod.GET)
     public Result menusAll() throws Exception {
-        List<Menus> me = ms.queryAll();
-        return new Result(BusinessStatus.SUCCESS, me);
+        return new Result(BusinessStatus.SUCCESS, ps.queryAll());
     }
 
     /**
@@ -137,20 +149,32 @@ public class PermissController {
         String uuid = usersService.Register(model.getUser());
         log.info("注册成功！uuid为: {}", uuid);
         //赋权
-        List<UsersRole> usersRoleList = new ArrayList<UsersRole>();
-        UsersRole ur = new UsersRole();
-        ur.setRoleId(model.getRoleId());
-        ur.setUserId(uuid);
-        usersRoleList.add(ur);
-        urs.allocationRole(usersRoleList);
+        Users users = new Users();
+        users.setUuid(uuid);
+        users.setRoleId(model.getRoleId());
+        usersService.update(model);
         return new Result(BusinessStatus.SUCCESS);
     }
 
-    @RequestMapping(value = "/user/queryAll", method = RequestMethod.GET)
-    public ResultForPage usersAll(@RequestParam("pageSize") int pageSize,
-                           @RequestParam("pageNum") int pageNum) throws Exception {
-        Page<Users> users = usersService.queryAll(pageNum, pageSize);
+    @RequestMapping(value = "/user/queryAll", method = RequestMethod.POST)
+    public ResultForPage usersAll(@RequestBody UsersPageModel model) throws Exception {
+        UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+
+        model.setSysType(usersModel.getSysType());
+        Page<Users> users = usersService.queryAll(model);
         PageInfo<Users> pageInfo = new PageInfo<Users>(users);
         return new ResultForPage(BusinessStatus.SUCCESS,pageInfo);
+    }
+
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
+    public Result update(@RequestBody UsersRegisterRoleModel model) throws Exception {
+        usersService.update(model);
+        return new Result(BusinessStatus.SUCCESS);
+    }
+
+    @RequestMapping(value = "/user/queryOne", method = RequestMethod.POST)
+    public Result queryOne(@RequestBody Users model) throws Exception {
+        Users users = usersService.findById(model.getUuid());
+        return new Result(BusinessStatus.SUCCESS,users);
     }
 }

@@ -4,109 +4,139 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Communitys implements Serializable {
-    private static final long serialVersionUID = -6580297936050468566L;
-    private String uuid;
+	private static final long serialVersionUID = -6580297936050468566L;
+	private String uuid;
 
-    private String name;
+	private String name;
 
-    private Integer integral;
+	private Integer integral;
 
-    private String createUser;
+	private String createUser;
 
-    private Integer totalIntegral;
+	private Integer totalIntegral;
 
-    private String remark;
+	private String remark;
 
-    private Integer status;
+	private Integer status;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date updateTime;
 
-    @Override
-    public String toString() {
-        return "Communitys{" +
-          "uuid='" + uuid + '\'' +
-          ", name='" + name + '\'' +
-          ", integral=" + integral +
-          ", createUser='" + createUser + '\'' +
-          ", totalIntegral=" + totalIntegral +
-          ", remark='" + remark + '\'' +
-          ", status=" + status +
-          ", createTime=" + createTime +
-          ", updateTime=" + updateTime +
-          '}';
-    }
+	private String sysType;
 
-    public Integer getStatus() {
-        return status;
-    }
+	private String leaderName;
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	private String leaderMobile;
 
-    public String getUuid() {
-        return uuid;
-    }
+	@Override
+	public String toString() {
+		return "Communitys{" +
+			"uuid='" + uuid + '\'' +
+			", name='" + name + '\'' +
+			", integral=" + integral +
+			", createUser='" + createUser + '\'' +
+			", totalIntegral=" + totalIntegral +
+			", remark='" + remark + '\'' +
+			", status=" + status +
+			", createTime=" + createTime +
+			", updateTime=" + updateTime +
+			'}';
+	}
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid == null ? null : uuid.trim();
-    }
+	public String getLeaderName() {
+		return leaderName;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setLeaderName(String leaderName) {
+		this.leaderName = leaderName;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getLeaderMobile() {
+		return leaderMobile;
+	}
 
-    public Integer getIntegral() {
-        return integral;
-    }
+	public void setLeaderMobile(String leaderMobile) {
+		this.leaderMobile = leaderMobile;
+	}
 
-    public void setIntegral(Integer integral) {
-        this.integral = integral;
-    }
+	public String getSysType() {
+		return sysType;
+	}
 
-    public String getCreateUser() {
-        return createUser;
-    }
+	public void setSysType(String sysType) {
+		this.sysType = sysType;
+	}
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public Integer getTotalIntegral() {
-        return totalIntegral;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public void setTotalIntegral(Integer totalIntegral) {
-        this.totalIntegral = totalIntegral;
-    }
+	public String getUuid() {
+		return uuid;
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public void setUuid(String uuid) {
+		this.uuid = uuid == null ? null : uuid.trim();
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Integer getIntegral() {
+		return integral;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setIntegral(Integer integral) {
+		this.integral = integral;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser == null ? null : createUser.trim();
+	}
+
+	public Integer getTotalIntegral() {
+		return totalIntegral;
+	}
+
+	public void setTotalIntegral(Integer totalIntegral) {
+		this.totalIntegral = totalIntegral;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

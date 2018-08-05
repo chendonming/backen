@@ -7,6 +7,7 @@ import com.xl.backen.handler.Result;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.PeoplesService;
 import com.xl.backen.service.UsersService;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,14 @@ public class UsersController {
 		Peoples peopless = ps.login(mobile,password);
 
 		return new Result(BusinessStatus.SUCCESS,peopless);
+	}
+
+	/**
+	 * 退出登录
+	 */
+	@RequestMapping(value = "/signOut", method = RequestMethod.POST)
+	public Result signOut() {
+		SecurityUtils.getSubject().logout();
+		return new Result(BusinessStatus.SUCCESS);
 	}
 }

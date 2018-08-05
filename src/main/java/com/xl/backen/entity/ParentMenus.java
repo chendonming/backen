@@ -21,8 +21,7 @@ public class ParentMenus implements Serializable {
 
 	private Date updateTime;
 
-	private List<Menus> menus;
-
+	private List<Powers> powers;
 	/**
 	 * @return the uuid
 	 */
@@ -30,18 +29,12 @@ public class ParentMenus implements Serializable {
 		return uuid;
 	}
 
-	/**
-	 * @return the menus
-	 */
-	public List<Menus> getMenus() {
-		return menus;
+	public List<Powers> getPowers() {
+		return powers;
 	}
 
-	/**
-	 * @param menus the menus to set
-	 */
-	public void setMenus(List<Menus> menus) {
-		this.menus = menus;
+	public void setPowers(List<Powers> powers) {
+		this.powers = powers;
 	}
 
 	/**

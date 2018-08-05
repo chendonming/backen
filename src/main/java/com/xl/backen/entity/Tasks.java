@@ -3,43 +3,45 @@ package com.xl.backen.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Tasks implements Serializable{
+public class Tasks implements Serializable {
 
-    private static final long serialVersionUID = -186100421421128053L;
+	private static final long serialVersionUID = -186100421421128053L;
 
-    private String uuid;
-    
-    private String name;
+	private String uuid;
 
-    private String communityId;
+	private String name;
 
-    private Date startTime;
+	private String communityId;
 
-    private Date endTime;
+	private Date startTime;
 
-    private String location;
+	private Date endTime;
 
-    private Integer limitPeople;
+	private String location;
 
-    private Integer integral;
+	private Integer limitPeople;
 
-    private Integer joinPeople;
+	private Integer integral;
 
-    private Integer dataForm;
+	private Integer joinPeople;
 
-    private String createUser;
+	private Integer dataForm;
 
-    private String coverpic;
+	private String createUser;
 
-    private String description;
+	private String createName;
 
-    private Date createTime;
+	private String coverpic;
 
-    private Date updateTime;
+	private String description;
 
-    private Integer status;
+	private Date createTime;
 
-    private Integer flag;
+	private Date updateTime;
+
+	private Integer status;
+
+	private Integer flag;
 
 	@Override
 	public String toString() {
@@ -63,15 +65,23 @@ public class Tasks implements Serializable{
 			"}";
 	}
 
-    public Integer getFlag() {
-        return flag;
-    }
+	public String getCreateName() {
+		return createName;
+	}
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
+	public void setCreateName(String createName) {
+		this.createName = createName;
+	}
 
-    public Integer getStatus() {
+	public Integer getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
+
+	public Integer getStatus() {
 		return this.status;
 	}
 
@@ -79,124 +89,124 @@ public class Tasks implements Serializable{
 		this.status = status;
 	}
 
-    public String getUuid() {
-        return uuid;
-    }
+	public String getUuid() {
+		return uuid;
+	}
 
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid == null ? null : uuid.trim();
-    }
+	public void setUuid(String uuid) {
+		this.uuid = uuid == null ? null : uuid.trim();
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public String getCommunityId() {
-        return communityId;
-    }
+	public String getCommunityId() {
+		return communityId;
+	}
 
-    public void setCommunityId(String communityId) {
-        this.communityId = communityId == null ? null : communityId.trim();
-    }
+	public void setCommunityId(String communityId) {
+		this.communityId = communityId == null ? null : communityId.trim();
+	}
 
-    public Date getStartTime() {
-        return startTime;
-    }
+	public Date getStartTime() {
+		return startTime;
+	}
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 
-    public Date getEndTime() {
-        return endTime;
-    }
+	public Date getEndTime() {
+		return endTime;
+	}
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
-    public String getLocation() {
-        return location;
-    }
+	public String getLocation() {
+		return location;
+	}
 
-    public void setLocation(String location) {
-        this.location = location == null ? null : location.trim();
-    }
+	public void setLocation(String location) {
+		this.location = location == null ? null : location.trim();
+	}
 
-    public Integer getLimitPeople() {
-        return limitPeople;
-    }
+	public Integer getLimitPeople() {
+		return limitPeople;
+	}
 
-    public void setLimitPeople(Integer limitPeople) {
-        this.limitPeople = limitPeople;
-    }
+	public void setLimitPeople(Integer limitPeople) {
+		this.limitPeople = limitPeople;
+	}
 
-    public Integer getIntegral() {
-        return integral;
-    }
+	public Integer getIntegral() {
+		return integral;
+	}
 
-    public void setIntegral(Integer integral) {
-        this.integral = integral;
-    }
+	public void setIntegral(Integer integral) {
+		this.integral = integral;
+	}
 
-    public Integer getJoinPeople() {
-        return joinPeople;
-    }
+	public Integer getJoinPeople() {
+		return joinPeople;
+	}
 
-    public void setJoinPeople(Integer joinPeople) {
-        this.joinPeople = joinPeople;
-    }
+	public void setJoinPeople(Integer joinPeople) {
+		this.joinPeople = joinPeople;
+	}
 
-    public Integer getDataForm() {
-        return dataForm;
-    }
+	public Integer getDataForm() {
+		return dataForm;
+	}
 
-    public void setDataForm(Integer dataForm) {
-        this.dataForm = dataForm;
-    }
+	public void setDataForm(Integer dataForm) {
+		this.dataForm = dataForm;
+	}
 
-    public String getCreateUser() {
-        return createUser;
-    }
+	public String getCreateUser() {
+		return createUser;
+	}
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser == null ? null : createUser.trim();
+	}
 
-    public String getCoverpic() {
-        return coverpic;
-    }
+	public String getCoverpic() {
+		return coverpic;
+	}
 
-    public void setCoverpic(String coverpic) {
-        this.coverpic = coverpic == null ? null : coverpic.trim();
-    }
+	public void setCoverpic(String coverpic) {
+		this.coverpic = coverpic == null ? null : coverpic.trim();
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
+	public void setDescription(String description) {
+		this.description = description == null ? null : description.trim();
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

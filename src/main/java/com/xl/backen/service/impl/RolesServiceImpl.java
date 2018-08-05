@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.xl.backen.model.UsersModel;
+import com.xl.backen.model.UsersPageModel;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,9 +43,11 @@ public class RolesServiceImpl implements RolesService{
 	}
 
 	@Override
-	public List<Roles> queryAll() {
+	public Page<Roles> queryAll(UsersPageModel model) {
 
 		UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+
+		PageHelper.startPage(model.getPageNum(),model.getPageSize());
 
 		return rm.queryAll(usersModel.getSysType());
 	}
@@ -55,5 +60,10 @@ public class RolesServiceImpl implements RolesService{
 	@Override
 	public int updateRole(Roles role) {
 		return rm.updateByPrimaryKeySelective(role);
+	}
+
+	@Override
+	public Roles findById(Roles roles) {
+		return rm.selectByPrimaryKey(roles.getUuid());
 	}
 }

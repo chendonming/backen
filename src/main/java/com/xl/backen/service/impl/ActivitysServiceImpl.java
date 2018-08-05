@@ -23,50 +23,51 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ActivitysServiceImpl implements ActivitysService {
-  @Autowired
-  private ActivitysMapper as;
+	@Autowired
+	private ActivitysMapper as;
 
-  @Override
-  @Transactional
-  public int add(Activitys activitys) {
-    activitys.setUuid(UUID.randomUUID().toString().replace("-", ""));
+	@Override
+	@Transactional
+	public int add(Activitys activitys) {
+		activitys.setUuid(UUID.randomUUID().toString().replace("-", ""));
 
-    UsersModel usersModel = (UsersModel) SecurityUtils.getSubject().getPrincipal();
-    String uuid = usersModel.getUuid();
-    activitys.setCreateUser(uuid);
+		UsersModel usersModel = (UsersModel) SecurityUtils.getSubject().getPrincipal();
+		String uuid = usersModel.getUuid();
+		activitys.setCreateUser(uuid);
+		activitys.setSysType(usersModel.getSysType());
 
-    Date sDate = activitys.getStartTime();
-    Date eDate = activitys.getEndTime();
-    Date jsdDate = activitys.getJoinStartTime();
-    Date jseDate = activitys.getJoinEndTime();
-    TimeUtil.volidTime(jsdDate, jseDate);
-    TimeUtil.volidTime(sDate, eDate);
-    activitys.setStatus(CommonConst.NORMAL_STATUS);
+		Date sDate = activitys.getStartTime();
+		Date eDate = activitys.getEndTime();
+		Date jsdDate = activitys.getJoinStartTime();
+		Date jseDate = activitys.getJoinEndTime();
+		TimeUtil.volidTime(jsdDate, jseDate);
+		TimeUtil.volidTime(sDate, eDate);
+		activitys.setStatus(CommonConst.NORMAL_STATUS);
 
-    activitys.setCreateTime(new Date());
-    activitys.setUpdateTime(new Date());
-    return as.insertSelective(activitys);
-  }
+		activitys.setCreateTime(new Date());
+		activitys.setUpdateTime(new Date());
+		return as.insertSelective(activitys);
+	}
 
-  @Override
-  public Page<Activitys> query(ActivitysPageModel model) {
-    PageHelper.startPage(model.getPageNum(), model.getPageSize());
-    Page<Activitys> activitys = as.query(model);
-    for(Activitys i : activitys) {
-      int flag = TimeUtil.compareTime(i.getStartTime(),i.getEndTime(),i.getJoinStartTime(),i.getJoinEndTime());
-      i.setFlag(flag);
-    }
-    return activitys;
-  }
+	@Override
+	public Page<Activitys> query(ActivitysPageModel model) {
+		PageHelper.startPage(model.getPageNum(), model.getPageSize());
+		Page<Activitys> activitys = as.query(model);
+		for (Activitys i : activitys) {
+			int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
+			i.setFlag(flag);
+		}
+		return activitys;
+	}
 
-  @Override
-  public int update(Activitys tasks) {
-    return as.updateByPrimaryKeySelective(tasks);
-  }
+	@Override
+	public int update(Activitys tasks) {
+		return as.updateByPrimaryKeySelective(tasks);
+	}
 
-  @Override
-  public Activitys findById(String uuid) {
-    return as.selectByPrimaryKey(uuid);
-  }
+	@Override
+	public Activitys findById(String uuid) {
+		return as.selectByPrimaryKey(uuid);
+	}
 
 }

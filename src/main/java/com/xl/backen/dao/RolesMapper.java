@@ -1,5 +1,6 @@
 package com.xl.backen.dao;
 
+import com.github.pagehelper.Page;
 import com.xl.backen.entity.Roles;
 
 import java.util.List;
@@ -20,5 +21,5 @@ public interface RolesMapper {
 
     int updateByPrimaryKey(Roles record);
     
-    List<Roles> queryAll(String sysType);
+    Page<Roles> queryAll(String sysType);
 }

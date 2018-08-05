@@ -41,7 +41,7 @@ public class PageInfo<T> implements Serializable {
 
         this.pages = page.getPages();
         this.list = page;
-        this.total = page.getTotal();
+        this.total = list.size();
     }
 
     public PageInfo() {

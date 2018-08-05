@@ -5,6 +5,8 @@ import java.util.List;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Users;
 import com.xl.backen.model.UsersModel;
+import com.xl.backen.model.UsersPageModel;
+import com.xl.backen.model.UsersRegisterRoleModel;
 
 
 public interface UsersService {
@@ -21,5 +23,15 @@ public interface UsersService {
     /**
      * 查询所有的用户
      */
-    Page<Users> queryAll(int pageNum, int pageSize);
+    Page<Users> queryAll(UsersPageModel model);
+
+    /**
+     * 修改管理员
+     */
+    int update(UsersRegisterRoleModel model);
+
+    /**
+     * 查询单个
+     */
+    Users findById(String uuid);
 }

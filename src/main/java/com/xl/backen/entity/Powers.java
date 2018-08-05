@@ -7,13 +7,33 @@ public class Powers {
 
     private String code;
 
-    private String meunId;
+    private String meunName;
 
     private String description;
 
     private Date createTime;
 
     private Date updateTime;
+
+    private String upMenusId;
+
+    private String upMenusName;
+
+    public String getUpMenusId() {
+        return upMenusId;
+    }
+
+    public void setUpMenusId(String upMenusId) {
+        this.upMenusId = upMenusId;
+    }
+
+    public String getUpMenusName() {
+        return upMenusName;
+    }
+
+    public void setUpMenusName(String upMenusName) {
+        this.upMenusName = upMenusName;
+    }
 
     public String getUuid() {
         return uuid;
@@ -31,12 +51,12 @@ public class Powers {
         this.code = code == null ? null : code.trim();
     }
 
-    public String getMeunId() {
-        return meunId;
+    public String getMeunName() {
+        return meunName;
     }
 
-    public void setMeunId(String meunId) {
-        this.meunId = meunId == null ? null : meunId.trim();
+    public void setMeunName(String meunName) {
+        this.meunName = meunName;
     }
 
     public String getDescription() {

@@ -4,22 +4,22 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Menus implements Serializable{
-    private static final long serialVersionUID = 9188101729579594291L;
+public class Menus implements Serializable {
+	private static final long serialVersionUID = 9188101729579594291L;
 
 	private String uuid;
 
-    private String name;
+	private String name;
 
-    private String code;
+	private String code;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
-    
-    private List<Powers> powers;
+	private Date updateTime;
 
-    public List<Powers> getPowers() {
+	private List<Powers> powers;
+
+	public List<Powers> getPowers() {
 		return powers;
 	}
 
@@ -28,42 +28,42 @@ public class Menus implements Serializable{
 	}
 
 	public String getUuid() {
-        return uuid;
-    }
+		return uuid;
+	}
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid == null ? null : uuid.trim();
-    }
+	public void setUuid(String uuid) {
+		this.uuid = uuid == null ? null : uuid.trim();
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
+	public void setCode(String code) {
+		this.code = code == null ? null : code.trim();
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

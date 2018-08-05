@@ -11,7 +11,7 @@ public interface UsersRoleService {
 	 * @param record
 	 * @return
 	 */
-	int allocationRole(List<UsersRole> ur);
+	int allocationRole(UsersRole ur);
 
 	/**
 	 * 查询角色下的所有用户

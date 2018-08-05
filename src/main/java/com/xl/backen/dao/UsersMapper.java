@@ -2,6 +2,7 @@ package com.xl.backen.dao;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Users;
+import com.xl.backen.model.UsersPageModel;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -28,5 +29,5 @@ public interface UsersMapper {
     /**
      * 查询所有的用户
      */
-    Page<Users> queryAll(int pageSize, int pageNum, String sysType);
+    Page<Users> queryAll(UsersPageModel model);
 }

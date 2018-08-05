@@ -10,6 +10,13 @@
   <sql id="Base_Column_List">
     uuid, power_id, role_id, status
   </sql>
+  <!--根据userId  roleId进行删除-->
+  <update id="delByUserAndRole" parameterType="java.lang.String">
+    update tb_roles_power rp
+    set rp.status=2
+    where rp.power_id=#{arg0} and rp.role_id=#{arg1}
+  </update>
+
   <!--根据角色id找到所有的rolespower  -->
   <select id="queryByRoleId" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"></include>

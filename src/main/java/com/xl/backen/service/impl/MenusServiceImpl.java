@@ -19,10 +19,4 @@ public class MenusServiceImpl implements MenusService{
 	public List<Menus> queryAll() {
 		return mm.queryAll();
 	}
-
-	@Override
-	public List<Menus> findByRoleId(String roleId) {
-		return mm.findByRoleId(roleId);
-	}
-
 }

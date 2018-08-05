@@ -35,6 +35,7 @@ public class CommunitysServiceImpl implements CommunitysService {
 
     @Override
     public int add(CommunitysForAddModel communitysForAddModel) throws Exception {
+        UsersModel model = (UsersModel) SecurityUtils.getSubject().getPrincipal();
         //新增
         String uuid = addCommunity(communitysForAddModel);
 
@@ -48,6 +49,9 @@ public class CommunitysServiceImpl implements CommunitysService {
         users.setCreateTime(new Date());
         users.setUpdateTime(new Date());
         users.setPassword(MD5.md5(CommonConst.PASSWORD));
+        users.setSysType(model.getSysType());
+        users.setStatus(CommonConst.NORMAL_STATUS);
+
         um.insertSelective(users);
 
         return 0;
@@ -64,6 +68,11 @@ public class CommunitysServiceImpl implements CommunitysService {
     @Override
     public Page<Communitys> query(CommunitysPageModel model) {
         PageHelper.startPage(model.getPageNum(), model.getPageSize());
+
+        UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+
+        model.setSysType(usersModel.getSysType());
+
         return cm.query(model);
     }
 
@@ -84,6 +93,7 @@ public class CommunitysServiceImpl implements CommunitysService {
         communitys.setStatus(CommonConst.NORMAL_STATUS);
         communitys.setCreateTime(new Date());
         communitys.setUpdateTime(new Date());
+        communitys.setSysType(model.getSysType());
 
         communitys.setCreateUser(model.getUuid());
         cm.insertSelective(communitys);

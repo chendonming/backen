@@ -35,13 +35,14 @@ public class ShiroConfig {
 		String[] t = menus.split(",");
 
 		map.put("/user/login", "anon");
+		map.put("/**", "authc");
+		map.put("/**/**", "authc");
 
 		for (int i = 0; i < t.length; i++) {
 			map.put("/"+t[i]+"/**", "perms["+t[i]+"]");
 		}
 
 		map.put("/permiss/**/**", "perms[permiss]");
-		map.put("/**", "authc");
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
