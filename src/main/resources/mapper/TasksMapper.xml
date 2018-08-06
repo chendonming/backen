@@ -30,7 +30,13 @@
     from tb_tasks
     where uuid = #{uuid,jdbcType=VARCHAR}
   </select>
-  <!-- 查询列表 -->
+  <!-- 查询列表
+      根据sysType
+        和
+        社区id
+
+        社区id为空则查询所有社区数据
+   -->
   <select id="query" resultMap="BaseResultMap">
     select  t.*,u.truename as u_truename
     from tb_tasks t left join tb_users u on t. create_user = u.uuid
@@ -40,17 +46,20 @@
     </if>
     <if test="flag != null and flag == 1">
       <!-- 未开始 -->
-        now() &lt; t.start_time
+        now() &lt; t.start_time and
     </if>
     <if test="flag != null and flag == 2">
       <!-- 进行中 -->
-        now() between  t.start_time  and  t.end_time
+        now() between  t.start_time  and  t.end_time and
     </if>
     <if test="flag != null and flag == 3">
       <!-- 已结束 -->
         now() &gt; t.end_time and
     </if>
-    t.status=1
+    <if test="communityId != null and communityId != ''">
+      t.community_id = #{communityId} and
+    </if>
+    t.status=1 and u.sys_type = #{sysType}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

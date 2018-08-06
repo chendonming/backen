@@ -22,16 +22,23 @@
         <result column="status" jdbcType="INTEGER" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
-    uuid, name, community_id, start_time, end_time, join_start_time, join_end_time, location, 
-    limit_people, integral, join_people, data_form, create_user, coverpic, description, 
-    create_time, update_time, status
-  </sql>
+        uuid, name, community_id, start_time, end_time, join_start_time, join_end_time, location, 
+        limit_people, integral, join_people, data_form, create_user, coverpic, description, 
+        create_time, update_time, status
+    </sql>
 
-    <!-- 查询列表 -->
+    <!-- 
+        查询列表
+        根据sysType
+        和
+        社区id
+
+        社区id为空则查询所有社区数据
+     -->
     <select id="query" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from tb_activitys
+          a.*
+        from tb_activitys a left join tb_users u on u.uuid = a.create_user
         where
         <trim>
             <if test="name != null and name != ''">
@@ -39,26 +46,29 @@
             </if>
             <if test="flag != null and flag == 1">
                 <!-- 报名未开始 -->
-                now() &lt; join_start_time
+                now() &lt; join_start_time and
             </if>
             <if test="flag != null and flag == 2">
                 <!-- 报名未开始 -->
-                now() between join_start_time and join_end_time
+                now() between join_start_time and join_end_time and
             </if>
             <if test="flag != null and flag == 3">
                 <!-- 活动未开始 -->
-                now() &gt; start_time
+                now() &gt; start_time and
             </if>
             <if test="flag != null and flag == 4">
                 <!-- 活动进行中 -->
-                now() between start_time and end_time
+                now() between start_time and end_time and
             </if>
             <if test="flag != null and flag == 5">
                 <!-- 活动已结束 -->
                 now() &gt; end_time and
             </if>
+            <if test="communityId != null and communityId != ''">
+                a.community_id = #{communityId} and
+            </if>
         </trim>
-        status = 1 and sys_type = #{sysType}
+        a.status = 1 and u.sys_type = #{sysType}
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

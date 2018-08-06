@@ -43,6 +43,8 @@ public class Tasks implements Serializable {
 
 	private Integer flag;
 
+	private String sysType;
+
 	@Override
 	public String toString() {
 		return "{" +
@@ -63,6 +65,14 @@ public class Tasks implements Serializable {
 			", updateTime='" + getUpdateTime() + "'" +
 			", status='" + getStatus() + "'" +
 			"}";
+	}
+
+	public String getSysType() {
+		return sysType;
+	}
+
+	public void setSysType(String sysType) {
+		this.sysType = sysType;
 	}
 
 	public String getCreateName() {

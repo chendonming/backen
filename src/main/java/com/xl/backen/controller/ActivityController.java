@@ -67,11 +67,11 @@ public class ActivityController {
 		return new Result(BusinessStatus.SUCCESS);
 	}
 
-	@RequestMapping(value = "/queryOne", method = RequestMethod.GET)
-	public Result queryOne(@RequestParam("uuid") String uuid) {
-		log.info("查询单个活动,uuid={}", uuid);
+	@RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+	public Result queryOne(@RequestBody Activitys activitys) {
+		log.info("查询单个活动,uuid={}", activitys.getUuid());
 
-		Activitys activitys = ts.findById(uuid);
-		return new Result(BusinessStatus.SUCCESS, activitys);
+		Activitys acts = ts.findById(activitys.getUuid());
+		return new Result(BusinessStatus.SUCCESS, acts);
 	}
 }

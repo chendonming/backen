@@ -7,6 +7,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.ActivitysMapper;
 import com.xl.backen.entity.Activitys;
+import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.ActivitysPageModel;
 import com.xl.backen.model.UsersModel;
@@ -31,10 +32,9 @@ public class ActivitysServiceImpl implements ActivitysService {
 	public int add(Activitys activitys) {
 		activitys.setUuid(UUID.randomUUID().toString().replace("-", ""));
 
-		UsersModel usersModel = (UsersModel) SecurityUtils.getSubject().getPrincipal();
+		Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
 		String uuid = usersModel.getUuid();
 		activitys.setCreateUser(uuid);
-		activitys.setSysType(usersModel.getSysType());
 
 		Date sDate = activitys.getStartTime();
 		Date eDate = activitys.getEndTime();
@@ -52,6 +52,11 @@ public class ActivitysServiceImpl implements ActivitysService {
 	@Override
 	public Page<Activitys> query(ActivitysPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
+
+		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+		model.setCommunityId(users.getCommunityId());
+		model.setSysType(users.getSysType());
+
 		Page<Activitys> activitys = as.query(model);
 		for (Activitys i : activitys) {
 			int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
@@ -67,7 +72,10 @@ public class ActivitysServiceImpl implements ActivitysService {
 
 	@Override
 	public Activitys findById(String uuid) {
-		return as.selectByPrimaryKey(uuid);
+		Activitys activitys = as.selectByPrimaryKey(uuid);
+		int flag = TimeUtil.compareTime(activitys.getStartTime(), activitys.getEndTime(), activitys.getJoinStartTime(), activitys.getJoinEndTime());
+		activitys.setFlag(flag);
+		return activitys;
 	}
 
 }

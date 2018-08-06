@@ -7,6 +7,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.TasksMapper;
 import com.xl.backen.entity.Tasks;
+import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.TasksPageModel;
 import com.xl.backen.model.UsersModel;
@@ -31,7 +32,7 @@ public class TasksServiceImpl implements TasksService {
     public int add(Tasks tasks) {
         tasks.setUuid(UUID.randomUUID().toString().replace("-", ""));
 
-        UsersModel usersModel = (UsersModel) SecurityUtils.getSubject().getPrincipal();
+        Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
         String uuid = usersModel.getUuid();
         tasks.setCreateUser(uuid);
 
@@ -48,6 +49,11 @@ public class TasksServiceImpl implements TasksService {
     @Override
     public Page<Tasks> query(TasksPageModel model) {
         PageHelper.startPage(model.getPageNum(), model.getPageSize());
+
+        Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
+        model.setCommunityId(usersModel.getCommunityId());
+        model.setSysType(usersModel.getSysType());
+
         Page<Tasks> tasks = tm.query(model);
         for(Tasks i : tasks) {
             i.setFlag(TimeUtil.compareTime(i.getStartTime(),i.getEndTime()));
