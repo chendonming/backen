@@ -9,4 +9,4 @@ jdbc:
   password: Xlmysql2018.
 
 filePath: /work/projects/front/static/
-nginxPath:  http://120.79.177.219/static/
+nginxPath:  http://120.79.177.219:8060/static/
