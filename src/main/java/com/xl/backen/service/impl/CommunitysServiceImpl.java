@@ -34,23 +34,26 @@ public class CommunitysServiceImpl implements CommunitysService {
     private UsersMapper um;
 
     @Override
-    public int add(CommunitysForAddModel communitysForAddModel) throws Exception {
+    public int add(Communitys communitys) throws Exception {
         UsersModel model = (UsersModel) SecurityUtils.getSubject().getPrincipal();
         //新增
-        String uuid = addCommunity(communitysForAddModel);
+        String uuid = addCommunity(communitys);
 
         //指定管理员
         Users users = new Users();
         users.setUuid(UUID.randomUUID().toString().replace("-", ""));
         users.setCommunityId(uuid);
-        users.setMobile(communitysForAddModel.getMobile());
-        users.setNickname(communitysForAddModel.getCommunityLeader());
-        users.setTruename(communitysForAddModel.getCommunityLeader());
+        users.setMobile(communitys.getLeaderMobile());
+        users.setNickname(communitys.getLeaderName());
+        users.setTruename(communitys.getLeaderName());
         users.setCreateTime(new Date());
         users.setUpdateTime(new Date());
         users.setPassword(MD5.md5(CommonConst.PASSWORD));
         users.setSysType(model.getSysType());
         users.setStatus(CommonConst.NORMAL_STATUS);
+
+        //指定初始角色值
+
 
         um.insertSelective(users);
 

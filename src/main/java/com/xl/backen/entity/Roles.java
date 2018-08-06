@@ -8,23 +8,25 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 public class Roles implements Serializable {
-    private static final long serialVersionUID = -7196094634505335416L;
-    private String uuid;
+	private static final long serialVersionUID = -7196094634505335416L;
+	private String uuid;
 
-    @NotEmpty
-    private String name;
+	@NotEmpty
+	private String name;
 
-    private String description;
+	private String description;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date updateTime;
 
-    @Max(value = 2)
-    @Min(value = 1)
-    private Integer status;
+	@Max(value = 2)
+	@Min(value = 1)
+	private Integer status;
 
-    private String sysType;
+	private String sysType;
+
+	private String createUser;
 
 	@Override
 	public String toString() {
@@ -38,59 +40,67 @@ public class Roles implements Serializable {
 			"}";
 	}
 
-    public String getSysType() {
-        return sysType;
-    }
+	public String getCreateUser() {
+		return createUser;
+	}
 
-    public void setSysType(String sysType) {
-        this.sysType = sysType;
-    }
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
+	public String getSysType() {
+		return sysType;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public void setSysType(String sysType) {
+		this.sysType = sysType;
+	}
 
-    public String getUuid() {
-        return uuid;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid == null ? null : uuid.trim();
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getUuid() {
+		return uuid;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setUuid(String uuid) {
+		this.uuid = uuid == null ? null : uuid.trim();
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setDescription(String description) {
+		this.description = description == null ? null : description.trim();
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

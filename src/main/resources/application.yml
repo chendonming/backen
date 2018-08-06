@@ -10,8 +10,8 @@ server:
 # mybatis
 mybatis_config_file: mybatis-config.xml
 mapper_path: /mapper/**.xml
-entity_package: com.example.demo.entity
+entity_package: com.xl.backen.entity
 
 # 权限菜单配置
 permission:
-  menusModel: task,activity
+  menusModel: task,activity,community,permiss,trash,people,volunteer,shop

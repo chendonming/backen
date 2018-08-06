@@ -44,7 +44,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public UsersModel login(String username, String password) {
+	public Users login(String username, String password) {
 		System.out.println("username: " + username);
 		System.out.println("password:  " + password);
 		if (StringUtils.isEmpty(username)) {
@@ -69,7 +69,7 @@ public class UsersServiceImpl implements UsersService {
 		try {
 			subject.login(token);
 			subject.getSession().setTimeout(sessionTimeOut);
-			UsersModel usersModel = (UsersModel) subject.getPrincipal();
+			Users usersModel = (Users) subject.getPrincipal();
 			return usersModel;
 		} catch (UnknownAccountException e) {
 			throw new BusinessException(BusinessStatus.USER_ERROR);

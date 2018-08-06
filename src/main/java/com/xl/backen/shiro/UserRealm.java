@@ -4,6 +4,7 @@ import com.xl.backen.dao.UsersMapper;
 import com.xl.backen.entity.Menus;
 import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.Powers;
+import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.UsersModel;
 
@@ -59,7 +60,7 @@ public class UserRealm extends AuthorizingRealm {
 
 		if(token.getLoginType() == CommonConst.LOGIN_TYPE_PC) {
 			System.out.println("PC登录");
-			UsersModel usersModel = (UsersModel) us.findByMobile(token.getUserName());
+			Users usersModel = (Users) us.findByMobile(token.getUserName());
 			if (usersModel == null) {
 				return null;
 			}else {

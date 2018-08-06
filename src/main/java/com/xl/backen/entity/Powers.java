@@ -19,6 +19,39 @@ public class Powers {
 
     private String upMenusName;
 
+    /**
+     * 管理后台的标识（1.后台 2.社区）
+     */
+    private Integer type;
+
+    private Integer weight;
+
+    private String frontPath;
+
+    public String getFrontPath() {
+        return frontPath;
+    }
+
+    public void setFrontPath(String frontPath) {
+        this.frontPath = frontPath;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public String getUpMenusId() {
         return upMenusId;
     }

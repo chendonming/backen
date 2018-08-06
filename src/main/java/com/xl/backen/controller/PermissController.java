@@ -3,6 +3,7 @@ package com.xl.backen.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.relation.Role;
 import javax.validation.Valid;
 
 import com.github.pagehelper.Page;
@@ -52,7 +53,7 @@ public class PermissController {
 
     @RequestMapping(value = "/role/query", method = RequestMethod.POST)
     public ResultForPage RoleQuery(@RequestBody UsersPageModel model) {
-        Page<Roles> roles = rs.queryAll(model);
+        Page<Roles> roles = rs.queryAll(model.getPageNum(),model.getPageSize());
         PageInfo<Roles> pageInfo = new PageInfo<>(roles);
 
         return new ResultForPage(BusinessStatus.SUCCESS, pageInfo);
@@ -124,9 +125,9 @@ public class PermissController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/menus/queryAll", method = RequestMethod.GET)
-    public Result menusAll() throws Exception {
-        return new Result(BusinessStatus.SUCCESS, ps.queryAll());
+    @RequestMapping(value = "/menus/queryAll", method = RequestMethod.POST)
+    public Result menusAll(@RequestBody Roles role){
+        return new Result(BusinessStatus.SUCCESS, ps.queryParentMenusByRoleId(role.getUuid()));
     }
 
     /**

@@ -1,10 +1,6 @@
 package com.xl.backen.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import com.xl.backen.dao.PowersMapper;
 import com.xl.backen.entity.Powers;
@@ -75,7 +71,10 @@ public class RolesPowerServiceImpl implements RolesPowerService{
 			list.retainAll(clientPowers);
 
 			if(list == null || list.size() == 0) {
-				rpm.delByUserAndRole(p,roleId);
+				Map<String,String> map = new HashMap<>();
+				map.put("powerId", p);
+				map.put("roleId", roleId);
+				rpm.delByUserAndRole(map);
 			}
 
 		}

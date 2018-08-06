@@ -14,7 +14,7 @@
   <update id="delByUserAndRole" parameterType="java.lang.String">
     update tb_roles_power rp
     set rp.status=2
-    where rp.power_id=#{arg0} and rp.role_id=#{arg1}
+    where rp.power_id=#{powerId} and rp.role_id=#{roleId}
   </update>
 
   <!--根据角色id找到所有的rolespower  -->

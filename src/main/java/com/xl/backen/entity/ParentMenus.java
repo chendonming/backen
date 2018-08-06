@@ -21,10 +21,33 @@ public class ParentMenus implements Serializable {
 
 	private Date updateTime;
 
+	private Integer type;
+
+	private Integer weight;
+
 	private List<Powers> powers;
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
+
 	/**
 	 * @return the uuid
 	 */
+
+
 	public String getUuid() {
 		return uuid;
 	}

@@ -1,10 +1,8 @@
 package com.xl.backen.controller;
 
-import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
-import com.xl.backen.model.PeopleCodeModel;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.PeoplesService;
 import com.xl.backen.service.UsersService;
@@ -38,7 +36,7 @@ public class UsersController {
 		String mobile = user.getMobile();
 		String password = user.getPassword();
 		log.info("登录方法: mobile={},password={}", mobile, password);
-		UsersModel usersModel = usersService.login(mobile, password);
+		Users usersModel = usersService.login(mobile, password);
 		usersModel.setPassword("");
 		return new Result(BusinessStatus.SUCCESS, usersModel);
 	}
@@ -47,8 +45,8 @@ public class UsersController {
 	 * 小程序登录接口
 	 */
 	@RequestMapping(value = "/loginApp", method = RequestMethod.POST)
-	public Result loginApp(@RequestBody PeopleCodeModel model) {
-		return new Result(BusinessStatus.SUCCESS,ps.login(model));
+	public Result loginApp() {
+		return null;
 	}
 
 	/**

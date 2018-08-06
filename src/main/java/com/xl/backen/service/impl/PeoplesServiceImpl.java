@@ -6,37 +6,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.xl.backen.common.LoginService;
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
-import com.xl.backen.handler.BusinessException;
-import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
-import com.xl.backen.model.PeopleCodeModel;
 import com.xl.backen.model.PeoplesPageModel;
-import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.PeoplesService;
-import com.xl.backen.shiro.CustomizedToken;
-import com.xl.backen.util.HttpUrlUtil;
-import com.xl.backen.util.MD5;
 import com.xl.backen.util.PeoplesPOI;
 
 import com.xl.backen.util.StringUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -108,24 +93,5 @@ public class PeoplesServiceImpl implements PeoplesService {
 			PageHelper.startPage(model.getPageNum(), model.getPageNum());
 		}
 		return pm.query(model);
-	}
-
-	/**
-	 * 小程序登录接口
-	 *
-	 * @return 用户对象
-	 */
-	@Override
-	public String login(PeopleCodeModel model) {
-//		String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+appId+"&secret="+appSecret+"&js_code="+model.getCode()+"&grant_type=authorization_code";
-//		String content = HttpUrlUtil.httpURLConectionGET(url);
-//		Peoples peoples = (Peoples)JSON.parse(content);
-
-		Subject subject = SecurityUtils.getSubject();
-		CustomizedToken token = new CustomizedToken(model.getOpenId(),model.getAppId(),CommonConst.LOGIN_TYPE_APP);
-
-		subject.login(token);
-
-		return "1";
 	}
 }

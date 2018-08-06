@@ -20,10 +20,9 @@
     </select>
     <!-- 查询所有角色 -->
     <select id="queryAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from tb_roles
-        where status=1 and sys_type=#{sysType}
+        select r.*
+        from tb_roles r left join tb_users u on u.uuid = r.create_user
+        where u.sys_type = #{sysType} and u.community_id = #{communityId}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from tb_roles
@@ -31,9 +30,9 @@
 	</delete>
     <insert id="insert" parameterType="com.xl.backen.entity.Roles">
 		insert into tb_roles (uuid, name, description,
-		create_time, update_time,status,sys_type)
+		create_time, update_time,status)
 		values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}),#{status,jdbcType=INTEGER},#{sysType,jdbcType=VARCHAR}
+		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}),#{status,jdbcType=INTEGER}
 	</insert>
     <insert id="insertSelective" parameterType="com.xl.backen.entity.Roles">
         insert into tb_roles
@@ -56,8 +55,8 @@
             <if test="status != null">
                 status,
             </if>
-            <if test="sysType != null">
-                sys_type,
+            <if test="createUser != null">
+                create_user,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -79,8 +78,8 @@
             <if test="status != null">
                 #{status,jdbcType=INTEGER},
             </if>
-            <if test="sysType != null">
-                #{sysType,jdbcType=VARCHAR},
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -102,9 +101,6 @@
             <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
-            <if test="sysType != null">
-                sys_type = #{sysType,jdbcType=VARCHAR},
-            </if>
         </set>
         where uuid = #{uuid,jdbcType=VARCHAR}
     </update>
@@ -114,8 +110,7 @@
 		description = #{description,jdbcType=VARCHAR},
 		create_time = #{createTime,jdbcType=TIMESTAMP},
 		update_time = #{updateTime,jdbcType=TIMESTAMP},
-		status = #{status,jdbcType=INTEGER},
-		sys_type = #{sysType, jdbcType=VARCHAR}
+		status = #{status,jdbcType=INTEGER}
 		where uuid = #{uuid,jdbcType=VARCHAR}
 	</update>
 </mapper>

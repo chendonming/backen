@@ -32,9 +32,7 @@ public class PeopleRealm extends AuthorizingRealm {
 		if(token.getLoginType() == CommonConst.LOGIN_TYPE_APP) {
 			System.out.println("APP登录");
 			Peoples p = new Peoples();
-			p.setAppId(token.getAppId());
-			p.setOpenId(token.getOpenId());
-			return new SimpleAuthenticationInfo(p,p.getAppId(),this.getName());
+			//return new SimpleAuthenticationInfo(p,p.getAppId(),this.getName());
 		}
 		return null;
 	}

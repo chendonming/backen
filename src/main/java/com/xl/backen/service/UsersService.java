@@ -18,7 +18,7 @@ public interface UsersService {
     /**
      * 登录
      */
-    UsersModel login(String username, String password);
+    Users login(String username, String password);
 
     /**
      * 查询所有的用户

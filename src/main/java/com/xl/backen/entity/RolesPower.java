@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
 
-public class RolesPower implements Serializable{
-    private static final long serialVersionUID = 135783863513366425L;
+public class RolesPower implements Serializable {
+	private static final long serialVersionUID = 135783863513366425L;
 
 	private String uuid;
 
-    @NotEmpty
-    private String powerId;
+	@NotEmpty
+	private String powerId;
 
-    @NotEmpty
-    private String roleId;
-    
-    private Integer status;
+	@NotEmpty
+	private String roleId;
+
+	private Integer status;
 
 	@Override
 	public String toString() {
@@ -27,20 +27,20 @@ public class RolesPower implements Serializable{
 			"}";
 	}
 
-    @Override
-    public boolean equals(Object obj) {
-    	if(obj instanceof RolesPower) {
-    		RolesPower rp = (RolesPower)obj;
-    		if(this.roleId.equals(rp.getRoleId()) && this.powerId.equals(rp.getPowerId())) {
-    			return true;
-    		}else {
-    			return false;
-    		}
-    	}else {
-    		return super.equals(obj);
-    	}
-    }
-    
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof RolesPower) {
+			RolesPower rp = (RolesPower) obj;
+			if (this.roleId.equals(rp.getRoleId()) && this.powerId.equals(rp.getPowerId())) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return super.equals(obj);
+		}
+	}
+
 	public Integer getStatus() {
 		return status;
 	}
@@ -50,26 +50,26 @@ public class RolesPower implements Serializable{
 	}
 
 	public String getUuid() {
-        return uuid;
-    }
+		return uuid;
+	}
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid == null ? null : uuid.trim();
-    }
+	public void setUuid(String uuid) {
+		this.uuid = uuid == null ? null : uuid.trim();
+	}
 
-    public String getPowerId() {
-        return powerId;
-    }
+	public String getPowerId() {
+		return powerId;
+	}
 
-    public void setPowerId(String powerId) {
-        this.powerId = powerId == null ? null : powerId.trim();
-    }
+	public void setPowerId(String powerId) {
+		this.powerId = powerId == null ? null : powerId.trim();
+	}
 
-    public String getRoleId() {
-        return roleId;
-    }
+	public String getRoleId() {
+		return roleId;
+	}
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
-    }
+	public void setRoleId(String roleId) {
+		this.roleId = roleId == null ? null : roleId.trim();
+	}
 }

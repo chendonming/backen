@@ -1,5 +1,6 @@
 package com.xl.backen.dao;
 
+import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.Powers;
 
 import com.xl.backen.entity.RolesPower;
@@ -21,7 +22,9 @@ public interface PowersMapper {
 
     int updateByPrimaryKey(Powers record);
     
-    List<Powers> queryAll();
+    List<Powers> queryAll(Integer type);
 
     List<Powers> queryByRoleId(String roleId);
+
+    List<ParentMenus> queryParentMenusByRoleId(String roleId);
 }

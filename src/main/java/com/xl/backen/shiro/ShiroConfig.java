@@ -44,11 +44,12 @@ public class ShiroConfig {
 		map.put("/**/**", "authc");
 
 		for (int i = 0; i < t.length; i++) {
-			map.put("/" + t[i] + "/**", "perms[" + t[i] + "]");
+			if(t[i].equals("permiss")) {
+				map.put("/permiss/**/**", "perms[permiss]");
+			}else {
+				map.put("/" + t[i] + "/**", "perms[" + t[i] + "]");
+			}
 		}
-
-		map.put("/permiss/**/**", "perms[permiss]");
-
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
 		return shiroFilterFactoryBean;

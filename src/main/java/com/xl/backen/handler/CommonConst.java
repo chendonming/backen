@@ -23,6 +23,11 @@ public class CommonConst {
     public static final int IS_REAL_NAME = 1; //已经实名
     public static final int NO_REAL_NAME = 2; //未实名
 
+    //APP登录身份
+    public static final int NOMARL_USER = 1; //普通居民
+    public static final int VOLUNTEER_USER = 2; //志愿者
+    public static final int COMMUNITY_WORK_USER = 3; //社工
+
     //登录
     public static final int LOGIN_TYPE_PC = 1; //pc后台登录
     public static final int LOGIN_TYPE_COMMUNITY = 2; //pc社区
@@ -31,4 +36,9 @@ public class CommonConst {
 
     //社区默认的密码
     public static final String PASSWORD = "123";
+
+
+    //菜单权限所属type
+    public static final Integer BACKEN_TYPE = 1; //总后台
+    public static final Integer COMMUNITY_TYPE = 2; //社区
 }

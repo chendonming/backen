@@ -1,11 +1,11 @@
 package com.xl.backen.service.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.xl.backen.entity.Users;
+import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.model.UsersPageModel;
 import org.apache.shiro.SecurityUtils;
@@ -27,12 +27,14 @@ public class RolesServiceImpl implements RolesService{
 	@Override
 	public int insertSelective(Roles role) {
 		Date d = new Date();
-		UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+		Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
 
 		role.setUuid(UUID.randomUUID().toString().replace("-", ""));
 		role.setCreateTime(d);
 		role.setUpdateTime(d);
 		role.setSysType(usersModel.getSysType());
+		role.setCreateUser(usersModel.getUuid());
+		role.setStatus(CommonConst.NORMAL_STATUS);
 
 		int i = rm.insertSelective(role);
 		if(i > 0) {
@@ -43,13 +45,16 @@ public class RolesServiceImpl implements RolesService{
 	}
 
 	@Override
-	public Page<Roles> queryAll(UsersPageModel model) {
+	public Page<Roles> queryAll(int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum,pageSize);
 
-		UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
 
-		PageHelper.startPage(model.getPageNum(),model.getPageSize());
+		Map<String, String> map = new HashMap<>();
+		map.put("sysType", users.getSysType());
+		map.put("communityId",users.getCommunityId());
 
-		return rm.queryAll(usersModel.getSysType());
+		return rm.queryAll(map);
 	}
 
 	/**

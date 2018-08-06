@@ -18,8 +18,6 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
-    <result column="app_id" jdbcType="VARCHAR" property="appId"/>
-    <result column="open_id" jdbcType="VARCHAR" property="openId"/>
   </resultMap>
   <sql id="Base_Column_List">
     uuid, nickname, truename, head_pic, mobile, sex, password, is_real_name, id_card, 

@@ -109,17 +109,10 @@
     </select>
 
     <!--根据手机号码查找user(登录)-->
-    <select id="findByMobile" resultMap="UsersModel">
-          select
-              u.*, r.uuid as r_uuid, r.name as r_name,
-              pm.uuid as pm_uuid,pm.name as pm_name,
-              pos.uuid as pos_uuid,pos.code as pos_code,pos.meun_name as pos_meun_name
-          from tb_users u left join tb_roles r on u.role = r.uuid
-          left join tb_roles_power rp on rp.role_id = r.uuid
-          left join tb_powers pos on pos.uuid = rp.power_id
-          left join tb_parent_menus pm on pm.uuid = pos.up_menus_id
-
-          where u.mobile=#{mobile}
+    <select id="findByMobile" resultMap="BaseResultMap">
+        select u.*, r.uuid as r_uuid, r.name as r_name
+        from  tb_users u left join tb_roles r on r.uuid = u.role
+        where u.mobile=#{mobile}
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

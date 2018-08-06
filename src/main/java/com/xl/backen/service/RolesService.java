@@ -16,7 +16,7 @@ public interface RolesService {
 	 */
 	int insertSelective(Roles role);
 	
-	Page<Roles> queryAll(UsersPageModel model);
+	Page<Roles> queryAll(int pageNum, int pageSize);
 
 	/**
 	 * 修改

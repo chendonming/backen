@@ -10,21 +10,67 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="up_menus_id" jdbcType="VARCHAR" property="upMenusId"/>
     <result column="up_menus_name" jdbcType="VARCHAR" property="upMenusName"/>
+    <result column="type" jdbcType="INTEGER" property="type"/>
+    <result column="weight" jdbcType="INTEGER" property="weight"/>
   </resultMap>
+  
+  <resultMap id="parentMenusMap" type="com.xl.backen.entity.ParentMenus">
+    <id column="m_uuid" jdbcType="VARCHAR" property="uuid"/>
+    <result column="m_name" jdbcType="VARCHAR" property="name"/>
+    <result column="m_code" jdbcType="VARCHAR" property="code"/>
+    <result column="m_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="m_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="m_type" jdbcType="INTEGER" property="type"/>
+    <result column="m_weight" jdbcType="INTEGER" property="weight"/>
+    <collection property="powers" ofType="com.xl.backen.entity.Powers">
+      <id column="p_uuid" jdbcType="VARCHAR" property="uuid" />
+      <result column="p_code" jdbcType="VARCHAR" property="code" />
+      <result column="p_meun_name" jdbcType="VARCHAR" property="meunName" />
+      <result column="p_description" jdbcType="VARCHAR" property="description" />
+      <result column="p_create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="p_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="p_type" jdbcType="INTEGER" property="type"/>
+      <result column="p_weight" jdbcType="INTEGER" property="weight"/>
+      <result column="p_front_path" jdbcType="VARCHAR" property="frontPath"/>
+    </collection>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     uuid, code, meun_name, description, create_time, update_time
   </sql>
+  
+  <sql id="parent_menus_list">
+    m.uuid as m_uuid,m.name as m_name, m.code as m_code ,m.create_time as m_create_time,
+    m.update_time as m_update_time, m.type as m_type,m.weight as m_weight
+  </sql>
 
-  <!--根据角色id查找对应的菜单-->
+  <sql id="powers_list">
+    p.uuid as p_uuid, p.code as p_code,  p.meun_name as p_meun_name,
+    p.description as p_description, p.create_time as p_create_time,
+    p.update_time as p_update_time,p.type as p_type , p.weight as p_weight,p.front_path as p_front_path
+  </sql>
+
+  <!--根据角色id查找对应的菜单(no parentMenus)-->
   <select id="queryByRoleId" resultMap="BaseResultMap">
     select p.*
     from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
     where rp.role_id=#{roleId} and rp.status=1
   </select>
 
+  <!--根据角色id查找对应的菜单(parentMenus)-->
+  <select id="queryParentMenusByRoleId" resultMap="parentMenusMap">
+    select
+    <include refid="parent_menus_list"/>,
+    <include refid="powers_list"/>
+    from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
+    left join tb_parent_menus m on m.uuid = p.up_menus_id
+    where rp.role_id=#{roleId} and rp.status=1
+  </select>
+
   <select id="queryAll" resultMap="BaseResultMap">
   	select p.*,pm.name as up_menus_name
   	from tb_powers p left join  tb_parent_menus pm on pm.uuid = p.up_menus_id
+  	where p.type=#{type}
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

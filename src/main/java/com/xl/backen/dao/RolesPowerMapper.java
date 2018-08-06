@@ -3,6 +3,7 @@ package com.xl.backen.dao;
 import com.xl.backen.entity.RolesPower;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -28,5 +29,5 @@ public interface RolesPowerMapper {
     /**
      * 根据userId  roleId进行删除
      */
-    int delByUserAndRole(String powerId, String roleId);
+    int delByUserAndRole(Map map);
 }

@@ -3,11 +3,9 @@ package com.xl.backen.service;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Peoples;
-import com.xl.backen.model.PeopleCodeModel;
 import com.xl.backen.model.PeoplesPageModel;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,10 +31,4 @@ public interface PeoplesService {
    * 条件查询居民分页
    */
   Page<Peoples> query(PeoplesPageModel model);
-
-
-  /**
-   * 登录接口
-   */
-  String login(PeopleCodeModel peopleCodeModel);
 }

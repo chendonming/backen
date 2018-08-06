@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.WxUsersMapper">
+  <resultMap id="BaseResultMap" type="com.xl.backen.entity.WxUsers">
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="is_real_name" jdbcType="INTEGER" property="isRealName" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="bind_user" jdbcType="VARCHAR" property="bindUser" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.xl.backen.entity.WxUsers">
+    insert into tb_wx_users (uuid, nick_name, is_real_name, 
+      open_id, bind_user, gender, 
+      avatar_url, create_time, update_time
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{isRealName,jdbcType=INTEGER}, 
+      #{openId,jdbcType=VARCHAR}, #{bindUser,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{avatarUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.backen.entity.WxUsers">
+    insert into tb_wx_users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="isRealName != null">
+        is_real_name,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="bindUser != null">
+        bind_user,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="isRealName != null">
+        #{isRealName,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="bindUser != null">
+        #{bindUser,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
