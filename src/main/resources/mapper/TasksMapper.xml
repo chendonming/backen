@@ -5,6 +5,7 @@
     <id column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="community_name" jdbcType="VARCHAR" property="communityName"/>
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="location" jdbcType="VARCHAR" property="location" />
@@ -38,8 +39,9 @@
         社区id为空则查询所有社区数据
    -->
   <select id="query" resultMap="BaseResultMap">
-    select  t.*,u.truename as u_truename
-    from tb_tasks t left join tb_users u on t. create_user = u.uuid
+    select  t.*,u.truename as u_truename,c.name as community_name
+    from tb_communitys c  right join tb_tasks t on t.community_id = c.uuid
+    left join tb_users u on t. create_user = u.uuid
     where
     <if test="name != null and name != ''">
       name like CONCAT(#{name},'%') and

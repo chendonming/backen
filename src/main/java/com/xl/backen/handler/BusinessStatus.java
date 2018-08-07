@@ -27,6 +27,7 @@ public enum BusinessStatus {
     MOBILE_ERROR(2006, "手机号码已注册"),
     ROLE_ERROR(2007,"角色下面存在用户，不能进行删除"),
     DEL_OPEAR_ERROR(2008, "不能通过修改接口直接更改status状态"),
+    SHIRO_REAML_ERROR(2999, "shiro realm验证异常"),
 
     /**
      * 任务活动模块异常

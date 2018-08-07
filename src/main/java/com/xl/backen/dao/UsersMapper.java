@@ -3,16 +3,20 @@ package com.xl.backen.dao;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Users;
 import com.xl.backen.model.UsersPageModel;
+
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsersMapper {
     /**
      * 根据手机号码查找用户
-     * @param uuid
+     * @param mobile
+     * @param communityId 
      * @return
      */
-    Users findByMobile(String uuid);
+    Users findByMobile(Map<String,String> map);
 
     int deleteByPrimaryKey(String uuid);
 

@@ -12,12 +12,14 @@
         <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
+        <result column="community_name" jdbcType="VARCHAR" property="communityName"/>
         <result column="total_integral" jdbcType="INTEGER" property="totalIntegral"/>
         <result column="integral" jdbcType="INTEGER" property="integral"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
+        <result column="sys_type_name" jdbcType="VARCHAR" property="sysName"/>
         <result column="r_uuid" jdbcType="VARCHAR" property="roleId"/>
         <result column="r_name" jdbcType="VARCHAR" property="roleName"/>
     </resultMap>
@@ -97,7 +99,7 @@
         from
         tb_users u
         left join tb_roles r on r.uuid = u.role
-        where u.sys_type=#{sysType} and
+        where u.sys_type=#{sysType} and u.community_id = #{communityId} and
         <if test="truename != null and truename != ''">
             truename like CONCAT(#{truename},'%') and
         </if>
@@ -111,8 +113,27 @@
     <!--根据手机号码查找user(登录)-->
     <select id="findByMobile" resultMap="BaseResultMap">
         select u.*, r.uuid as r_uuid, r.name as r_name
-        from  tb_users u left join tb_roles r on r.uuid = u.role
-        where u.mobile=#{mobile}
+        <if test="communityId != null and communityId != ''">
+            ,c.name as community_name
+        </if>
+        <if test="communityId == null or communityId == ''">
+            ,s.name as sys_type_name
+        </if>
+        from
+        <if test="communityId != null and communityId != ''">
+            tb_communitys c left join tb_users u on u.community_id = c.uuid
+        </if>
+        <if test="communityId == null or communityId == ''">
+            tb_sys_type s left join tb_users u  on u.sys_type = s.uuid
+        </if>
+        left join tb_roles r on r.uuid = u.role
+        where u.mobile=#{mobile} and u.status=1 and
+        <if test="communityId != null and communityId != ''">
+        	community_id != ''
+        </if>
+        <if test="communityId == '' or communityId == null">
+        	community_id = ''
+        </if>
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

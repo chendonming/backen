@@ -13,6 +13,8 @@ public class Tasks implements Serializable {
 
 	private String communityId;
 
+	private String communityName;
+
 	private Date startTime;
 
 	private Date endTime;
@@ -65,6 +67,14 @@ public class Tasks implements Serializable {
 			", updateTime='" + getUpdateTime() + "'" +
 			", status='" + getStatus() + "'" +
 			"}";
+	}
+
+	public String getCommunityName() {
+		return communityName;
+	}
+
+	public void setCommunityName(String communityName) {
+		this.communityName = communityName;
 	}
 
 	public String getSysType() {

@@ -34,8 +34,8 @@ public class CommunitysServiceImpl implements CommunitysService {
     private UsersMapper um;
 
     @Override
-    public int add(Communitys communitys) throws Exception {
-        UsersModel model = (UsersModel) SecurityUtils.getSubject().getPrincipal();
+    public int add(CommunitysForAddModel communitys) throws Exception {
+        Users model = (Users) SecurityUtils.getSubject().getPrincipal();
         //新增
         String uuid = addCommunity(communitys);
 
@@ -43,16 +43,18 @@ public class CommunitysServiceImpl implements CommunitysService {
         Users users = new Users();
         users.setUuid(UUID.randomUUID().toString().replace("-", ""));
         users.setCommunityId(uuid);
-        users.setMobile(communitys.getLeaderMobile());
-        users.setNickname(communitys.getLeaderName());
-        users.setTruename(communitys.getLeaderName());
+        users.setMobile(communitys.getMobile());
+        users.setNickname(communitys.getCommunityLeader());
+        users.setTruename(communitys.getCommunityLeader());
         users.setCreateTime(new Date());
         users.setUpdateTime(new Date());
         users.setPassword(MD5.md5(CommonConst.PASSWORD));
         users.setSysType(model.getSysType());
         users.setStatus(CommonConst.NORMAL_STATUS);
 
+
         //指定初始角色值
+        users.setRoleId(CommonConst.COMMUNITY_ROLE);
 
 
         um.insertSelective(users);
@@ -72,7 +74,7 @@ public class CommunitysServiceImpl implements CommunitysService {
     public Page<Communitys> query(CommunitysPageModel model) {
         PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
-        UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+        Users usersModel = (Users)SecurityUtils.getSubject().getPrincipal();
 
         model.setSysType(usersModel.getSysType());
 
@@ -87,8 +89,8 @@ public class CommunitysServiceImpl implements CommunitysService {
         return cm.selectByPrimaryKey(uuid);
     }
 
-    public String addCommunity(Communitys communitys) {
-        UsersModel model = (UsersModel) SecurityUtils.getSubject().getPrincipal();
+    public String addCommunity(CommunitysForAddModel communitys) {
+        Users model = (Users) SecurityUtils.getSubject().getPrincipal();
 
         String uuid = UUID.randomUUID().toString().replace("-", "");
 
@@ -97,6 +99,9 @@ public class CommunitysServiceImpl implements CommunitysService {
         communitys.setCreateTime(new Date());
         communitys.setUpdateTime(new Date());
         communitys.setSysType(model.getSysType());
+        communitys.setLeaderName(communitys.getCommunityLeader());
+        communitys.setLeaderMobile(communitys.getMobile());
+
 
         communitys.setCreateUser(model.getUuid());
         cm.insertSelective(communitys);

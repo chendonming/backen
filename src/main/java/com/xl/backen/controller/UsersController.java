@@ -1,10 +1,12 @@
 package com.xl.backen.controller;
 
+import com.xl.backen.entity.Roles;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.PeoplesService;
+import com.xl.backen.service.PowersService;
 import com.xl.backen.service.UsersService;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -26,6 +28,9 @@ public class UsersController {
 	@Autowired
 	private PeoplesService ps;
 
+	@Autowired
+	private PowersService psr;
+
 	/**
 	 * 管理员登录
 	 * @param user
@@ -36,7 +41,7 @@ public class UsersController {
 		String mobile = user.getMobile();
 		String password = user.getPassword();
 		log.info("登录方法: mobile={},password={}", mobile, password);
-		Users usersModel = usersService.login(mobile, password);
+		Users usersModel = usersService.login(mobile, password, user.getLoginType());
 		usersModel.setPassword("");
 		return new Result(BusinessStatus.SUCCESS, usersModel);
 	}
@@ -56,5 +61,16 @@ public class UsersController {
 	public Result signOut() {
 		SecurityUtils.getSubject().logout();
 		return new Result(BusinessStatus.SUCCESS);
+	}
+
+	/**
+	 * 所有的菜单
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/menus/queryAll", method = RequestMethod.POST)
+	public Result menusAll(@RequestBody Roles role){
+		return new Result(BusinessStatus.SUCCESS, psr.queryParentMenusByRoleId(role.getUuid()));
 	}
 }

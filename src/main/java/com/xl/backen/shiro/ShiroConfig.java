@@ -40,18 +40,16 @@ public class ShiroConfig {
 		String[] t = menus.split(",");
 
 		map.put("/user/**", "anon");
-		map.put("/**", "authc");
-		map.put("/**/**", "authc");
 
 		for (int i = 0; i < t.length; i++) {
 			if(t[i].equals("permiss")) {
-				map.put("/permiss/**/**", "perms[permiss]");
+				map.put("/permiss/**/**", "authc,perms[permiss]");
 			}else {
-				map.put("/" + t[i] + "/**", "perms[" + t[i] + "]");
+				map.put("/" + t[i] + "/**", "authc,perms[" + t[i] + "]");
 			}
 		}
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
+		shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 		return shiroFilterFactoryBean;
 	}
 

@@ -1,6 +1,7 @@
 package com.xl.backen.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Users;
@@ -13,12 +14,12 @@ public interface UsersService {
 
     String Register(Users users);
 
-    Users findByMobile(String uuid);
+    Users findByMobile(Map<String,String> map);
 
     /**
      * 登录
      */
-    Users login(String username, String password);
+    Users login(String username, String password, Integer loginType);
 
     /**
      * 查询所有的用户

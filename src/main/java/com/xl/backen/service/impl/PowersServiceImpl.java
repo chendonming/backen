@@ -1,6 +1,8 @@
 package com.xl.backen.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.RolesPower;
@@ -37,7 +39,13 @@ public class PowersServiceImpl implements PowersService {
 
 	@Override
 	public List<Powers> queryByRoleId(String roleId) {
-		return pm.queryByRoleId(roleId);
+		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+
+		Map map = new HashMap<>();
+		map.put("roleId", roleId);
+		map.put("type", users.getLoginType());
+
+		return pm.queryByRoleId(map);
 	}
 
 	/**
@@ -47,7 +55,20 @@ public class PowersServiceImpl implements PowersService {
 	 */
 	@Override
 	public List<ParentMenus> queryParentMenusByRoleId(String roleId) {
-		return pm.queryParentMenusByRoleId(roleId);
+		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+
+		Map map = new HashMap();
+		map.put("roleId",roleId);
+		map.put("type",users.getLoginType());
+
+		return pm.queryParentMenusByRoleId(map);
+	}
+
+	@Override
+	public List<ParentMenus> queryParentMenus() {
+		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+		System.out.println(users);
+		return pm.queryParentMenus(users.getLoginType());
 	}
 
 }

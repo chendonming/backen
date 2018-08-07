@@ -31,7 +31,7 @@
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_communitys
     where uuid = #{uuid,jdbcType=VARCHAR} and status = 1
@@ -83,6 +83,12 @@
       <if test="sysType != null">
         sys_type,
       </if>
+      <if test="leaderName != null">
+        leader_name,
+      </if>
+      <if test="leaderMobile != null">
+        leader_mobile,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -114,6 +120,12 @@
       </if>
       <if test="sysType != null">
         #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderName != null">
+          #{leaderName, jdbcType=VARCHAR},
+      </if>
+      <if test="leaderMobile != null">
+        #{leaderMobile, jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>

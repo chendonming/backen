@@ -22,7 +22,8 @@
     <select id="queryAll" resultMap="BaseResultMap">
         select r.*
         from tb_roles r left join tb_users u on u.uuid = r.create_user
-        where u.sys_type = #{sysType} and u.community_id = #{communityId}
+        where
+        r.status=1 and u.sys_type = #{sysType} and u.community_id = #{communityId} order by r.create_time desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from tb_roles

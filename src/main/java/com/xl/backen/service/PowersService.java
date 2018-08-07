@@ -18,4 +18,9 @@ public interface PowersService {
 	 * 根据角色id找到所有的菜单（包括最外层菜单）
 	 */
 	List<ParentMenus> queryParentMenusByRoleId(String roleId);
+	
+	/**
+	 * 找到所有的菜单
+	 */
+	List<ParentMenus> queryParentMenus();
 }

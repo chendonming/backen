@@ -12,6 +12,8 @@ public class Activitys implements Serializable {
 
 	private String communityId;
 
+	private String communityName;
+
 	private Date startTime;
 
 	private Date endTime;
@@ -45,6 +47,14 @@ public class Activitys implements Serializable {
 	private Integer flag;
 
 	private String sysType;
+
+	public String getCommunityName() {
+		return communityName;
+	}
+
+	public void setCommunityName(String communityName) {
+		this.communityName = communityName;
+	}
 
 	public String getSysType() {
 		return sysType;

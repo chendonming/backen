@@ -54,7 +54,7 @@
   <select id="queryByRoleId" resultMap="BaseResultMap">
     select p.*
     from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
-    where rp.role_id=#{roleId} and rp.status=1
+    where rp.role_id=#{roleId} and p.type=#{type} and rp.status=1
   </select>
 
   <!--根据角色id查找对应的菜单(parentMenus)-->
@@ -64,7 +64,16 @@
     <include refid="powers_list"/>
     from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
     left join tb_parent_menus m on m.uuid = p.up_menus_id
-    where rp.role_id=#{roleId} and rp.status=1
+    where rp.role_id=#{roleId} and p.type = #{type} and rp.status=1 order by m.weight desc, p.weight desc
+  </select>
+
+  <select id="queryParentMenus" resultMap="parentMenusMap">
+    select
+    <include refid="parent_menus_list"/>,
+    <include refid="powers_list"/>
+    from  tb_powers p
+    left join tb_parent_menus m on m.uuid = p.up_menus_id
+    where p.type = #{type} order by m.weight desc, p.weight desc
   </select>
 
   <select id="queryAll" resultMap="BaseResultMap">

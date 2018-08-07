@@ -35,7 +35,12 @@ public class CommonConst {
     public static final int LOGIN_TYPE_APP = 3; //app登录
 
     //社区默认的密码
-    public static final String PASSWORD = "123";
+    public static final String PASSWORD = "123456";
+
+    //社区默认初始角色
+    public static final String COMMUNITY_ROLE = "30f8d2eb12514bd4aaf847d2ebe1594d";
+    //总后台最高角色
+    public static final String ADMIN_ROLE = "9393b172278e449585d192ff72a02f88";
 
 
     //菜单权限所属type

@@ -1,5 +1,6 @@
 package com.xl.backen.shiro;
 
+import com.xl.backen.dao.PowersMapper;
 import com.xl.backen.dao.UsersMapper;
 import com.xl.backen.entity.Menus;
 import com.xl.backen.entity.ParentMenus;
@@ -8,10 +9,9 @@ import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.UsersModel;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -30,24 +30,31 @@ public class UserRealm extends AuthorizingRealm {
 	@Autowired
 	private UsersMapper us;
 
+	@Autowired
+	private PowersMapper pm;
+
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+		System.out.println("授权方法");
+
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-		UsersModel us = (UsersModel) SecurityUtils.getSubject().getPrincipal();
+		Users us = (Users) SecurityUtils.getSubject().getPrincipal();
 
 		if (us != null) {
 			Set<String> permis = new HashSet<String>();
 
-			List<ParentMenus> pms = us.getParentMenus();
+			Map map = new HashMap();
+			map.put("roleId", us.getRoleId());
+			map.put("type", us.getLoginType());
 
-			for (ParentMenus pm : pms) {
-				for (Powers j : pm.getPowers()) {
-					if (!StringUtils.isEmpty(j.getUuid())) {
-						permis.add(j.getCode());
-					}
-				}
+			List<Powers> powers = pm.queryByRoleId(map);
+
+			for (Powers p : powers) {
+				System.out.println("追加code" + p.getCode());
+				permis.add(p.getCode());
 			}
+
 			info.addStringPermissions(permis);
 		}
 
@@ -56,27 +63,39 @@ public class UserRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-		CustomizedToken token = (CustomizedToken)authenticationToken;
+		CustomizedToken token = (CustomizedToken) authenticationToken;
 
-		if(token.getLoginType() == CommonConst.LOGIN_TYPE_PC) {
-			System.out.println("PC登录");
-			Users usersModel = (Users) us.findByMobile(token.getUserName());
+		if (token.getLoginType() == CommonConst.LOGIN_TYPE_PC) {
+			System.out.println("PC总后台登录");
+
+			Map<String, String> map = new HashedMap<>();
+
+			map.put("mobile", token.getUserName());
+			map.put("communityId", "");
+
+			Users usersModel = (Users) us.findByMobile(map);
+			usersModel.setLoginType(CommonConst.LOGIN_TYPE_PC);
 			if (usersModel == null) {
 				return null;
-			}else {
+			} else {
 				return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
 			}
-		}else {
+		} else if (token.getLoginType() == CommonConst.LOGIN_TYPE_COMMUNITY) {
+			System.out.println("社区pc登录");
+
+			Map<String, String> map = new HashedMap<>();
+			map.put("mobile", token.getUserName());
+			map.put("communityId", "1");
+
+			Users usersModel = (Users) us.findByMobile(map);
+			usersModel.setLoginType(CommonConst.LOGIN_TYPE_COMMUNITY);
+			if (usersModel == null) {
+				return null;
+			} else {
+				return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
+			}
+		} else {
 			return null;
 		}
-	}
-
-
-	/**
-	 * 清理权限缓存
-	 */
-	public void clearCachedAuthorization() {
-		//清空权限缓存
-		clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
 	}
 }

@@ -5,6 +5,7 @@
         <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
+        <result column="community_name" jdbcType="VARCHAR" property="communityName"/>
         <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
         <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
         <result column="join_start_time" jdbcType="TIMESTAMP" property="joinStartTime"/>
@@ -37,8 +38,9 @@
      -->
     <select id="query" resultMap="BaseResultMap">
         select
-          a.*
-        from tb_activitys a left join tb_users u on u.uuid = a.create_user
+          a.*,u.truename as u_truename,c.name as community_name
+        from tb_communitys c  right join tb_activitys a on a.community_id = c.uuid
+        left join tb_users u on u.uuid = a.create_user
         where
         <trim>
             <if test="name != null and name != ''">

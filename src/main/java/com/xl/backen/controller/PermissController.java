@@ -18,6 +18,7 @@ import com.xl.backen.model.UsersRegisterRoleModel;
 import com.xl.backen.service.*;
 import com.xl.backen.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,6 @@ public class PermissController {
     public ResultForPage RoleQuery(@RequestBody UsersPageModel model) {
         Page<Roles> roles = rs.queryAll(model.getPageNum(),model.getPageSize());
         PageInfo<Roles> pageInfo = new PageInfo<>(roles);
-
         return new ResultForPage(BusinessStatus.SUCCESS, pageInfo);
     }
 
@@ -120,14 +120,14 @@ public class PermissController {
     }
 
     /**
-     * 所有的菜单
+     * 所有的菜单(包括顶级菜单)
      *
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/menus/queryAll", method = RequestMethod.POST)
-    public Result menusAll(@RequestBody Roles role){
-        return new Result(BusinessStatus.SUCCESS, ps.queryParentMenusByRoleId(role.getUuid()));
+    @RequestMapping(value = "/menus/queryAllHasMenus", method = RequestMethod.POST)
+    public Result queryAllHasMenus(){
+        return new Result(BusinessStatus.SUCCESS, ps.queryParentMenus());
     }
 
     /**
@@ -159,7 +159,7 @@ public class PermissController {
 
     @RequestMapping(value = "/user/queryAll", method = RequestMethod.POST)
     public ResultForPage usersAll(@RequestBody UsersPageModel model) throws Exception {
-        UsersModel usersModel = (UsersModel)SecurityUtils.getSubject().getPrincipal();
+        Users usersModel = (Users)SecurityUtils.getSubject().getPrincipal();
 
         model.setSysType(usersModel.getSysType());
         Page<Users> users = usersService.queryAll(model);

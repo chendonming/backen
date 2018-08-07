@@ -30,6 +30,8 @@ public class Users implements Serializable {
 
 	private String communityId;
 
+	private String communityName;
+
 	private Integer totalIntegral;
 
 	private Integer integral;
@@ -43,11 +45,15 @@ public class Users implements Serializable {
 	private String roleId;
 
 	private String roleName;
+	
+	private Integer loginType;
 
 	/**
 	 * 系统的标识
 	 */
 	private String sysType;
+
+	private String sysName;
 
 	@Override
 	public String toString() {
@@ -69,6 +75,31 @@ public class Users implements Serializable {
 			", updateTime='" + getUpdateTime() + "'" +
 			"}";
 	}
+	public String getCommunityName() {
+		return communityName;
+	}
+
+	public void setCommunityName(String communityName) {
+		this.communityName = communityName;
+	}
+
+	public Integer getLoginType() {
+		return loginType;
+	}
+
+	public String getSysName() {
+		return sysName;
+	}
+
+	public void setSysName(String sysName) {
+		this.sysName = sysName;
+	}
+
+	public void setLoginType(Integer loginType) {
+		this.loginType = loginType;
+	}
+
+
 
 	public String getRoleId() {
 		return roleId;

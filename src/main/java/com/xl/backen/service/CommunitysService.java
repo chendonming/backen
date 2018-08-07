@@ -6,7 +6,7 @@ import com.xl.backen.model.CommunitysForAddModel;
 import com.xl.backen.model.CommunitysPageModel;
 
 public interface CommunitysService {
-	int add (Communitys communitys) throws Exception;
+	int add (CommunitysForAddModel communitys) throws Exception;
 
 	int update(Communitys communitys);
 

@@ -7,6 +7,7 @@ import com.xl.backen.entity.RolesPower;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface PowersMapper {
@@ -24,7 +25,9 @@ public interface PowersMapper {
     
     List<Powers> queryAll(Integer type);
 
-    List<Powers> queryByRoleId(String roleId);
+    List<Powers> queryByRoleId(Map map);
 
-    List<ParentMenus> queryParentMenusByRoleId(String roleId);
+    List<ParentMenus> queryParentMenusByRoleId(Map map);
+    
+    List<ParentMenus> queryParentMenus(Integer type);
 }

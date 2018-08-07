@@ -3,6 +3,7 @@ package com.xl.backen.handler;
 import javax.validation.UnexpectedTypeException;
 
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
+import org.apache.shiro.authc.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -51,6 +52,14 @@ public class GlobalExceptionHandler {
         log.warn("导入excel错误",e);
         NotOfficeXmlFileException notOfficeXmlFileException = (NotOfficeXmlFileException)e;
         return new Result(BusinessStatus.FILE_EXCEL_ERROR);
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    @ResponseBody
+    public Result handlerAuthenticationException(Exception e) {
+        log.warn("shiro realm验证异常",e);
+        AuthenticationException notOfficeXmlFileException = (AuthenticationException)e;
+        return new Result(BusinessStatus.SHIRO_REAML_ERROR);
     }
 
     @ExceptionHandler(value = Exception.class)

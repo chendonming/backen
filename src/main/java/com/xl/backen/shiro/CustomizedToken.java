@@ -32,8 +32,7 @@ public class CustomizedToken extends UsernamePasswordToken {
      */
     @Override
     public Object getPrincipal() {
-        // 如果获取到用户名，则返回用户名，否则返回电话号码
-        if(LoginType == CommonConst.LOGIN_TYPE_PC) {
+        if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE) {
             return getUserName();
         }else{
             return openId;
@@ -45,8 +44,7 @@ public class CustomizedToken extends UsernamePasswordToken {
      */
     @Override
     public Object getCredentials() {
-        // 如果获取到密码，则返回密码，否则返回null
-        if(LoginType == CommonConst.LOGIN_TYPE_PC) {
+        if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE) {
             return getPassWord();
         }else{
             return appId;
