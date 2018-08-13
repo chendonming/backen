@@ -2,7 +2,6 @@ package com.xl.backen.service.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +19,6 @@ import com.xl.backen.util.MD5;
 import com.xl.backen.util.PeoplesPOI;
 
 import com.xl.backen.util.StringUtil;
-import org.apache.catalina.security.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +83,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 		log.info("导入的用户信息列表:", peoples);
 
 		//手机号码和身份证的去重
-		Collection<Peoples> p = ArrayUtil.compareArr(peoples, servicePeoples);
+		List<Peoples> p = ArrayUtil.compareArr(peoples, servicePeoples);
 
 
 		for (Peoples i : p) {

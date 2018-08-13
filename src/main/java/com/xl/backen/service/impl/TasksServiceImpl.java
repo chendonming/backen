@@ -1,25 +1,16 @@
 package com.xl.backen.service.impl;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.TasksMapper;
-import com.xl.backen.dao.TasksPeoplesMapper;
-import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Tasks;
-import com.xl.backen.entity.TasksPeoples;
 import com.xl.backen.entity.Users;
-import com.xl.backen.handler.BusinessException;
-import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.TasksPageModel;
-import com.xl.backen.model.TasksPeopleModel;
-import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.TasksService;
-import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
 
 import org.apache.shiro.SecurityUtils;
@@ -28,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.awt.windows.ThemeReader;
 
 /**
  * TasksServiceImpl
@@ -39,9 +29,6 @@ public class TasksServiceImpl implements TasksService {
 
     @Autowired
     private TasksMapper tm;
-
-    @Autowired
-    private TasksPeoplesMapper tpm;
 
     @Override
     @Transactional

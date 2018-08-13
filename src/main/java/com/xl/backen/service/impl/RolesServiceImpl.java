@@ -6,8 +6,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
-import com.xl.backen.model.UsersModel;
-import com.xl.backen.model.UsersPageModel;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

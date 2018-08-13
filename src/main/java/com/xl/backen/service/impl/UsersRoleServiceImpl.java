@@ -1,10 +1,6 @@
 package com.xl.backen.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 import com.xl.backen.dao.UsersMapper;
 import com.xl.backen.entity.Users;
@@ -12,11 +8,9 @@ import com.xl.backen.model.RolesModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.xl.backen.dao.UsersRoleMapper;
 import com.xl.backen.entity.UsersRole;
-import com.xl.backen.handler.CommonConst;
 import com.xl.backen.service.UsersRoleService;
 
 @Service

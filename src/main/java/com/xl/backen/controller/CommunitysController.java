@@ -1,7 +1,6 @@
 package com.xl.backen.controller;
 
 import com.github.pagehelper.Page;
-import com.xl.backen.entity.Activitys;
 import com.xl.backen.entity.Communitys;
 import com.xl.backen.handler.*;
 import com.xl.backen.model.CommunitysForAddModel;
@@ -12,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("/community")
 public class CommunitysController {
@@ -23,36 +20,36 @@ public class CommunitysController {
 	private CommunitysService cs;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Result add(@RequestBody CommunitysForAddModel communitysForAddModel) throws Exception {
+	public Result<Object> add(@RequestBody CommunitysForAddModel communitysForAddModel) throws Exception {
 		log.info("新增社区接口，参数: {}",communitysForAddModel);
 		cs.add(communitysForAddModel);
-		return new Result(BusinessStatus.SUCCESS);
+		return new Result<>(BusinessStatus.SUCCESS);
 	}
 
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
-	public ResultForPage query(@RequestBody CommunitysPageModel model) {
+	public ResultForPage<Communitys> query(@RequestBody CommunitysPageModel model) {
 		log.info("分页条件查询社区接口，参数: {}",model);
 		Page<Communitys> page = cs.query(model);
 		PageInfo<Communitys> pageInfo = new PageInfo<>(page);
 
-		return new ResultForPage(BusinessStatus.SUCCESS, pageInfo);
+		return new ResultForPage<Communitys>(BusinessStatus.SUCCESS, pageInfo);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ResultForPage update(@RequestBody Communitys communitys) {
+	public ResultForPage<Object> update(@RequestBody Communitys communitys) {
 		log.info("修改社区接口，参数: {}",communitys);
 		if(communitys.getStatus() != null) {
 			throw new BusinessException(BusinessStatus.DEL_OPEAR_ERROR);
 		}
 		cs.update(communitys);
-		return new ResultForPage(BusinessStatus.SUCCESS);
+		return new ResultForPage<>(BusinessStatus.SUCCESS);
 	}
 
 	@RequestMapping(value = "/queryOne", method = RequestMethod.GET)
-	public Result queryOne(@RequestParam("uuid") String uuid) {
+	public Result<Communitys> queryOne(@RequestParam("uuid") String uuid) {
 		log.info("查询社区单个接口,参数uuid={}",uuid);
 		Communitys communitys = cs.findById(uuid);
-		return new Result(BusinessStatus.SUCCESS,communitys);
+		return new Result<Communitys>(BusinessStatus.SUCCESS,communitys);
 	}
 
 }

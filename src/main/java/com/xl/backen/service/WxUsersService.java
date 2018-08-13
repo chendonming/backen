@@ -1,7 +1,6 @@
 package com.xl.backen.service;
 
 import com.xl.backen.entity.Peoples;
-import com.xl.backen.entity.WxUsers;
 
 /**
  * 微信用户服务

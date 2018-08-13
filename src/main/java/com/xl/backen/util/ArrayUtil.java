@@ -3,9 +3,8 @@ package com.xl.backen.util;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Iterator;
 
 /**
  * 数组操作
@@ -16,10 +15,10 @@ public class ArrayUtil {
 	 *
 	 * @return a2中没有元素并包装成集合
 	 */
-	public static Collection compareArr(Collection a1, Collection a2) {
-		Collection c = new ArrayList();
+	public static<T> List<T> compareArr(List<T> a1, List<T> a2) {
+		List<T> c = new ArrayList<T>();
 
-		Iterator iterator =  a1.iterator();
+		Iterator<T> iterator =  a1.iterator();
 		while (iterator.hasNext()) {
 			c.add(iterator.next());
 		}
@@ -36,10 +35,10 @@ public class ArrayUtil {
 	 *
 	 * @return a2和a1中相同的集合
 	 */
-	public static Collection compareArrSame(Collection a1, Collection a2) {
-		Collection c = new ArrayList();
+	public static<T> List<T> compareArrSame(List<T> a1, List<T> a2) {
+		List<T> c = new ArrayList<T>();
 
-		Iterator iterator =  a1.iterator();
+		Iterator<T> iterator =  a1.iterator();
 		while (iterator.hasNext()) {
 			c.add(iterator.next());
 		}

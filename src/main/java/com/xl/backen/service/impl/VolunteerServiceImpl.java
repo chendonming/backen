@@ -6,7 +6,6 @@ import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
-import com.xl.backen.model.PeoplesPageModel;
 import com.xl.backen.model.VolunteerModel;
 import com.xl.backen.service.VolunteerService;
 

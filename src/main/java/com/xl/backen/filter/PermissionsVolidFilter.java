@@ -18,7 +18,7 @@ public class PermissionsVolidFilter extends PermissionsAuthorizationFilter{
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        httpServletResponse.getWriter().write(JSONObject.toJSON(new Result(BusinessStatus.POWER_ERROR)).toString());
+        httpServletResponse.getWriter().write(JSONObject.toJSON(new Result<>(BusinessStatus.POWER_ERROR)).toString());
         return false;
     }
 }

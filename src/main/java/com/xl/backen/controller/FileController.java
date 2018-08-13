@@ -34,7 +34,7 @@ public class FileController {
 
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, newFileName+ "." + suffix);
-            return new Result<>(BusinessStatus.SUCCESS, nginxPath + newFileName + "." + suffix);
+            return new Result<String>(BusinessStatus.SUCCESS, nginxPath + newFileName + "." + suffix);
         } catch (Exception e) {
             throw new BusinessException(BusinessStatus.FILEUPLOAD_ERROR);
         }

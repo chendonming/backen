@@ -13,7 +13,6 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.xl.backen.dao.RolesPowerMapper;
 import com.xl.backen.entity.RolesPower;
@@ -40,7 +39,7 @@ public class RolesPowerServiceImpl implements RolesPowerService {
 
 		String roleId = model.getRoleId();
 		Users users = (Users) SecurityUtils.getSubject().getPrincipal();
-		Map m = new HashMap();
+		Map<String,Object> m = new HashMap<>();
 		m.put("roleId", model.getRoleId());
 		m.put("type", users.getLoginType());
 

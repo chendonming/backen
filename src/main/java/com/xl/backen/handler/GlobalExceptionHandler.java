@@ -19,62 +19,56 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BusinessException.class)
     @ResponseBody
-    public Result handlerBusinessException(Exception e) {
+    public Result<String> handlerBusinessException(Exception e) {
         BusinessException businessException = (BusinessException) e;
         log.warn("业务异常: {}", e);
-        return new Result(businessException.getCode(), businessException.getMsg());
+        return new Result<String>(businessException.getCode(), businessException.getMsg());
     }
 
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     @ResponseBody
-    public Result handlerHttpMediaTypeNotSupportedException(Exception e) {
-        HttpMediaTypeNotSupportedException exception = (HttpMediaTypeNotSupportedException) e;
-        return new Result(BusinessStatus.TYPE_ERROR);
+    public Result<Object> handlerHttpMediaTypeNotSupportedException(Exception e) {
+        return new Result<Object>(BusinessStatus.TYPE_ERROR);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
-    public Result handlerMethodArgumentNotValidException(Exception e) {
-        MethodArgumentNotValidException exception = (MethodArgumentNotValidException) e;
-        return new Result(BusinessStatus.PARAMETER_ERROR);
+    public Result<Object> handlerMethodArgumentNotValidException(Exception e) {
+        return new Result<Object>(BusinessStatus.PARAMETER_ERROR);
     }
 
     @ExceptionHandler(value = UnexpectedTypeException.class)
     @ResponseBody
-    public Result handlerUnexpectedTypeException(Exception e) {
-        UnexpectedTypeException exception = (UnexpectedTypeException) e;
+    public Result<Object> handlerUnexpectedTypeException(Exception e) {
         log.warn("字段校验异常",e);
-        return new Result(BusinessStatus.VOLID_ERROR);
+        return new Result<Object>(BusinessStatus.VOLID_ERROR);
     }
 
     @ExceptionHandler(value = NotOfficeXmlFileException.class)
     @ResponseBody
-    public Result handlerNotOfficeXmlFileException(Exception e) {
+    public Result<Object> handlerNotOfficeXmlFileException(Exception e) {
         log.warn("导入excel错误",e);
-        NotOfficeXmlFileException notOfficeXmlFileException = (NotOfficeXmlFileException)e;
-        return new Result(BusinessStatus.FILE_EXCEL_ERROR);
+        return new Result<Object>(BusinessStatus.FILE_EXCEL_ERROR);
     }
 
     @ExceptionHandler(value = AuthenticationException.class)
     @ResponseBody
-    public Result handlerAuthenticationException(Exception e) {
+    public Result<Object> handlerAuthenticationException(Exception e) {
         log.warn("shiro realm验证异常",e);
-        AuthenticationException notOfficeXmlFileException = (AuthenticationException)e;
-        return new Result(BusinessStatus.SHIRO_REAML_ERROR);
+        return new Result<Object>(BusinessStatus.SHIRO_REAML_ERROR);
     }
 
     @ExceptionHandler(value = MultipartException.class)
     @ResponseBody
-    public Result handlerMultipartException(Exception e) {
+    public Result<Object> handlerMultipartException(Exception e) {
         log.warn("文件异常",e);
-        MultipartException notOfficeXmlFileException = (MultipartException)e;
-        return new Result(BusinessStatus.FILE_EXIST_ERROR);
+        return new Result<Object>(BusinessStatus.FILE_EXIST_ERROR);
     }
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public Result handler(Exception e) {
+    public Result<String> handler(Exception e) {
         log.warn("未知异常",e);
-        return new Result(BusinessStatus.ERROR,e.getMessage());
+        return new Result<String>(BusinessStatus.ERROR,e.getMessage());
     }
 }

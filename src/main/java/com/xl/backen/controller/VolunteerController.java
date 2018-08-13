@@ -24,27 +24,27 @@ public class VolunteerController {
   private VolunteerService vs;
 
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public Result add(@RequestBody VolunteerModel volunteerModel) {
+  public Result<Object> add(@RequestBody VolunteerModel volunteerModel) {
     vs.add(volunteerModel);
     return new Result<>(BusinessStatus.SUCCESS);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public Result update(@RequestBody VolunteerModel volunteerModel) {
+  public Result<Object> update(@RequestBody VolunteerModel volunteerModel) {
     vs.update(volunteerModel);
     return new Result<>(BusinessStatus.SUCCESS);
   }
 
   @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
-  public Result queryOne(@RequestBody VolunteerModel volunteerModel) {
+  public Result<Object> queryOne(@RequestBody VolunteerModel volunteerModel) {
     return new Result<>(BusinessStatus.SUCCESS, vs.queryOne(volunteerModel.getUuid()));
   }
 
   @RequestMapping(value = "/queryList", method = RequestMethod.POST)
-  public ResultForPage queryList(@RequestBody VolunteerModel volunteerModel) {
+  public ResultForPage<VolunteerModel> queryList(@RequestBody VolunteerModel volunteerModel) {
     Page<VolunteerModel> pModels = vs.queryList(volunteerModel);
     PageInfo<VolunteerModel> pageInfo = new PageInfo<>(pModels);
-    return new ResultForPage(BusinessStatus.SUCCESS, pageInfo);
+    return new ResultForPage<VolunteerModel>(BusinessStatus.SUCCESS, pageInfo);
   }
 
 }

@@ -7,7 +7,6 @@ import com.xl.backen.entity.TasksPeoples;
 import com.xl.backen.model.TasksPeopleModel;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -38,5 +37,5 @@ public interface TasksPeoplesMapper {
     /**
      * 根据people_id和tasks_id count
      */
-    int exist(Map map);
+    int exist(Map<String,String> map);
 }

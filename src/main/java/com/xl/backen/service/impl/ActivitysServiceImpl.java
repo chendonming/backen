@@ -6,18 +6,11 @@ import java.util.UUID;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.ActivitysMapper;
-import com.xl.backen.dao.ActivitysPeoplesMapper;
 import com.xl.backen.entity.Activitys;
-import com.xl.backen.entity.ActivitysPeoples;
-import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Users;
-import com.xl.backen.handler.BusinessException;
-import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.ActivitysPageModel;
-import com.xl.backen.model.ActivitysPeopleModel;
 import com.xl.backen.service.ActivitysService;
-import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
 
 import org.apache.shiro.SecurityUtils;
@@ -32,9 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ActivitysServiceImpl implements ActivitysService {
 	@Autowired
 	private ActivitysMapper as;
-
-	@Autowired
-	private ActivitysPeoplesMapper apm;
 
 	@Override
 	@Transactional

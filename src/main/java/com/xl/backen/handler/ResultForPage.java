@@ -3,12 +3,12 @@ package com.xl.backen.handler;
 /**
  * ResultForPage
  */
-public class ResultForPage {
+public class ResultForPage<T> {
   private Integer code;
   private String msg;
-  private PageInfo data;
+  private PageInfo<T> data;
 
-  public ResultForPage(BusinessStatus businessStatus, PageInfo pageInfo) {
+  public ResultForPage(BusinessStatus businessStatus, PageInfo<T> pageInfo) {
     this.code = businessStatus.getCode();
     this.msg = businessStatus.getMsg();
     this.data = pageInfo;
@@ -22,14 +22,14 @@ public class ResultForPage {
   /**
    * @return the data
    */
-  public PageInfo getData() {
+  public PageInfo<T> getData() {
     return data;
   }
 
   /**
    * @param data the data to set
    */
-  public void setData(PageInfo data) {
+  public void setData(PageInfo<T> data) {
     this.data = data;
   }
 

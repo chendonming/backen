@@ -7,7 +7,6 @@ import com.xl.backen.dao.TasksPeoplesMapper;
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Tasks;
 import com.xl.backen.entity.TasksPeoples;
-import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.model.AppTasksModel;
@@ -16,10 +15,7 @@ import com.xl.backen.model.TasksPeopleModel;
 import com.xl.backen.service.AppTasksService;
 import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
-import javafx.concurrent.Task;
 import org.apache.shiro.SecurityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +24,6 @@ import java.util.*;
 
 @Service
 public class AppTasksServiceImpl implements AppTasksService {
-	private static Logger log = LoggerFactory.getLogger(AppTasksServiceImpl.class);
 
 	@Autowired
 	private TasksMapper tm;

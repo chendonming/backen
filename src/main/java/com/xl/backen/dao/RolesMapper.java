@@ -3,8 +3,6 @@ package com.xl.backen.dao;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Roles;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -23,5 +21,5 @@ public interface RolesMapper {
 
     int updateByPrimaryKey(Roles record);
     
-    Page<Roles> queryAll(Map map);
+    Page<Roles> queryAll(Map<String,String> map);
 }

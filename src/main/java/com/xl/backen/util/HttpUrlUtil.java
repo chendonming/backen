@@ -82,9 +82,8 @@ public class HttpUrlUtil {
 
 			// 连接发起请求,处理服务器响应  (从连接获取到输入流并包装为bufferedReader)
 			BufferedReader bf = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
 			// 循环读取流,若不到结尾处
-			while ((line = bf.readLine()) != null) {
+			while ((bf.readLine()) != null) {
 				sb.append(bf.readLine());
 			}
 			bf.close();    // 重要且易忽略步骤 (关闭流,切记!)

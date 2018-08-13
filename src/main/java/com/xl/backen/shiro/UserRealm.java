@@ -2,16 +2,12 @@ package com.xl.backen.shiro;
 
 import com.xl.backen.dao.PowersMapper;
 import com.xl.backen.dao.UsersMapper;
-import com.xl.backen.entity.Menus;
-import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.Powers;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
-import com.xl.backen.model.UsersModel;
 
 import java.util.*;
 
-import org.apache.catalina.User;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -20,8 +16,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  * 后台管理员端的登录校验和权限控制
@@ -47,7 +41,7 @@ public class UserRealm extends AuthorizingRealm {
 			if (us != null) {
 				Set<String> permis = new HashSet<String>();
 
-				Map map = new HashMap();
+				Map<String,Object> map = new HashMap<>();
 				map.put("roleId", us.getRoleId());
 				map.put("type", us.getLoginType());
 

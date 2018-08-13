@@ -23,29 +23,29 @@ public class ShopsController {
     private ShopsService ss;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Result add(@RequestBody Shops shops) {
+    public Result<Object> add(@RequestBody Shops shops) {
         ss.insertSelective(shops);
-        return new Result(BusinessStatus.SUCCESS);
+        return new Result<>(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result update(@RequestBody Shops shops) {
+    public Result<Object> update(@RequestBody Shops shops) {
         ss.updateByPrimaryKeySelective(shops);
-        return new Result(BusinessStatus.SUCCESS);
+        return new Result<>(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
-    public Result queryOne(@RequestBody Shops shops) {
-        return new Result(BusinessStatus.SUCCESS, ss.selectByPrimaryKey(shops.getUuid()));
+    public Result<Shops> queryOne(@RequestBody Shops shops) {
+        return new Result<Shops>(BusinessStatus.SUCCESS, ss.selectByPrimaryKey(shops.getUuid()));
     }
     
     /*
      * 分页查询 : pageSize, pageNum
      */
     @RequestMapping(value = "/queryList", method = RequestMethod.POST)
-    public ResultForPage queryList(@RequestBody Map<String, Object> map) {
+    public ResultForPage<Shops> queryList(@RequestBody Map<String, Object> map) {
     	Page<Shops> paShops = ss.query(map);
     	PageInfo<Shops> pageInfo = new PageInfo<>(paShops);
-        return new ResultForPage(BusinessStatus.SUCCESS, pageInfo);
+        return new ResultForPage<Shops>(BusinessStatus.SUCCESS, pageInfo);
     }
 }
