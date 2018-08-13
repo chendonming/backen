@@ -11,7 +11,6 @@ import com.xl.backen.service.ShopsService;
 import java.util.Map;
 import java.util.UUID;
 
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,7 @@ public class ShopsServiceImpl implements ShopsService {
 	@Override
 	public int insertSelective(Shops record) {
 		record.setUuid(UUID.randomUUID().toString().replace("-", ""));
-		Users user = (Users) SecurityUtils.getSubject().getPrincipal();
-		record.setCommunityId(user.getCommunityId());
+		record.setCommunityId(record.getCommunityId());
 		record.setStatus(CommonConst.NORMAL_STATUS);
 		
 		return sm.insertSelective(record);
@@ -42,16 +40,15 @@ public class ShopsServiceImpl implements ShopsService {
 	}
 
 	@Override
-	public Page<Shops> query(Map<String, Integer> map) {
-		Users user = (Users) SecurityUtils.getSubject().getPrincipal();
-		Integer pageNum = map.get("pageNum");
-		Integer pageSize = map.get("pageSize");
+	public Page<Shops> query(Map<String, Object> map) {
+		Integer pageNum = (Integer)map.get("pageNum");
+		Integer pageSize = (Integer)map.get("pageSize");
 		
 		if (pageNum != null && pageSize != null) {
 			PageHelper.startPage(pageNum, pageSize);
 		}
 
-		return sm.query(user.getCommunityId());
+		return sm.query(map);
 	}
 
 }

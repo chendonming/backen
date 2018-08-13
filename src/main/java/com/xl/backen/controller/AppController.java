@@ -33,7 +33,7 @@ public class AppController {
 	private AppTasksService at;
 
 	@RequestMapping(value = "/queryAct", method = RequestMethod.POST)
-	public ResultForPage query(@RequestBody @Valid ActivitysPageModel model) {
+	public ResultForPage queryAct(@RequestBody @Valid ActivitysPageModel model) {
 		log.info("活动分页条件查询，参数model={}", model);
 		Page<Activitys> tasks = ts.query(model);
 
@@ -43,7 +43,7 @@ public class AppController {
 	}
 
 	@RequestMapping(value = "/queryTasks", method = RequestMethod.POST)
-	public ResultForPage query(@RequestBody @Valid TasksPageModel model) {
+	public ResultForPage queryTasks(@RequestBody @Valid TasksPageModel model) {
 		log.info("任务分页条件查询，参数model={}", model);
 		Page<Tasks> tasks = at.query(model);
 
@@ -88,7 +88,7 @@ public class AppController {
 	}
 
 	@RequestMapping(value = "/queryMyAct", method = RequestMethod.POST)
-	public Result queryAct(@RequestBody ActivitysPeopleModel ap) {
+	public Result queryMyAct(@RequestBody ActivitysPeopleModel ap) {
 		log.info("查询我的活动，参数={}", ap);
 		Page<Activitys> activitys = ts.findByPeople(ap);
 		PageInfo<Activitys> activitysPageInfo = new PageInfo<>(activitys);
@@ -102,7 +102,7 @@ public class AppController {
 	 * @return
 	 */
 	@RequestMapping(value = "/queryTaskPeople", method = RequestMethod.POST)
-	public Result queryTasksPeople(@RequestBody TasksPeopleModel tp) {
+	public Result queryTaskPeople(@RequestBody TasksPeopleModel tp) {
 		Page<Peoples> activitys = at.findByTasksId(tp);
 		PageInfo<Peoples> activitysPageInfo = new PageInfo<>(activitys);
 		return new Result(BusinessStatus.SUCCESS, activitysPageInfo);
@@ -115,7 +115,7 @@ public class AppController {
 	 * @return
 	 */
 	@RequestMapping(value = "/queryActPeople", method = RequestMethod.POST)
-	public Result queryActsPeople(@RequestBody ActivitysPeopleModel ap) {
+	public Result queryActPeople(@RequestBody ActivitysPeopleModel ap) {
 		Page<Peoples> activitys = ts.findByActId(ap);
 		PageInfo<Peoples> activitysPageInfo = new PageInfo<>(activitys);
 		return new Result(BusinessStatus.SUCCESS, activitysPageInfo);

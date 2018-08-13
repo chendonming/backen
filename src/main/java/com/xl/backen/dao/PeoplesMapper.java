@@ -3,6 +3,8 @@ package com.xl.backen.dao;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.model.PeoplesPageModel;
+import com.xl.backen.model.VolunteerModel;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,4 +41,6 @@ public interface PeoplesMapper {
 	List<Peoples> queryAll(String communityId);
 
 	Peoples queryByOpenId(String openId);
+
+	Page<VolunteerModel> queryList();
 }

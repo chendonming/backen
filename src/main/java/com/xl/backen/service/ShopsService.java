@@ -14,5 +14,5 @@ public interface ShopsService {
     int updateByPrimaryKeySelective(Shops record);
 
     //分页查询商品
-    Page<Shops> query(Map<String,Integer> map);
+    Page<Shops> query(Map<String,Object> map);
 }

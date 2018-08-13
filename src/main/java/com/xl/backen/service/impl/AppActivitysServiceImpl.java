@@ -70,7 +70,10 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 		// 根据任务id进行修改
 		synchronized (ap) {
 			Activitys act = as.selectByPrimaryKey(actId);
-			act.setJoinPeople(act.getJoinPeople() + 1);
+
+			int joinPeople = act.getJoinPeople() == null ? 0 : act.getJoinPeople();
+
+			act.setJoinPeople(joinPeople + 1);
 
 			count = as.updateByPrimaryKeySelective(act);
 
@@ -98,9 +101,6 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 		if (ap.getPageNum() != null && ap.getPageSize() != null) {
 			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
 		}
-
-		ap.setActivityId(ap.getActivityId());
-
 		return apm.findByActId(ap);
 	}
 

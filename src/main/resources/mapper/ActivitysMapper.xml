@@ -79,15 +79,15 @@
                 <!--&lt;!&ndash; 报名未开始 &ndash;&gt;-->
                 <!--now() between join_start_time and join_end_time and-->
             <!--</if>-->
-            <if test="flag != null and flag == 1">
+            <if test="flag != null and flag == 3">
                 <!-- 活动未开始 -->
                 now() &lt; start_time and
             </if>
-            <if test="flag != null and flag == 2">
+            <if test="flag != null and flag == 4">
                 <!-- 活动进行中 -->
                 now() between start_time and end_time and
             </if>
-            <if test="flag != null and flag == 3">
+            <if test="flag != null and flag == 5">
                 <!-- 活动已结束 -->
                 now() &gt; end_time and
             </if>

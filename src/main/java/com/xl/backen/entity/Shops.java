@@ -20,28 +20,38 @@ public class Shops implements Serializable {
     private String createName;
 
     private Integer status;
-    
+
     private String communityId;
-    
+
+    private String communityName;
+
     private String coverPic;
-    
+
+    public String getCommunityName() {
+        return this.communityName;
+    }
+
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
+    }
+
     public String getCoverPic() {
-		return coverPic;
-	}
+        return coverPic;
+    }
 
-	public void setCoverPic(String coverPic) {
-		this.coverPic = coverPic;
-	}
+    public void setCoverPic(String coverPic) {
+        this.coverPic = coverPic;
+    }
 
-	public String getCommunityId() {
-		return communityId;
-	}
+    public String getCommunityId() {
+        return communityId;
+    }
 
-	public void setCommunityId(String communityId) {
-		this.communityId = communityId;
-	}
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
+    }
 
-	public String getUuid() {
+    public String getUuid() {
         return uuid;
     }
 

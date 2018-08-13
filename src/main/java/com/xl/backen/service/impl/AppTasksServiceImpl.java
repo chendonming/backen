@@ -72,9 +72,11 @@ public class AppTasksServiceImpl implements AppTasksService {
 		}
 
 		// 根据任务id进行修改
-		synchronized (tp) {
+		synchronized (new Object()) {
 			Tasks task = tm.selectByPrimaryKey(taskId);
-			task.setJoinPeople(task.getJoinPeople() + 1);
+			int joinPeople = task.getJoinPeople() == null ? 0 : task.getJoinPeople();
+
+			task.setJoinPeople(joinPeople + 1);
 
 			count = tm.updateByPrimaryKeySelective(task);
 

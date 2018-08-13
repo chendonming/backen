@@ -43,14 +43,14 @@
     <select id="findByPeople" resultMap="ActPeoplesModelMap">
         select
         <include refid="acts_list"/>
-        from tb_tasks_peoples tp right join tb_activitys t on t.uuid = tp.activity_id
+        from tb_activitys_peoples tp right join tb_activitys t on t.uuid = tp.activity_id
         where tp.people_id = #{peopleId}
     </select>
 
     <!--查询活动下面的报名人数-->
-    <select id="findByTasksId" resultMap="PeoplesModelMap">
+    <select id="findByActId" resultMap="PeoplesModelMap">
       select p.uuid,p.nickname,p.truename,p.head_pic
-      from tb_tasks_peoples tp right join tb_peoples p on tp.people_id = p.uuid
+      from tb_activitys_peoples tp right join tb_peoples p on tp.people_id = p.uuid
       where tp.activity_id = #{activityId}
     </select>
 
