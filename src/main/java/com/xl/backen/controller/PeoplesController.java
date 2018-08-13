@@ -1,12 +1,12 @@
 package com.xl.backen.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.ResultForPage;
 import com.xl.backen.model.PeoplesPageModel;
+import com.xl.backen.service.WxUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +19,7 @@ import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
 import com.xl.backen.service.PeoplesService;
+import sun.misc.Request;
 
 /**
  * 居民管理
@@ -30,6 +31,9 @@ import com.xl.backen.service.PeoplesService;
 public class PeoplesController {
     @Autowired
     private PeoplesService ps;
+
+    @Autowired
+    private WxUsersService uss;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result add(@RequestBody Peoples pe) {
@@ -45,8 +49,8 @@ public class PeoplesController {
 
     @RequestMapping(value = "/addByImport", method = RequestMethod.POST)
     public Result importPeople(@RequestParam("file") MultipartFile file) throws Exception {
-        ps.importPeople(file);
-        return new Result(BusinessStatus.SUCCESS);
+        int count = ps.importPeople(file);
+        return new Result(BusinessStatus.SUCCESS, count + "条记录改变");
     }
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
@@ -54,6 +58,18 @@ public class PeoplesController {
         Page<Peoples> peoples = ps.query(model);
         PageInfo<Peoples> peoplesPageInfo = new PageInfo<Peoples>(peoples);
         return new ResultForPage(BusinessStatus.SUCCESS, peoplesPageInfo);
+    }
+
+
+    /**
+     * APP实名认证
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/verified", method = RequestMethod.POST)
+    public Result verified(@RequestBody Peoples peoples){
+        uss.authentication(peoples);
+        return new Result(BusinessStatus.SUCCESS);
     }
 
 }

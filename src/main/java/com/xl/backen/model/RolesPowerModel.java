@@ -1,7 +1,5 @@
 package com.xl.backen.model;
 
-import com.xl.backen.entity.Powers;
-
 import java.util.List;
 
 public class RolesPowerModel {

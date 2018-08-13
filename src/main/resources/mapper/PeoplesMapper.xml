@@ -12,16 +12,18 @@
     <result column="is_real_name" jdbcType="INTEGER" property="isRealName" />
     <result column="id_card" jdbcType="VARCHAR" property="idCard" />
     <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="community_name" jdbcType="VARCHAR" property="communityName" />
     <result column="total_integral" jdbcType="INTEGER" property="totalIntegral" />
     <result column="integral" jdbcType="INTEGER" property="integral" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
+    <result column="role" jdbcType="VARCHAR" property="role"/>
   </resultMap>
   <sql id="Base_Column_List">
     uuid, nickname, truename, head_pic, mobile, sex, password, is_real_name, id_card, 
-    community_id, total_integral, integral, status, create_time, update_time
+    community_id, total_integral, integral, status, create_time, update_time,open_id,sys_type,role
   </sql>
 
   <!--通过手机号码查找用户信息-->
@@ -35,22 +37,36 @@
   <!-- 条件分页查询 -->
   <select id="query" resultMap="BaseResultMap">
   	select
-  	<include refid="Base_Column_List" />
-  	from tb_peoples
+  	  p.* ,c.name as community_name
+  	from tb_peoples p left join tb_communitys c on c.uuid = p.community_id
     where
     <if test="truename != null and truename != ''">
-        truename like CONCAT(#{truename},'%') and
+        p.truename like CONCAT(#{truename},'%') and
     </if>
     <if test="sex != null and sex != ''">
-        sex=#{sex} and
+        p.sex=#{sex} and
     </if>
     <if test="communityId != null and communityId  != ''">
-        community_id=#{communityId} and
+        p.community_id=#{communityId} and
     </if>
     <if test="isRealName != null and isRealName != ''">
-        is_real_name=#{isRealName} and
+        p.is_real_name=#{isRealName} and
     </if>
-    status=1
+    p.status=1
+  </select>
+
+  <!--查询社区下的所有居民信息-->
+  <select id="queryAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from tb_peoples s
+    where s.community_id = #{communityId}
+  </select>
+
+  <!--根据openid查询居民信息-->
+  <select id="queryByOpenId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from tb_peoples s
+    where s.open_id=#{openId}
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -125,6 +141,12 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="sysType != null">
+        sys_type,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -172,6 +194,12 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="sysType!= null">
+        #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role, jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Peoples">
@@ -218,6 +246,12 @@
       </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        role = #{role, jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId, jdbcType=VARCHAR},
       </if>
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}

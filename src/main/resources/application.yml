@@ -14,4 +14,4 @@ entity_package: com.xl.backen.entity
 
 # 权限菜单配置
 permission:
-  menusModel: task,activity,community,permiss,trash,people,volunteer,shop
+  menusModel: task,activity,community,permiss,trash,people,volunteer,shop,app,garbage

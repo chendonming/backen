@@ -126,10 +126,11 @@ public class PeoplesPOI {
 
 				cell = row.getCell(3);
 				String idCard = cell.getStringCellValue();
-				if (StringUtils.isEmpty(idCard) || idCard.length() != 18) {
-					throw new BusinessException(BusinessStatus.IMPORT_ERROR.getCode(),
-						BusinessStatus.IMPORT_ERROR.getMsg() + ": 第" + i + "行  第3列 校验错误");
-				}
+//				if (StringUtils.isEmpty(idCard) || idCard.length() != 18) {
+//					throw new BusinessException(BusinessStatus.IMPORT_ERROR.getCode(),
+//						BusinessStatus.IMPORT_ERROR.getMsg() + ": 第" + i + "行  第3列 校验错误");
+//				}
+
 				user.setIdCard(idCard);
 
 				users.add(user);

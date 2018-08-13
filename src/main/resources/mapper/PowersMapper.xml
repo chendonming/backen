@@ -17,6 +17,7 @@
   <resultMap id="parentMenusMap" type="com.xl.backen.entity.ParentMenus">
     <id column="m_uuid" jdbcType="VARCHAR" property="uuid"/>
     <result column="m_name" jdbcType="VARCHAR" property="name"/>
+    <result column="m_meun_name" jdbcType="VARCHAR" property="meunName"/>
     <result column="m_code" jdbcType="VARCHAR" property="code"/>
     <result column="m_create_time" jdbcType="TIMESTAMP" property="createTime"/>
     <result column="m_update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -41,7 +42,7 @@
   
   <sql id="parent_menus_list">
     m.uuid as m_uuid,m.name as m_name, m.code as m_code ,m.create_time as m_create_time,
-    m.update_time as m_update_time, m.type as m_type,m.weight as m_weight
+    m.update_time as m_update_time, m.type as m_type,m.weight as m_weight,m.meun_name as m_meun_name
   </sql>
 
   <sql id="powers_list">

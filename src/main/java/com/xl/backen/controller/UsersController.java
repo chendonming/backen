@@ -1,13 +1,16 @@
 package com.xl.backen.controller;
 
+import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Roles;
 import com.xl.backen.entity.Users;
+import com.xl.backen.entity.WxUsers;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
 import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.PeoplesService;
 import com.xl.backen.service.PowersService;
 import com.xl.backen.service.UsersService;
+import com.xl.backen.service.WxUsersService;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +34,9 @@ public class UsersController {
 	@Autowired
 	private PowersService psr;
 
+	@Autowired
+	private WxUsersService uss;
+
 	/**
 	 * 管理员登录
 	 * @param user
@@ -50,8 +56,8 @@ public class UsersController {
 	 * 小程序登录接口
 	 */
 	@RequestMapping(value = "/loginApp", method = RequestMethod.POST)
-	public Result loginApp() {
-		return null;
+	public Result loginApp(@RequestBody Peoples peoples) {
+		return new Result(BusinessStatus.SUCCESS,uss.login(peoples));
 	}
 
 	/**

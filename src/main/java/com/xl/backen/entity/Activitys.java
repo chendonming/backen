@@ -48,6 +48,16 @@ public class Activitys implements Serializable {
 
 	private String sysType;
 
+	private String createName;
+
+	public String getCreateName() {
+		return createName;
+	}
+
+	public void setCreateName(String createName) {
+		this.createName = createName;
+	}
+
 	public String getCommunityName() {
 		return communityName;
 	}

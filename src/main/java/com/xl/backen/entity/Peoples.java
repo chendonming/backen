@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Peoples implements Serializable {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 8889596202350070028L;
+	private static final long serialVersionUID = 1474722109591883058L;
 
 	private String uuid;
 
@@ -29,6 +26,8 @@ public class Peoples implements Serializable {
 
 	private String communityId;
 
+	private String communityName;
+
 	private Integer totalIntegral;
 
 	private Integer integral;
@@ -40,6 +39,82 @@ public class Peoples implements Serializable {
 	private Date updateTime;
 
 	private String sysType;
+
+	private String role;
+
+	private String openId;
+
+	private String code;
+
+	private String sessionId;
+
+	@Override
+	public String toString() {
+		return "Peoples{" + "uuid='" + uuid + '\'' + ", nickname='" + nickname + '\'' + ", truename='" + truename + '\''
+				+ ", headPic='" + headPic + '\'' + ", mobile='" + mobile + '\'' + ", sex=" + sex + ", password='"
+				+ password + '\'' + ", isRealName=" + isRealName + ", idCard='" + idCard + '\'' + ", communityId='"
+				+ communityId + '\'' + ", totalIntegral=" + totalIntegral + ", integral=" + integral + ", status="
+				+ status + ", createTime=" + createTime + ", updateTime=" + updateTime + ", sysType='" + sysType + '\''
+				+ ", role=" + role + ", openId='" + openId + '\'' + ", code='" + code + '\'' + ", sessionId='"
+				+ sessionId + '\'' + '}';
+	}
+
+	public String getCommunityName() {
+		return communityName;
+	}
+
+	public void setCommunityName(String communityName) {
+		this.communityName = communityName;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Peoples) {
+			Peoples peoples = (Peoples) obj;
+			if (peoples.mobile.equals(this.mobile)) {
+				// 手机号码相同 相等
+				return true;
+			}
+		}
+		return super.equals(obj);
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 
 	public String getSysType() {
 		return sysType;

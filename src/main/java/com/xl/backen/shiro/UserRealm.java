@@ -11,6 +11,7 @@ import com.xl.backen.model.UsersModel;
 
 import java.util.*;
 
+import org.apache.catalina.User;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -39,30 +40,33 @@ public class UserRealm extends AuthorizingRealm {
 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-		Users us = (Users) SecurityUtils.getSubject().getPrincipal();
+		Object o = SecurityUtils.getSubject().getPrincipal();
 
-		if (us != null) {
-			Set<String> permis = new HashSet<String>();
+		if (o instanceof Users) {
+			Users us = (Users) o;
+			if (us != null) {
+				Set<String> permis = new HashSet<String>();
 
-			Map map = new HashMap();
-			map.put("roleId", us.getRoleId());
-			map.put("type", us.getLoginType());
+				Map map = new HashMap();
+				map.put("roleId", us.getRoleId());
+				map.put("type", us.getLoginType());
 
-			List<Powers> powers = pm.queryByRoleId(map);
+				List<Powers> powers = pm.queryByRoleId(map);
 
-			for (Powers p : powers) {
-				System.out.println("追加code" + p.getCode());
-				permis.add(p.getCode());
+				for (Powers p : powers) {
+					System.out.println("追加code" + p.getCode());
+					permis.add(p.getCode());
+				}
+
+				info.addStringPermissions(permis);
 			}
-
-			info.addStringPermissions(permis);
 		}
-
 		return info;
 	}
 
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
+		throws AuthenticationException {
 		CustomizedToken token = (CustomizedToken) authenticationToken;
 
 		if (token.getLoginType() == CommonConst.LOGIN_TYPE_PC) {
@@ -75,11 +79,7 @@ public class UserRealm extends AuthorizingRealm {
 
 			Users usersModel = (Users) us.findByMobile(map);
 			usersModel.setLoginType(CommonConst.LOGIN_TYPE_PC);
-			if (usersModel == null) {
-				return null;
-			} else {
-				return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
-			}
+			return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
 		} else if (token.getLoginType() == CommonConst.LOGIN_TYPE_COMMUNITY) {
 			System.out.println("社区pc登录");
 
@@ -89,11 +89,7 @@ public class UserRealm extends AuthorizingRealm {
 
 			Users usersModel = (Users) us.findByMobile(map);
 			usersModel.setLoginType(CommonConst.LOGIN_TYPE_COMMUNITY);
-			if (usersModel == null) {
-				return null;
-			} else {
-				return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
-			}
+			return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
 		} else {
 			return null;
 		}

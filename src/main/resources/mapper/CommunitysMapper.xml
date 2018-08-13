@@ -1,46 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xl.backen.dao.CommunitysMapper">
-  <resultMap id="BaseResultMap" type="com.xl.backen.entity.Communitys">
-    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="integral" jdbcType="INTEGER" property="integral" />
-    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
-    <result column="total_integral" jdbcType="INTEGER" property="totalIntegral" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="status" jdbcType="INTEGER" property="status"/>
-    <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="leader_name" jdbcType="VARCHAR" property="leaderName"/>
-    <result column="leader_mobile" jdbcType="VARCHAR"  property="leaderMobile"/>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.xl.backen.entity.Communitys">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="total_integral" jdbcType="INTEGER" property="totalIntegral"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="leader_name" jdbcType="VARCHAR" property="leaderName"/>
+        <result column="leader_mobile" jdbcType="VARCHAR" property="leaderMobile"/>
+    </resultMap>
+
+    <resultMap id="ActivityPeoplesModelMap" type="com.xl.backen.entity.Activitys">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="limit_people" jdbcType="INTEGER" property="limitPeople"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="join_people" jdbcType="INTEGER" property="joinPeople"/>
+        <result column="data_form" jdbcType="INTEGER" property="dataForm"/>
+        <result column="coverpic" jdbcType="VARCHAR" property="coverpic"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
     uuid, name, integral, create_user, total_integral, remark, status,create_time, update_time,sys_type,leader_name,leader_mobile
   </sql>
+    <sql id="activity_list">
+    t.uuid, t.name, t.start_time, t.end_time, t.location, t.limit_people, t.integral,
+    t.join_people, t.data_form, t.coverpic, t.description
+  </sql>
 
-  <select id="query" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tb_communitys
-    where
-    <if test="name != null and name != ''">
-      name like CONCAT(#{name},'%') and
-    </if>
-    status = 1 and sys_type=#{sysType}
-  </select>
+    <!--查询我的活动-->
+    <select id="findByPeople" resultMap="ActivityPeoplesModelMap">
+        select
+        <include refid="activity_list"/>
+        from tb_activitys_peoples tp right join tb_activitys t on t.uuid = tp.activity_id
+        where tp.people_id = #{peopleId}
+    </select>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tb_communitys
-    where uuid = #{uuid,jdbcType=VARCHAR} and status = 1
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_communitys
+        where
+        <if test="name != null and name != ''">
+            name like CONCAT(#{name},'%') and
+        </if>
+        status = 1 and sys_type=#{sysType}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_communitys
+        where uuid = #{uuid,jdbcType=VARCHAR} and status = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_communitys
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.xl.backen.entity.Communitys">
+    <insert id="insert" parameterType="com.xl.backen.entity.Communitys">
     insert into tb_communitys (uuid, name, integral, 
       create_user, total_integral, remark, status
       create_time, update_time, sys_type)
@@ -50,119 +77,119 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}),
       #{sysType, jdbcType=VARCHAR}
   </insert>
-  <insert id="insertSelective" parameterType="com.xl.backen.entity.Communitys">
-    insert into tb_communitys
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uuid != null">
-        uuid,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="integral != null">
-        integral,
-      </if>
-      <if test="createUser != null">
-        create_user,
-      </if>
-      <if test="totalIntegral != null">
-        total_integral,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="sysType != null">
-        sys_type,
-      </if>
-      <if test="leaderName != null">
-        leader_name,
-      </if>
-      <if test="leaderMobile != null">
-        leader_mobile,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uuid != null">
-        #{uuid,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="integral != null">
-        #{integral,jdbcType=INTEGER},
-      </if>
-      <if test="createUser != null">
-        #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="totalIntegral != null">
-        #{totalIntegral,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sysType != null">
-        #{sysType,jdbcType=VARCHAR},
-      </if>
-      <if test="leaderName != null">
-          #{leaderName, jdbcType=VARCHAR},
-      </if>
-      <if test="leaderMobile != null">
-        #{leaderMobile, jdbcType=VARCHAR}
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Communitys">
-    update tb_communitys
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="integral != null">
-        integral = #{integral,jdbcType=INTEGER},
-      </if>
-      <if test="createUser != null">
-        create_user = #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="totalIntegral != null">
-        total_integral = #{totalIntegral,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sysType != null">
-        sys_type = #{sysType,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where uuid = #{uuid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Communitys">
+    <insert id="insertSelective" parameterType="com.xl.backen.entity.Communitys">
+        insert into tb_communitys
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="integral != null">
+                integral,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="totalIntegral != null">
+                total_integral,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="sysType != null">
+                sys_type,
+            </if>
+            <if test="leaderName != null">
+                leader_name,
+            </if>
+            <if test="leaderMobile != null">
+                leader_mobile,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="integral != null">
+                #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="totalIntegral != null">
+                #{totalIntegral,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sysType != null">
+                #{sysType,jdbcType=VARCHAR},
+            </if>
+            <if test="leaderName != null">
+                #{leaderName, jdbcType=VARCHAR},
+            </if>
+            <if test="leaderMobile != null">
+                #{leaderMobile, jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Communitys">
+        update tb_communitys
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="integral != null">
+                integral = #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="totalIntegral != null">
+                total_integral = #{totalIntegral,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sysType != null">
+                sys_type = #{sysType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Communitys">
     update tb_communitys
     set name = #{name,jdbcType=VARCHAR},
       integral = #{integral,jdbcType=INTEGER},

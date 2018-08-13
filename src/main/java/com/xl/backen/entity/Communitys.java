@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Communitys implements Serializable {
-	private static final long serialVersionUID = -6580297936050468566L;
+	private static final long serialVersionUID = 1092957841392029071L;
+
 	private String uuid;
 
 	private String name;

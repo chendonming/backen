@@ -46,4 +46,14 @@ public class CommonConst {
     //菜单权限所属type
     public static final Integer BACKEN_TYPE = 1; //总后台
     public static final Integer COMMUNITY_TYPE = 2; //社区
+
+    //微信app id
+    public static final String APPID = "wx886ac99b96a07e94";
+    public static final String APPSECRET = "4c2dce496c53dc2d655822ae25bebd8b";
+
+
+    /**
+     * 积分
+     */
+    public static final Integer INIT_INTEGRAL = 20; //首次实名认证
 }

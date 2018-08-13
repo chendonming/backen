@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Shops implements Serializable {
     private static final long serialVersionUID = 6491725416424475800L;
+
     private String uuid;
 
     private String name;
@@ -19,8 +20,28 @@ public class Shops implements Serializable {
     private String createName;
 
     private Integer status;
+    
+    private String communityId;
+    
+    private String coverPic;
+    
+    public String getCoverPic() {
+		return coverPic;
+	}
 
-    public String getUuid() {
+	public void setCoverPic(String coverPic) {
+		this.coverPic = coverPic;
+	}
+
+	public String getCommunityId() {
+		return communityId;
+	}
+
+	public void setCommunityId(String communityId) {
+		this.communityId = communityId;
+	}
+
+	public String getUuid() {
         return uuid;
     }
 

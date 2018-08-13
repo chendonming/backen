@@ -5,13 +5,13 @@ package com.xl.backen.handler;
  */
 public enum BusinessStatus {
     //错误码
-    ERROR(-1, "未知错误"),
+    ERROR(999, "系统异常"),
 
     //4开头错误码
     USERNAME_REQ(400, "用户名是必须的"),
     PASSWORD_REQ(401, "密码是必须的"),
     TYPE_ERROR(402, "表单方式提交是不支持的"),
-    VOLID_ERROR(402, "字段校验未通过"),
+    VOLID_ERROR(403, "字段校验未通过"),
     PARAMETER_ERROR(499, "参数异常"),
     
     //5开头后台错误
@@ -27,7 +27,7 @@ public enum BusinessStatus {
     MOBILE_ERROR(2006, "手机号码已注册"),
     ROLE_ERROR(2007,"角色下面存在用户，不能进行删除"),
     DEL_OPEAR_ERROR(2008, "不能通过修改接口直接更改status状态"),
-    SHIRO_REAML_ERROR(2999, "shiro realm验证异常"),
+    SHIRO_REAML_ERROR(2999, "用户名或密码错误"),
 
     /**
      * 任务活动模块异常
@@ -47,9 +47,18 @@ public enum BusinessStatus {
 
     //文件上传异常
     FILEUPLOAD_ERROR(2001, "文件上传异常"),
+    FILE_EXIST_ERROR(2002, "文件为空"),
 
     //展示
-    SUCCESS(200, "成功");
+    SUCCESS(200, "成功"),
+
+
+    /**
+     * 具体模块错误码 ---APP端
+     */
+    OPENID_RQ(406, "微信登录 OPENID必须"),
+    AUTHC_APP_RQ(407, "微信实名认证，手机号码和身份证至少选择其中一个"),
+    AUTHC_APP_NULL(408, "所选择的手机号码不存在");
 
     BusinessStatus(Integer code, String msg) {
         this.code = code;

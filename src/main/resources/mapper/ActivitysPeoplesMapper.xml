@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.ActivitysPeoplesMapper">
+    <resultMap id="BaseResultMap" type="com.xl.backen.entity.ActivitysPeoples">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="activity_id" jdbcType="VARCHAR" property="activityId"/>
+        <result column="people_id" jdbcType="VARCHAR" property="peopleId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="ActPeoplesModelMap" type="com.xl.backen.entity.Activitys">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="limit_people" jdbcType="INTEGER" property="limitPeople"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="join_people" jdbcType="INTEGER" property="joinPeople"/>
+        <result column="data_form" jdbcType="INTEGER" property="dataForm"/>
+        <result column="coverpic" jdbcType="VARCHAR" property="coverpic"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+
+    <resultMap id="PeoplesModelMap" type="com.xl.backen.entity.Peoples">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="truename" jdbcType="VARCHAR" property="truename"/>
+        <result column="head_pic" jdbcType="VARCHAR" property="headPic"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    uuid, activity_id, people_id, create_time, update_time
+  </sql>
+
+    <sql id="acts_list">
+        t.uuid, t.name, t.start_time, t.end_time, t.location, t.limit_people, t.integral,
+        t.join_people, t.data_form, t.coverpic, t.description
+    </sql>
+
+    <!--查询我的活动-->
+    <select id="findByPeople" resultMap="ActPeoplesModelMap">
+        select
+        <include refid="acts_list"/>
+        from tb_tasks_peoples tp right join tb_activitys t on t.uuid = tp.activity_id
+        where tp.people_id = #{peopleId}
+    </select>
+
+    <!--查询活动下面的报名人数-->
+    <select id="findByTasksId" resultMap="PeoplesModelMap">
+      select p.uuid,p.nickname,p.truename,p.head_pic
+      from tb_tasks_peoples tp right join tb_peoples p on tp.people_id = p.uuid
+      where tp.activity_id = #{activityId}
+    </select>
+
+    <!--根据peopleid和task_id查询是否有值-->
+    <select id="exist" resultType="java.lang.Integer">
+        select count(*) from tb_activitys_peoples where people_id = #{peopleId} and activity_id = #{actId}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_activitys_peoples
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_activitys_peoples
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.xl.backen.entity.ActivitysPeoples">
+    insert into tb_activitys_peoples (uuid, activity_id, people_id, 
+      create_time, update_time)
+    values (#{uuid,jdbcType=VARCHAR}, #{activityId,jdbcType=VARCHAR}, #{peopleId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.xl.backen.entity.ActivitysPeoples">
+        insert into tb_activitys_peoples
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="activityId != null">
+                activity_id,
+            </if>
+            <if test="peopleId != null">
+                people_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="activityId != null">
+                #{activityId,jdbcType=VARCHAR},
+            </if>
+            <if test="peopleId != null">
+                #{peopleId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.ActivitysPeoples">
+        update tb_activitys_peoples
+        <set>
+            <if test="activityId != null">
+                activity_id = #{activityId,jdbcType=VARCHAR},
+            </if>
+            <if test="peopleId != null">
+                people_id = #{peopleId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.ActivitysPeoples">
+    update tb_activitys_peoples
+    set activity_id = #{activityId,jdbcType=VARCHAR},
+      people_id = #{peopleId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

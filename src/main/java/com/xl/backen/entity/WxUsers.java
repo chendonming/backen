@@ -26,6 +26,22 @@ public class WxUsers implements Serializable {
 
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "WxUsers{" +
+          "uuid='" + uuid + '\'' +
+          ", nickName='" + nickName + '\'' +
+          ", isRealName=" + isRealName +
+          ", openId='" + openId + '\'' +
+          ", bindUser='" + bindUser + '\'' +
+          ", gender=" + gender +
+          ", avatarUrl='" + avatarUrl + '\'' +
+          ", code='" + code + '\'' +
+          ", createTime=" + createTime +
+          ", updateTime=" + updateTime +
+          '}';
+    }
+
     public String getCode() {
         return code;
     }

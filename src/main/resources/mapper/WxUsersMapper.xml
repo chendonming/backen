@@ -12,14 +12,19 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+
+  <!--根据openid查询是否存在用户-->
+  <select id="queryWxByOpenId" resultMap="BaseResultMap">
+    select w.*
+    from tb_wx_users w where w.open_id=#{openId}
+  </select>
+
   <insert id="insert" parameterType="com.xl.backen.entity.WxUsers">
     insert into tb_wx_users (uuid, nick_name, is_real_name, 
       open_id, bind_user, gender, 
       avatar_url, create_time, update_time
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{isRealName,jdbcType=INTEGER}, 
-      #{openId,jdbcType=VARCHAR}, #{bindUser,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
-      #{avatarUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    values (#{uuid,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{isRealName,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{bindUser,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{avatarUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xl.backen.entity.WxUsers">
@@ -54,32 +59,23 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uuid != null">
-        #{uuid,jdbcType=VARCHAR},
+      <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
       </if>
-      <if test="nickName != null">
-        #{nickName,jdbcType=VARCHAR},
+      <if test="nickName != null"> #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="isRealName != null">
-        #{isRealName,jdbcType=INTEGER},
+      <if test="isRealName != null"> #{isRealName,jdbcType=INTEGER},
       </if>
-      <if test="openId != null">
-        #{openId,jdbcType=VARCHAR},
+      <if test="openId != null"> #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="bindUser != null">
-        #{bindUser,jdbcType=VARCHAR},
+      <if test="bindUser != null"> #{bindUser,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
-        #{gender,jdbcType=INTEGER},
+      <if test="gender != null"> #{gender,jdbcType=INTEGER},
       </if>
-      <if test="avatarUrl != null">
-        #{avatarUrl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null"> #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null"> #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>

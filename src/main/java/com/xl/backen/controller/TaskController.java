@@ -11,6 +11,7 @@ import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.Result;
 import com.xl.backen.handler.ResultForPage;
 import com.xl.backen.model.TasksPageModel;
+import com.xl.backen.model.TasksPeopleModel;
 import com.xl.backen.service.TasksService;
 
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/task")

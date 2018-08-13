@@ -17,8 +17,6 @@ public class CustomizedModularRealmAuthenticator extends ModularRealmAuthenticat
 		assertRealmsConfigured();
 		// 强制转换回自定义的CustomizedToken
 		CustomizedToken customizedToken = (CustomizedToken) authenticationToken;
-		// 登录类型
-		Integer loginType = customizedToken.getLoginType();
 		// 所有Realm
 		Collection<Realm> realms = getRealms();
 		// 登录类型对应的所有Realm

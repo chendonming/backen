@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartException;
 
 @ControllerAdvice(basePackages = "com.xl.backen.controller")
 public class GlobalExceptionHandler {
@@ -62,10 +63,18 @@ public class GlobalExceptionHandler {
         return new Result(BusinessStatus.SHIRO_REAML_ERROR);
     }
 
+    @ExceptionHandler(value = MultipartException.class)
+    @ResponseBody
+    public Result handlerMultipartException(Exception e) {
+        log.warn("文件异常",e);
+        MultipartException notOfficeXmlFileException = (MultipartException)e;
+        return new Result(BusinessStatus.FILE_EXIST_ERROR);
+    }
+
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handler(Exception e) {
         log.warn("未知异常",e);
-        return new Result(BusinessStatus.ERROR);
+        return new Result(BusinessStatus.ERROR,e.getMessage());
     }
 }

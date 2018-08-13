@@ -6,7 +6,9 @@ import com.xl.backen.entity.Communitys;
  * 社区新增模板
  */
 public class CommunitysForAddModel extends Communitys {
-    /**
+    private static final long serialVersionUID = 5919595996098042347L;
+
+	/**
      * 社区负责人
      */
     private String communityLeader;

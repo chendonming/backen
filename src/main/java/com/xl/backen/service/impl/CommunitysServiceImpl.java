@@ -11,7 +11,6 @@ import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.CommunitysForAddModel;
 import com.xl.backen.model.CommunitysPageModel;
-import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.CommunitysService;
 import com.xl.backen.util.MD5;
 import org.apache.shiro.SecurityUtils;
