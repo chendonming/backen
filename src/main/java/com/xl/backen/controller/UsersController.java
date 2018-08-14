@@ -68,9 +68,7 @@ public class UsersController {
 
 	/**
 	 * 所有的菜单
-	 *
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/menus/queryAll", method = RequestMethod.POST)
 	public Result<List<ParentMenus>> menusAll(@RequestBody Roles role){
