@@ -1,12 +1,12 @@
 package com.xl.backen.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.ResultForPage;
 import com.xl.backen.model.PeoplesPageModel;
+import com.xl.backen.service.WxUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,29 +31,44 @@ public class PeoplesController {
     @Autowired
     private PeoplesService ps;
 
+    @Autowired
+    private WxUsersService uss;
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Result add(@RequestBody Peoples pe) {
+    public Result<Object> add(@RequestBody Peoples pe) {
         ps.add(pe);
-        return new Result(BusinessStatus.SUCCESS);
+        return new Result<>(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/queryByExport", method = RequestMethod.GET)
-    public Result exportPeople() throws IOException {
+    public Result<String> exportPeople() throws IOException {
         String file = ps.exportPeople();
-        return new Result(BusinessStatus.SUCCESS, file);
+        return new Result<String>(BusinessStatus.SUCCESS, file);
     }
 
     @RequestMapping(value = "/addByImport", method = RequestMethod.POST)
-    public Result importPeople(@RequestParam("file") MultipartFile file) throws Exception {
-        ps.importPeople(file);
-        return new Result(BusinessStatus.SUCCESS);
+    public Result<String> importPeople(@RequestParam("file") MultipartFile file) throws Exception {
+        int count = ps.importPeople(file);
+        return new Result<String>(BusinessStatus.SUCCESS, count + "条记录改变");
     }
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    public ResultForPage query(@RequestBody PeoplesPageModel model) {
+    public ResultForPage<Peoples> query(@RequestBody PeoplesPageModel model) {
         Page<Peoples> peoples = ps.query(model);
         PageInfo<Peoples> peoplesPageInfo = new PageInfo<Peoples>(peoples);
-        return new ResultForPage(BusinessStatus.SUCCESS, peoplesPageInfo);
+        return new ResultForPage<Peoples>(BusinessStatus.SUCCESS, peoplesPageInfo);
+    }
+
+
+    /**
+     * APP实名认证
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/verified", method = RequestMethod.POST)
+    public Result<Object> verified(@RequestBody Peoples peoples){
+        uss.authentication(peoples);
+        return new Result<>(BusinessStatus.SUCCESS);
     }
 
 }

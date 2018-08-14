@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.xl.backen.entity.ParentMenus;
-import com.xl.backen.entity.RolesPower;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.util.StringUtil;
@@ -41,7 +40,7 @@ public class PowersServiceImpl implements PowersService {
 	public List<Powers> queryByRoleId(String roleId) {
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
 
-		Map map = new HashMap<>();
+		Map<String,Object> map = new HashMap<>();
 		map.put("roleId", roleId);
 		map.put("type", users.getLoginType());
 
@@ -57,7 +56,7 @@ public class PowersServiceImpl implements PowersService {
 	public List<ParentMenus> queryParentMenusByRoleId(String roleId) {
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
 
-		Map map = new HashMap();
+		Map<String,Object> map = new HashMap<>();
 		map.put("roleId",roleId);
 		map.put("type",users.getLoginType());
 

@@ -9,16 +9,34 @@
     <result column="store" jdbcType="INTEGER" property="store" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="cover_pic" jdbcType="VARCHAR" property="coverPic"/>
+    <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
+    <result column="community_name" jdbcType="VARCHAR" property="communityName"/>
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    uuid, name, description, integral, store, create_user, create_name, status
+    uuid, name, description, integral, store, create_user, create_name, status,cover_pic
   </sql>
+  
+  <!-- 查询全部 社区下面 -->
+  <select id="query" resultMap="BaseResultMap">
+  	select s.*,c.name as community_name
+  	from tb_shops s left join tb_communitys c on c.uuid = s.community_id
+  	where 
+    <if test="communityId != null and communityId != ''">
+      s.community_id=#{communityId} and
+    </if>
+    <if test="name != null and name != ''">
+      s.name like CONCAT(#{name},'%') and
+    </if>
+      s.status=1
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from tb_shops
-    where uuid = #{uuid,jdbcType=VARCHAR}
+    s.*,c.name as community_name
+    from tb_shops s left join tb_communitys c on c.uuid = s.community_id
+    where s.uuid = #{uuid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_shops
@@ -59,6 +77,12 @@
       <if test="status != null">
         status,
       </if>
+      <if test="communityId != null">
+      	community_id,
+      </if>
+      <if test="coverPic != null">
+      	cover_pic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -84,6 +108,12 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="communityId != null">
+      	#{communityId,jdbcType=VARCHAR},
+      </if>
+       <if test="coverPic != null">
+      	#{coverPic,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -111,6 +141,9 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="coverPic != null">
+        cover_pic = #{coverPic,jdbcType=VARCHAR},
+      </if>
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
@@ -122,7 +155,8 @@
       store = #{store,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_name = #{createName,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      cover_pic=#{coverPic,jdbcType=VARCHAR}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

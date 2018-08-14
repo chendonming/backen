@@ -29,5 +29,5 @@ public interface RolesPowerMapper {
     /**
      * 根据userId  roleId进行删除
      */
-    int delByUserAndRole(Map map);
+    int delByUserAndRole(Map<String,String> map);
 }

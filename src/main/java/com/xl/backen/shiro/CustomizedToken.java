@@ -1,5 +1,6 @@
 package com.xl.backen.shiro;
 
+import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.CommonConst;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
@@ -7,12 +8,19 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  * 自己的token
  */
 public class CustomizedToken extends UsernamePasswordToken {
-    /**
+    private static final long serialVersionUID = 3412468759582256508L;
+
+	/**
      * 登录类型
      * @see com.xl.backen.handler.CommonConst
      */
     private Integer LoginType;
 
+    /**
+     * 微信用户
+     * @see com.xl.backen.entity.WxUsers
+     */
+    private Peoples peoples;
 
     /**
      * 后台登录通过userName 和 password校验
@@ -22,12 +30,6 @@ public class CustomizedToken extends UsernamePasswordToken {
 
 
     /**
-     * APP通过open_id做校验
-     */
-    private String openId;
-    private String appId;
-
-    /**
      * 重写getPrincipal方法
      */
     @Override
@@ -35,7 +37,7 @@ public class CustomizedToken extends UsernamePasswordToken {
         if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE) {
             return getUserName();
         }else{
-            return openId;
+            return getPeoples().getOpenId();
         }
     }
 
@@ -47,22 +49,24 @@ public class CustomizedToken extends UsernamePasswordToken {
         if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE) {
             return getPassWord();
         }else{
-            return appId;
+            return getPeoples().getOpenId();
         }
     }
 
     public CustomizedToken() {
     }
 
-    public CustomizedToken(String openId, String appId, int loginType) {
-        this.openId = openId;
-        this.appId = appId;
-        this.LoginType = loginType;
-    }
-
     public CustomizedToken(String username, char[] password, int loginType) {
         super(username, password);
         LoginType = loginType;
+    }
+
+    public Peoples getPeoples() {
+        return peoples;
+    }
+
+    public void setPeoples(Peoples peoples) {
+        this.peoples = peoples;
     }
 
     public Integer getLoginType() {
@@ -87,21 +91,5 @@ public class CustomizedToken extends UsernamePasswordToken {
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
     }
 }

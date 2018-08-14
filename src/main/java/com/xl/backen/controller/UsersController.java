@@ -1,13 +1,16 @@
 package com.xl.backen.controller;
 
+import java.util.List;
+
+import com.xl.backen.entity.ParentMenus;
+import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Roles;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
-import com.xl.backen.model.UsersModel;
-import com.xl.backen.service.PeoplesService;
 import com.xl.backen.service.PowersService;
 import com.xl.backen.service.UsersService;
+import com.xl.backen.service.WxUsersService;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,36 +31,39 @@ public class UsersController {
 	@Autowired
 	private PowersService psr;
 
+	@Autowired
+	private WxUsersService uss;
+
 	/**
 	 * 管理员登录
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Result login(@RequestBody Users user) {
+	public Result<Users> login(@RequestBody Users user) {
 		String mobile = user.getMobile();
 		String password = user.getPassword();
 		log.info("登录方法: mobile={},password={}", mobile, password);
 		Users usersModel = usersService.login(mobile, password, user.getLoginType());
 		usersModel.setPassword("");
-		return new Result(BusinessStatus.SUCCESS, usersModel);
+		return new Result<Users>(BusinessStatus.SUCCESS, usersModel);
 	}
 
 	/**
 	 * 小程序登录接口
 	 */
 	@RequestMapping(value = "/loginApp", method = RequestMethod.POST)
-	public Result loginApp() {
-		return null;
+	public Result<Peoples> loginApp(@RequestBody Peoples peoples) {
+		return new Result<Peoples>(BusinessStatus.SUCCESS,uss.login(peoples));
 	}
 
 	/**
 	 * 退出登录
 	 */
 	@RequestMapping(value = "/signOut", method = RequestMethod.POST)
-	public Result signOut() {
+	public Result<Object> signOut() {
 		SecurityUtils.getSubject().logout();
-		return new Result(BusinessStatus.SUCCESS);
+		return new Result<>(BusinessStatus.SUCCESS);
 	}
 
 	/**
@@ -65,7 +71,7 @@ public class UsersController {
 	 * @return
 	 */
 	@RequestMapping(value = "/menus/queryAll", method = RequestMethod.POST)
-	public Result menusAll(@RequestBody Roles role){
-		return new Result(BusinessStatus.SUCCESS, psr.queryParentMenusByRoleId(role.getUuid()));
+	public Result<List<ParentMenus>> menusAll(@RequestBody Roles role){
+		return new Result<List<ParentMenus>>(BusinessStatus.SUCCESS, psr.queryParentMenusByRoleId(role.getUuid()));
 	}
 }

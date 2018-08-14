@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.Powers;
-import com.xl.backen.entity.RolesPower;
 
 public interface PowersService {
 	List<Powers> queryAll();

@@ -3,7 +3,6 @@ package com.xl.backen.dao;
 import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.Powers;
 
-import com.xl.backen.entity.RolesPower;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,9 +24,9 @@ public interface PowersMapper {
     
     List<Powers> queryAll(Integer type);
 
-    List<Powers> queryByRoleId(Map map);
+    List<Powers> queryByRoleId(Map<String,Object> map);
 
-    List<ParentMenus> queryParentMenusByRoleId(Map map);
+    List<ParentMenus> queryParentMenusByRoleId(Map<String, Object> map);
     
     List<ParentMenus> queryParentMenus(Integer type);
 }

@@ -10,7 +10,6 @@ import com.xl.backen.entity.Activitys;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.ActivitysPageModel;
-import com.xl.backen.model.UsersModel;
 import com.xl.backen.service.ActivitysService;
 import com.xl.backen.util.TimeUtil;
 
@@ -53,7 +52,7 @@ public class ActivitysServiceImpl implements ActivitysService {
 	public Page<Activitys> query(ActivitysPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
-		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+		Users users = (Users) SecurityUtils.getSubject().getPrincipal();
 		model.setCommunityId(users.getCommunityId());
 		model.setSysType(users.getSysType());
 
@@ -73,9 +72,9 @@ public class ActivitysServiceImpl implements ActivitysService {
 	@Override
 	public Activitys findById(String uuid) {
 		Activitys activitys = as.selectByPrimaryKey(uuid);
-		int flag = TimeUtil.compareTime(activitys.getStartTime(), activitys.getEndTime(), activitys.getJoinStartTime(), activitys.getJoinEndTime());
+		int flag = TimeUtil.compareTime(activitys.getStartTime(), activitys.getEndTime(), activitys.getJoinStartTime(),
+				activitys.getJoinEndTime());
 		activitys.setFlag(flag);
 		return activitys;
 	}
-
 }

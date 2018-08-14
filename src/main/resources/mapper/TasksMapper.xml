@@ -21,16 +21,49 @@
     <result column="status" jdbcType="INTEGER" property="status"/>
     <result column="u_truename" jdbcType="VARCHAR" property="createName"/>
   </resultMap>
+
+  <resultMap id="AppMap" type="com.xl.backen.model.AppTasksModel">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="community_name" jdbcType="VARCHAR" property="communityName"/>
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="limit_people" jdbcType="INTEGER" property="limitPeople" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="join_people" jdbcType="INTEGER" property="joinPeople" />
+    <result column="data_form" jdbcType="INTEGER" property="dataForm" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="coverpic" jdbcType="VARCHAR" property="coverpic" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status"/>
+    <result column="u_truename" jdbcType="VARCHAR" property="createName"/>
+  </resultMap>
+
   <sql id="Base_Column_List">
     uuid, name, community_id, start_time, end_time, location, limit_people, integral, 
     join_people, data_form, create_user, coverpic, description, create_time, update_time,status
   </sql>
+
+  <!--PC端查询单个-->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from tb_tasks
-    where uuid = #{uuid,jdbcType=VARCHAR}
+    t.*,u.truename as u_truename
+    from tb_tasks t left join tb_users u on u.uuid = t.create_user
+    where t.uuid = #{uuid,jdbcType=VARCHAR}
   </select>
+
+  <!--APP端查询单个-->
+  <select id="findOne" parameterType="java.lang.String" resultMap="AppMap">
+    select
+    t.*,u.truename as u_truename
+    from tb_tasks t left join tb_users u on u.uuid = t.create_user
+    where t.uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+
   <!-- 查询列表
       根据sysType
         和
@@ -52,7 +85,7 @@
     </if>
     <if test="flag != null and flag == 2">
       <!-- 进行中 -->
-        now() between  t.start_time  and  t.end_time and
+        now() between t.start_time  and  t.end_time and
     </if>
     <if test="flag != null and flag == 3">
       <!-- 已结束 -->

@@ -34,31 +34,33 @@ public class UserRealm extends AuthorizingRealm {
 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-		Users us = (Users) SecurityUtils.getSubject().getPrincipal();
+		Object o = SecurityUtils.getSubject().getPrincipal();
 
-		if (us != null) {
-			Set<String> permis = new HashSet<String>();
+		if (o instanceof Users) {
+			Users us = (Users) o;
+			if (us != null) {
+				Set<String> permis = new HashSet<String>();
 
-			Map<String,String> map = new HashMap<>();
-			map.put("roleId", us.getRoleId());
-			map.put("type", us.getLoginType()+"");
+				Map<String,Object> map = new HashMap<>();
+				map.put("roleId", us.getRoleId());
+				map.put("type", us.getLoginType());
 
-			List<Powers> powers = pm.queryByRoleId(map);
+				List<Powers> powers = pm.queryByRoleId(map);
 
-			for (Powers p : powers) {
-				System.out.println("追加code" + p.getCode());
-				permis.add(p.getCode());
+				for (Powers p : powers) {
+					System.out.println("追加code" + p.getCode());
+					permis.add(p.getCode());
+				}
+
+				info.addStringPermissions(permis);
 			}
-
-			info.addStringPermissions(permis);
 		}
-
 		return info;
 	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
-			throws AuthenticationException {
+		throws AuthenticationException {
 		CustomizedToken token = (CustomizedToken) authenticationToken;
 
 		if (token.getLoginType() == CommonConst.LOGIN_TYPE_PC) {

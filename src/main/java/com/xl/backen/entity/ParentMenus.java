@@ -27,6 +27,16 @@ public class ParentMenus implements Serializable {
 
 	private List<Powers> powers;
 
+	private String meunName;
+
+	public String getMeunName() {
+		return meunName;
+	}
+
+	public void setMeunName(String meunName) {
+		this.meunName = meunName;
+	}
+
 	public Integer getType() {
 		return type;
 	}

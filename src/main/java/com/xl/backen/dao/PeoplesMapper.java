@@ -3,7 +3,13 @@ package com.xl.backen.dao;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.model.PeoplesPageModel;
+import com.xl.backen.model.VolunteerModel;
 
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
 public interface PeoplesMapper {
 	int deleteByPrimaryKey(String uuid);
 
@@ -25,7 +31,16 @@ public interface PeoplesMapper {
 	/**
 	 * 根据手机号码查询用户信息
 	 *
-	 * @param 手机号码
+	 * @param
 	 */
 	Peoples findByMobile(String mobile);
+
+	/**
+	 * 查询所有的居民信息
+	 */
+	List<Peoples> queryAll(String communityId);
+
+	Peoples queryByOpenId(String openId);
+
+	Page<VolunteerModel> queryList();
 }

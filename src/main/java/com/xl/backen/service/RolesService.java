@@ -1,12 +1,9 @@
 package com.xl.backen.service;
 
-import java.util.List;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Roles;
-import com.xl.backen.model.UsersPageModel;
 
-import javax.management.relation.Role;
 
 public interface RolesService {
 	/**

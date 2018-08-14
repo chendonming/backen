@@ -26,15 +26,15 @@ public class FileController {
     @Value("${nginxPath}")
     private String nginxPath;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public Result upload(@RequestParam("file") MultipartFile file) {
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public Result<String> upload(@RequestParam("file") MultipartFile file) {
         String newFileName = UUID.randomUUID().toString().replace("-", "");
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, newFileName+ "." + suffix);
-            return new Result(BusinessStatus.SUCCESS, nginxPath + newFileName + "." + suffix);
+            return new Result<String>(BusinessStatus.SUCCESS, nginxPath + newFileName + "." + suffix);
         } catch (Exception e) {
             throw new BusinessException(BusinessStatus.FILEUPLOAD_ERROR);
         }
