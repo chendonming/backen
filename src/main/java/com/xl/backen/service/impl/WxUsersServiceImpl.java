@@ -94,7 +94,7 @@ public class WxUsersServiceImpl implements WxUsersService {
 		//已实名
 		p.setIsRealName(CommonConst.IS_REAL_NAME);
 		//设置普通居民
-		p.setRole(CommonConst.NOMARL_USER+"");
+		p.setRole(CommonConst.NOMARL_USER);
 		//设置修改时间
 		p.setUpdateTime(new Date());
 		//设置昵称

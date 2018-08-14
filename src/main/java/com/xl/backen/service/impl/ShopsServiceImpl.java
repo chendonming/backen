@@ -4,12 +4,15 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.ShopsMapper;
 import com.xl.backen.entity.Shops;
+import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.service.ShopsService;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +24,15 @@ public class ShopsServiceImpl implements ShopsService {
 
 	@Override
 	public int insertSelective(Shops record) {
+		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+
 		record.setUuid(UUID.randomUUID().toString().replace("-", ""));
 		record.setCommunityId(record.getCommunityId());
 		record.setStatus(CommonConst.NORMAL_STATUS);
+		record.setCreateTime(new Date());
+		record.setUpdateTime(new Date());
+		record.setCreateName(users.getTruename());
+		record.setCreateUser(users.getUuid());
 		
 		return sm.insertSelective(record);
 	}

@@ -1,6 +1,7 @@
 package com.xl.backen.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Shops implements Serializable {
     private static final long serialVersionUID = 6491725416424475800L;
@@ -26,6 +27,26 @@ public class Shops implements Serializable {
     private String communityName;
 
     private String coverPic;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public String getCommunityName() {
         return this.communityName;

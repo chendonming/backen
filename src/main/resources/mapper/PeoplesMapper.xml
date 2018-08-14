@@ -19,8 +19,9 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
-    <result column="role" jdbcType="VARCHAR" property="role"/>
+    <result column="role" jdbcType="INTEGER" property="role"/>
     <result column="description" jdbcType="VARCHAR" property="description"/>
+    <result column="identity_flag" jdbcType="VARCHAR" property="identityFlag" />
   </resultMap>
 
   <resultMap id="VolunteerMap" type="com.xl.backen.model.VolunteerModel">
@@ -33,14 +34,14 @@
 
   <sql id="Base_Column_List">
     uuid, nickname, truename, head_pic, mobile, sex, password, is_real_name, id_card, 
-    community_id, total_integral, integral, status, create_time, update_time,open_id,sys_type,role,description
+    community_id, total_integral, integral, status, create_time, update_time,open_id,sys_type,role,description,identity_flag
   </sql>
 
   <!-- 查询志愿者 -->
   <select id="queryList" resultMap="VolunteerMap">
-    select uuid, truename,mobile,role,description
+    select uuid, truename,mobile,role,description,identity_flag
     from tb_peoples
-    where role <![CDATA[!= ]]> '' and role <![CDATA[!= ]]> '1'
+    where role = 2
   </select>
 
   <!--通过手机号码查找用户信息-->
@@ -156,6 +157,9 @@
       <if test="role != null">
         role,
       </if>
+      <if test="identityFlag != null">
+        identity_flag,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
@@ -191,7 +195,10 @@
       <if test="sysType!= null"> #{sysType,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
-        #{role, jdbcType=VARCHAR},
+        #{role, jdbcType=INTEGER},
+      </if>
+      <if test="identityFlag != null">
+        #{identityFlag, jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -241,13 +248,16 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="role != null">
-        role = #{role, jdbcType=VARCHAR},
+        role = #{role, jdbcType=INTEGER},
       </if>
       <if test="openId != null">
         open_id = #{openId, jdbcType=VARCHAR},
       </if>
       <if test="description != null and description != ''">
         description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="identityFlag != null">
+        identity_flag = #{identityFlag, jdbcType=VARCHAR},
       </if>
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}

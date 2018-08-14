@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.PeoplesIntegralIntMapper">
+  <resultMap id="BaseResultMap" type="com.xl.backen.entity.PeoplesIntegralInt">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="people_id" jdbcType="VARCHAR" property="peopleId" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="foreign_id" jdbcType="VARCHAR" property="foreignId" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="foreign_name" jdbcType="VARCHAR" property="foreignName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, people_id, integral, create_time, type, foreign_id, description, foreign_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from "tb_ peoples_integral_int"
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from "tb_ peoples_integral_int"
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
+    insert into "tb_ peoples_integral_int" (uuid, people_id, integral, 
+      create_time, type, foreign_id, 
+      description, foreign_name)
+    values (#{uuid,jdbcType=VARCHAR}, #{peopleId,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, #{foreignId,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{foreignName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
+    insert into "tb_ peoples_integral_int"
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="peopleId != null">
+        people_id,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="foreignId != null">
+        foreign_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="foreignName != null">
+        foreign_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleId != null">
+        #{peopleId,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="foreignId != null">
+        #{foreignId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignName != null">
+        #{foreignName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
+    update "tb_ peoples_integral_int"
+    <set>
+      <if test="peopleId != null">
+        people_id = #{peopleId,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="foreignId != null">
+        foreign_id = #{foreignId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignName != null">
+        foreign_name = #{foreignName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
+    update "tb_ peoples_integral_int"
+    set people_id = #{peopleId,jdbcType=VARCHAR},
+      integral = #{integral,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER},
+      foreign_id = #{foreignId,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      foreign_name = #{foreignName,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

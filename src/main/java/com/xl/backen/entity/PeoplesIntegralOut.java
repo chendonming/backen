@@ -1,8 +1,10 @@
 package com.xl.backen.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PeoplesIntegralOut {
+public class PeoplesIntegralOut implements Serializable {
+    private static final long serialVersionUID = -5707219079491835483L;
     private String uuid;
 
     private String peopleId;

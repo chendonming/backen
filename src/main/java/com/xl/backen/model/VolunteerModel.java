@@ -4,74 +4,83 @@ package com.xl.backen.model;
  * 志愿者model
  */
 public class VolunteerModel {
-  private String uuid;
+    private String uuid;
 
-  private String truename;
+    private String truename;
 
-  private String mobile;
+    private String mobile;
 
-  private String description;
+    private String description;
 
-  private String role;
+    private Integer role;
 
-  private Integer pageSize;
+    private String identityFlag;
 
-  private Integer pageNum;
+    private Integer pageSize;
 
-  public Integer getPageSize() {
-    return this.pageSize;
-  }
+    private Integer pageNum;
 
-  public void setPageSize(Integer pageSize) {
-    this.pageSize = pageSize;
-  }
+    public String getIdentityFlag() {
+        return identityFlag;
+    }
 
-  public Integer getPageNum() {
-    return this.pageNum;
-  }
+    public void setIdentityFlag(String identityFlag) {
+        this.identityFlag = identityFlag;
+    }
 
-  public void setPageNum(Integer pageNum) {
-    this.pageNum = pageNum;
-  }
+    public Integer getPageSize() {
+        return this.pageSize;
+    }
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
+    public Integer getPageNum() {
+        return this.pageNum;
+    }
 
-  public String getTruename() {
-    return this.truename;
-  }
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
 
-  public void setTruename(String truename) {
-    this.truename = truename;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public String getMobile() {
-    return this.mobile;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public void setMobile(String mobile) {
-    this.mobile = mobile;
-  }
+    public String getTruename() {
+        return this.truename;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public void setTruename(String truename) {
+        this.truename = truename;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public String getMobile() {
+        return this.mobile;
+    }
 
-  public String getRole() {
-    return this.role;
-  }
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-  public void setRole(String role) {
-    this.role = role;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
 }

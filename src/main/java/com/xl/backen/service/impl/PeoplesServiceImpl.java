@@ -103,7 +103,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 			//默认密码(微信登录不需要)
 			i.setPassword(MD5.md5(CommonConst.PASSWORD));
 			//默认是普通居民
-			i.setRole(CommonConst.NOMARL_USER+"");
+			i.setRole(CommonConst.NOMARL_USER);
 
 			add(i);
 		}

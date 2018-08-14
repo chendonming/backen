@@ -1,7 +1,9 @@
 package com.xl.backen.dao;
 
 import com.xl.backen.entity.PeoplesIntegralOut;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PeoplesIntegralOutMapper {
     int deleteByPrimaryKey(String uuid);
 

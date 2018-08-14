@@ -13,9 +13,11 @@
     <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
     <result column="community_name" jdbcType="VARCHAR" property="communityName"/>
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    uuid, name, description, integral, store, create_user, create_name, status,cover_pic
+    uuid, name, description, integral, store, create_user, create_name, status,cover_pic,create_time,update_time
   </sql>
   
   <!-- 查询全部 社区下面 -->

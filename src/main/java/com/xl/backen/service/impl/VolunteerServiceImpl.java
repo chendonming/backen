@@ -6,6 +6,7 @@ import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
+import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.VolunteerModel;
 import com.xl.backen.service.VolunteerService;
 
@@ -35,7 +36,8 @@ public class VolunteerServiceImpl implements VolunteerService {
     //修改description
     p.setDescription(volunteerModel.getDescription());
     //修改role
-    p.setRole(volunteerModel.getRole());
+    p.setRole(CommonConst.VOLUNTEER_USER);
+    p.setIdentityFlag(volunteerModel.getIdentityFlag());
 
     pm.updateByPrimaryKeySelective(p);
 
@@ -48,6 +50,7 @@ public class VolunteerServiceImpl implements VolunteerService {
     p.setUuid(volunteerModel.getUuid());
     p.setDescription(volunteerModel.getDescription());
     p.setRole(volunteerModel.getRole());
+    p.setIdentityFlag(volunteerModel.getIdentityFlag());
 
     pm.updateByPrimaryKeySelective(p);
     return 1;
@@ -60,6 +63,7 @@ public class VolunteerServiceImpl implements VolunteerService {
     volunteerModel.setUuid(peoples.getUuid());
     volunteerModel.setDescription(peoples.getDescription());
     volunteerModel.setRole(peoples.getRole());
+    volunteerModel.setIdentityFlag(peoples.getIdentityFlag());
     volunteerModel.setMobile(peoples.getMobile());
     //真实姓名
     volunteerModel.setTruename(peoples.getTruename());
