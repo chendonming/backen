@@ -22,7 +22,7 @@ public class LoginVolidFilter extends FormAuthenticationFilter{
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		httpServletResponse.setCharacterEncoding("UTF-8");
 		httpServletResponse.setContentType("application/json");
-		httpServletResponse.getWriter().write(JSONObject.toJSON(new Result(BusinessStatus.LOGIN_ERROR)).toString());
+		httpServletResponse.getWriter().write(JSONObject.toJSON(new Result<>(BusinessStatus.LOGIN_ERROR)).toString());
 		return false;
 	}
 	

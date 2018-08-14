@@ -26,9 +26,6 @@ public class UsersController {
 	private UsersService usersService;
 
 	@Autowired
-	private PeoplesService ps;
-
-	@Autowired
 	private PowersService psr;
 
 	/**
@@ -65,9 +62,7 @@ public class UsersController {
 
 	/**
 	 * 所有的菜单
-	 *
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/menus/queryAll", method = RequestMethod.POST)
 	public Result menusAll(@RequestBody Roles role){

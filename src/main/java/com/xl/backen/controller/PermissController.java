@@ -1,9 +1,7 @@
 package com.xl.backen.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.relation.Role;
 import javax.validation.Valid;
 
 import com.github.pagehelper.Page;
@@ -12,13 +10,10 @@ import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.handler.PageInfo;
 import com.xl.backen.model.RolesPowerModel;
-import com.xl.backen.model.UsersModel;
 import com.xl.backen.model.UsersPageModel;
 import com.xl.backen.model.UsersRegisterRoleModel;
 import com.xl.backen.service.*;
-import com.xl.backen.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

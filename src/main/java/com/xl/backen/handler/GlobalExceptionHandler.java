@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     public Result handlerBusinessException(Exception e) {
         BusinessException businessException = (BusinessException) e;
         log.warn("业务异常: {}", e);
-        return new Result(businessException.getCode(), businessException.getMsg());
+        return new Result<>(businessException.getCode(), businessException.getMsg());
     }
 
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)

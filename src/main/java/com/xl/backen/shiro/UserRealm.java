@@ -2,12 +2,9 @@ package com.xl.backen.shiro;
 
 import com.xl.backen.dao.PowersMapper;
 import com.xl.backen.dao.UsersMapper;
-import com.xl.backen.entity.Menus;
-import com.xl.backen.entity.ParentMenus;
 import com.xl.backen.entity.Powers;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.CommonConst;
-import com.xl.backen.model.UsersModel;
 
 import java.util.*;
 
@@ -19,8 +16,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  * 后台管理员端的登录校验和权限控制
@@ -44,9 +39,9 @@ public class UserRealm extends AuthorizingRealm {
 		if (us != null) {
 			Set<String> permis = new HashSet<String>();
 
-			Map map = new HashMap();
+			Map<String,String> map = new HashMap<>();
 			map.put("roleId", us.getRoleId());
-			map.put("type", us.getLoginType());
+			map.put("type", us.getLoginType()+"");
 
 			List<Powers> powers = pm.queryByRoleId(map);
 
@@ -62,7 +57,8 @@ public class UserRealm extends AuthorizingRealm {
 	}
 
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
+			throws AuthenticationException {
 		CustomizedToken token = (CustomizedToken) authenticationToken;
 
 		if (token.getLoginType() == CommonConst.LOGIN_TYPE_PC) {
@@ -75,11 +71,7 @@ public class UserRealm extends AuthorizingRealm {
 
 			Users usersModel = (Users) us.findByMobile(map);
 			usersModel.setLoginType(CommonConst.LOGIN_TYPE_PC);
-			if (usersModel == null) {
-				return null;
-			} else {
-				return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
-			}
+			return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
 		} else if (token.getLoginType() == CommonConst.LOGIN_TYPE_COMMUNITY) {
 			System.out.println("社区pc登录");
 
@@ -89,11 +81,7 @@ public class UserRealm extends AuthorizingRealm {
 
 			Users usersModel = (Users) us.findByMobile(map);
 			usersModel.setLoginType(CommonConst.LOGIN_TYPE_COMMUNITY);
-			if (usersModel == null) {
-				return null;
-			} else {
-				return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
-			}
+			return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
 		} else {
 			return null;
 		}
