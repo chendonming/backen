@@ -77,7 +77,7 @@
     left join tb_users u on t. create_user = u.uuid
     where
     <if test="name != null and name != ''">
-      name like CONCAT(#{name},'%') and
+      t.name like CONCAT(#{name},'%') and
     </if>
     <if test="flag != null and flag == 1">
       <!-- 未开始 -->

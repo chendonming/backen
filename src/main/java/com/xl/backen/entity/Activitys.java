@@ -50,6 +50,36 @@ public class Activitys implements Serializable {
 
 	private String createName;
 
+	/*是否已经兑换积分*/
+	private Boolean isDistribute;
+
+	public Boolean getDistribute() {
+		return isDistribute;
+	}
+
+	public void setDistribute(Boolean distribute) {
+		isDistribute = distribute;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Activitys) {
+			Activitys tasks = (Activitys) obj;
+			if (tasks.uuid.equals(this.uuid)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return super.equals(obj);
+		}
+	}
+
 	public String getCreateName() {
 		return createName;
 	}

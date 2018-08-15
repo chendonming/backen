@@ -7,6 +7,8 @@ import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
 import com.xl.backen.util.FileUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/file")
 public class FileController {
+    private static Logger log = LoggerFactory.getLogger(FileController.class);
+
     @Value("${filePath}")
     private String filePath;
 
@@ -28,10 +32,10 @@ public class FileController {
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
     public Result<String> upload(@RequestParam("file") MultipartFile file) {
+	    log.info("文件上传: file: {}",file);
         String newFileName = UUID.randomUUID().toString().replace("-", "");
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, newFileName+ "." + suffix);
             return new Result<String>(BusinessStatus.SUCCESS, nginxPath + newFileName + "." + suffix);

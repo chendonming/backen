@@ -42,5 +42,5 @@ public interface PeoplesMapper {
 
 	Peoples queryByOpenId(String openId);
 
-	Page<VolunteerModel> queryList();
+	Page<VolunteerModel> queryList(String communityId);
 }

@@ -41,7 +41,7 @@
   <select id="queryList" resultMap="VolunteerMap">
     select uuid, truename,mobile,role,description,identity_flag
     from tb_peoples
-    where role = 2
+    where role = 2 and community_id=#{communityId}
   </select>
 
   <!--通过手机号码查找用户信息-->

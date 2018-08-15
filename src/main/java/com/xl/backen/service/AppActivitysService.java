@@ -21,6 +21,12 @@ public interface AppActivitysService {
      */
     Page<Activitys> findByPeople(ActivitysPeopleModel ap);
 
+
+    /**
+     * 根据用户id查询活动
+     */
+    Page<Activitys> findByPeopleId(ActivitysPeopleModel ap);
+
     /**
      * 查询任务下面的报名人
      */

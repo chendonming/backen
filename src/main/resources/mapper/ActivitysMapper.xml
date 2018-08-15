@@ -69,7 +69,7 @@
         where
         <trim>
             <if test="name != null and name != ''">
-                name like CONCAT(#{name},'%') and
+                a.name like CONCAT(#{name},'%') and
             </if>
             <!--<if test="flag != null and flag == 1">-->
                 <!--&lt;!&ndash; 报名未开始 &ndash;&gt;-->

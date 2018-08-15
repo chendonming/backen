@@ -65,6 +65,10 @@ public class PeoplesServiceImpl implements PeoplesService {
 	@Override
 	public String exportPeople() throws IOException {
 		PeoplesPageModel pp = new PeoplesPageModel();
+		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+
+		pp.setCommunityId(users.getCommunityId());
+
 		Page<Peoples> p = query(pp);
 		List<Peoples> peoplesList = p.getResult();
 
@@ -114,7 +118,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 	@Override
 	public Page<Peoples> query(PeoplesPageModel model) {
 		if (model.getPageNum() != null && model.getPageSize() != null) {
-			PageHelper.startPage(model.getPageNum(), model.getPageNum());
+			PageHelper.startPage(model.getPageNum(), model.getPageSize());
 		}
 		return pm.query(model);
 	}

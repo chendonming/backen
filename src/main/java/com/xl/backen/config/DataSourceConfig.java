@@ -29,6 +29,8 @@ public class DataSourceConfig {
         comboPooledDataSource.setDriverClass(jdbcDriverClass);
         comboPooledDataSource.setJdbcUrl(jdbcUrl);
         comboPooledDataSource.setAutoCommitOnClose(false);
+        comboPooledDataSource.setTestConnectionOnCheckin(false);
+        comboPooledDataSource.setTestConnectionOnCheckout(true);
         return comboPooledDataSource;
     }
 }

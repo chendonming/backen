@@ -11,9 +11,33 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="foreign_name" jdbcType="VARCHAR" property="foreignName" />
   </resultMap>
+
+  <resultMap id="TasksMap" type="com.xl.backen.entity.Tasks">
+    <id column="foreign_id" jdbcType="VARCHAR" property="uuid" />
+  </resultMap>
+
+  <resultMap id="ActMap" type="com.xl.backen.entity.Activitys">
+    <id column="foreign_id" jdbcType="VARCHAR" property="uuid" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     uuid, people_id, integral, create_time, type, foreign_id, description, foreign_name
   </sql>
+
+  <!--根据peopleId查询所有的任务id-->
+  <select id="queryByPeopleId" resultMap="TasksMap">
+    select foreign_id
+    from tb_ peoples_integral_int
+    where people_id=#{peopleId}
+  </select>
+
+  <!--根据peopleId查询所有的活动id-->
+  <select id="queryActByPeopleId" resultMap="ActMap">
+    select foreign_id
+    from tb_ peoples_integral_int
+    where people_id=#{peopleId}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

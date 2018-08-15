@@ -22,6 +22,12 @@ public interface AppTasksService {
     Page<Tasks> findByPeople(TasksPeopleModel tp);
 
     /**
+     * 根据用户id查询任务
+     * @return
+     */
+    Page<Tasks> findByPeopleId(TasksPeopleModel tp);
+
+    /**
      * 查询任务下面的报名人
      */
     Page<Peoples> findByTasksId(TasksPeopleModel tp);

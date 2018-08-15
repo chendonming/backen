@@ -97,6 +97,38 @@ public class AppController {
 		return new ResultForPage<Activitys>(BusinessStatus.SUCCESS, activitysPageInfo);
 	}
 
+	@RequestMapping(value = "/queryActByPeople", method = RequestMethod.GET)
+	public ResultForPage<Activitys> queryActByPeople(@RequestParam("uuid") String uuid,
+													 @RequestParam("pageNum") Integer pageNum,
+													 @RequestParam("pageSize") Integer pageSize) {
+		log.info("根据用户id查询活动，参数={}", uuid);
+
+		ActivitysPeopleModel ap = new ActivitysPeopleModel();
+		ap.setUuid(uuid);
+		ap.setPageNum(pageNum);
+		ap.setPageSize(pageSize);
+
+		Page<Activitys> activitys = ts.findByPeopleId(ap);
+		PageInfo<Activitys> activitysPageInfo = new PageInfo<>(activitys);
+		return new ResultForPage<Activitys>(BusinessStatus.SUCCESS, activitysPageInfo);
+	}
+
+	@RequestMapping(value = "/queryTaskByPeople", method = RequestMethod.GET)
+	public ResultForPage<Tasks> queryTaskByPeople(@RequestParam("uuid") String uuid,
+												  @RequestParam("pageNum") Integer pageNum,
+												  @RequestParam("pageSize") Integer pageSize) {
+		log.info("根据用户id查询任务，参数={}", uuid);
+
+		TasksPeopleModel tp = new TasksPeopleModel();
+		tp.setUuid(uuid);
+		tp.setPageNum(pageNum);
+		tp.setPageSize(pageSize);
+
+		Page<Tasks> tasks = at.findByPeopleId(tp);
+		PageInfo<Tasks> tasksPageInfo = new PageInfo<>(tasks);
+		return new ResultForPage<Tasks>(BusinessStatus.SUCCESS, tasksPageInfo);
+	}
+
 	/**
 	 * 查询任务报名的人
 	 * 
@@ -105,6 +137,7 @@ public class AppController {
 	 */
 	@RequestMapping(value = "/queryTaskPeople", method = RequestMethod.POST)
 	public ResultForPage<Peoples> queryTaskPeople(@RequestBody TasksPeopleModel tp) {
+		log.info("查询任务报名：{}",tp);
 		Page<Peoples> activitys = at.findByTasksId(tp);
 		PageInfo<Peoples> activitysPageInfo = new PageInfo<>(activitys);
 		return new ResultForPage<Peoples>(BusinessStatus.SUCCESS, activitysPageInfo);
@@ -118,6 +151,7 @@ public class AppController {
 	 */
 	@RequestMapping(value = "/queryActPeople", method = RequestMethod.POST)
 	public ResultForPage<Peoples> queryActPeople(@RequestBody ActivitysPeopleModel ap) {
+		log.info("查询活动报名：{}",ap);
 		Page<Peoples> activitys = ts.findByActId(ap);
 		PageInfo<Peoples> activitysPageInfo = new PageInfo<>(activitys);
 		return new ResultForPage<Peoples>(BusinessStatus.SUCCESS, activitysPageInfo);

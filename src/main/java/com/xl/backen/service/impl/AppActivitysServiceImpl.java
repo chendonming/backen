@@ -4,23 +4,23 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.ActivitysMapper;
 import com.xl.backen.dao.ActivitysPeoplesMapper;
+import com.xl.backen.dao.PeoplesIntegralIntMapper;
 import com.xl.backen.entity.Activitys;
 import com.xl.backen.entity.ActivitysPeoples;
 import com.xl.backen.entity.Peoples;
+import com.xl.backen.entity.Tasks;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.model.*;
 import com.xl.backen.service.AppActivitysService;
+import com.xl.backen.util.ArrayUtil;
 import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AppActivitysServiceImpl implements AppActivitysService {
@@ -29,6 +29,9 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 
 	@Autowired
 	private ActivitysPeoplesMapper apm;
+
+	@Autowired
+	private PeoplesIntegralIntMapper pil;
 
 	@Override
 	public Page<Activitys> query(ActivitysPageModel model) {
@@ -90,6 +93,42 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 
 		ap.setPeopleId(((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
 
+		return apm.findByPeople(ap);
+	}
+
+	/**
+	 * 根据peopleid查询活动
+	 * @param ap
+	 * @return
+	 */
+	@Override
+	public Page<Activitys> findByPeopleId(ActivitysPeopleModel ap) {
+		if (ap.getPageNum() != null && ap.getPageSize() != null) {
+			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
+		}
+
+		Page<Activitys> t = apm.findByPeople(ap);
+		/*peopleid拥有的已兑换的任务列表*/
+		List<Activitys> tasksList = pil.queryActByPeopleId(ap.getPeopleId());
+		/*peopleid拥有的任务*/
+		List<Activitys> tasks = t.getResult();
+
+		/*任务已兑换*/
+		List<Activitys> tasksSame = ArrayUtil.compareArrSame(tasks,tasksList);
+
+		for (Activitys i : tasks) {
+			int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
+			i.setFlag(f);
+			//告诉前端tasks是否已兑换
+			for(Activitys j: tasksSame) {
+				if(i == j) {
+					/*已兑换*/
+					i.setDistribute(true);
+				}
+			}
+		}
+
+		Page<Activitys> tasksPage = (Page<Activitys>) tasks;
 		return apm.findByPeople(ap);
 	}
 

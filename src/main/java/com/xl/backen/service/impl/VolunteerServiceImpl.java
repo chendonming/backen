@@ -4,12 +4,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
+import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.VolunteerModel;
 import com.xl.backen.service.VolunteerService;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +77,10 @@ public class VolunteerServiceImpl implements VolunteerService {
     if(volunteerModel.getPageSize() != null && volunteerModel.getPageSize() != null) {
       PageHelper.startPage(volunteerModel.getPageNum(), volunteerModel.getPageSize());
     }
-    return pm.queryList();
+
+    Users users = (Users) SecurityUtils.getSubject().getPrincipal();
+
+    return pm.queryList(users.getCommunityId());
   }
 
 }

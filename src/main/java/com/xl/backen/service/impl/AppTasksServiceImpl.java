@@ -2,6 +2,7 @@ package com.xl.backen.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.xl.backen.dao.PeoplesIntegralIntMapper;
 import com.xl.backen.dao.TasksMapper;
 import com.xl.backen.dao.TasksPeoplesMapper;
 import com.xl.backen.entity.Peoples;
@@ -13,6 +14,7 @@ import com.xl.backen.model.AppTasksModel;
 import com.xl.backen.model.TasksPageModel;
 import com.xl.backen.model.TasksPeopleModel;
 import com.xl.backen.service.AppTasksService;
+import com.xl.backen.util.ArrayUtil;
 import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
 import org.apache.shiro.SecurityUtils;
@@ -30,6 +32,9 @@ public class AppTasksServiceImpl implements AppTasksService {
 
 	@Autowired
 	private TasksPeoplesMapper tpm;
+
+	@Autowired
+	private PeoplesIntegralIntMapper pil;
 
 	@Override
 	public Page<Tasks> query(TasksPageModel model) {
@@ -93,11 +98,49 @@ public class AppTasksServiceImpl implements AppTasksService {
 
 		Page<Tasks> t = tpm.findByPeople(tp);
 
+
 		List<Tasks> tasks = t.getResult();
 
 		for (Tasks i : tasks) {
 			int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
 			i.setFlag(f);
+		}
+
+		Page<Tasks> tasksPage = (Page<Tasks>) tasks;
+
+		return tasksPage;
+	}
+
+	/**
+	 * 通过peopleid查询报名任务
+	 * @param
+	 * @return
+	 */
+	@Override
+	public Page<Tasks> findByPeopleId(TasksPeopleModel tp) {
+		if (tp.getPageNum() != null && tp.getPageSize() != null) {
+			PageHelper.startPage(tp.getPageNum(), tp.getPageSize());
+		}
+
+		Page<Tasks> t = tpm.findByPeople(tp);
+		/*peopleid拥有的已兑换的任务列表*/
+		List<Tasks> tasksList = pil.queryByPeopleId(tp.getPeopleId());
+		/*peopleid拥有的任务*/
+		List<Tasks> tasks = t.getResult();
+
+		/*任务已兑换*/
+		List<Tasks> tasksSame = ArrayUtil.compareArrSame(tasks,tasksList);
+
+		for (Tasks i : tasks) {
+			int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
+			i.setFlag(f);
+			//告诉前端tasks是否已兑换
+			for(Tasks j: tasksSame) {
+				if(i == j) {
+					/*已兑换*/
+					i.setDistribute(true);
+				}
+			}
 		}
 
 		Page<Tasks> tasksPage = (Page<Tasks>) tasks;
