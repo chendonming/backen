@@ -8,6 +8,14 @@ public class AppTasksModel extends Tasks {
 
     private Boolean is_join_task;
 
+    @Override
+    public String toString() {
+        return "AppTasksModel{" +
+                "is_join_task=" + is_join_task +
+                ",Tasks=" + super.toString() +
+                '}';
+    }
+
     public Boolean getIs_join_task() {
         return is_join_task;
     }

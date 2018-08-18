@@ -13,6 +13,15 @@ public class PeoplesPageModel extends Peoples{
 	
 	private Integer pageSize;
 
+	@Override
+	public String toString() {
+		return "PeoplesPageModel{" +
+				"pageNum=" + pageNum +
+				", pageSize=" + pageSize +
+				",super=" +super.toString() +
+				'}';
+	}
+
 	public Integer getPageNum() {
 		return pageNum;
 	}

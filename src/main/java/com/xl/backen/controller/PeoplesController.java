@@ -40,6 +40,12 @@ public class PeoplesController {
         return new Result<>(BusinessStatus.SUCCESS);
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Result<Object> update(@RequestBody Peoples pe) {
+        ps.update(pe);
+        return new Result<>(BusinessStatus.SUCCESS);
+    }
+
     @RequestMapping(value = "/queryByExport", method = RequestMethod.GET)
     public Result<String> exportPeople() throws IOException {
         String file = ps.exportPeople();

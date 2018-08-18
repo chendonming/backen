@@ -8,9 +8,13 @@ import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.model.RolesPowerModel;
+import com.xl.backen.shiro.UserRealm;
 import com.xl.backen.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +24,7 @@ import com.xl.backen.handler.CommonConst;
 import com.xl.backen.service.RolesPowerService;
 
 @Service
+@CacheConfig(cacheNames = "permiss")
 public class RolesPowerServiceImpl implements RolesPowerService {
 	@Autowired
 	private PowersMapper pm;
@@ -32,6 +37,7 @@ public class RolesPowerServiceImpl implements RolesPowerService {
 	 */
 	@Override
 	@Transactional
+	@CacheEvict(allEntries=true)
 	public int givePermiss(RolesPowerModel model) throws Exception {
 		if (StringUtil.isEmpty(model.getRoleId())) {
 			throw new BusinessException(BusinessStatus.PARAMETER_ERROR);
@@ -83,6 +89,11 @@ public class RolesPowerServiceImpl implements RolesPowerService {
 			}
 
 		}
+
+		/*刷新权限*/
+		RealmSecurityManager rsm = (RealmSecurityManager)SecurityUtils.getSecurityManager();
+		UserRealm realm = (UserRealm)rsm.getRealms().iterator().next();
+		realm.clearCachedAuthorization();
 
 		return 1;
 	}

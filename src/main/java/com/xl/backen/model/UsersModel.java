@@ -15,6 +15,15 @@ public class UsersModel extends Users {
 		return roles;
 	}
 
+	@Override
+	public String toString() {
+		return "UsersModel{" +
+				"roles=" + roles +
+				", parentMenus=" + parentMenus +
+				",super=" +super.toString() +
+				'}';
+	}
+
 	/**
 	 * @return the parentMenus
 	 */

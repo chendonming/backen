@@ -21,6 +21,20 @@ public class PeoplesIntegralOut implements Serializable {
 
     private Date createTime;
 
+    @Override
+    public String toString() {
+        return "PeoplesIntegralOut{" +
+                "uuid='" + uuid + '\'' +
+                ", peopleId='" + peopleId + '\'' +
+                ", shopId='" + shopId + '\'' +
+                ", shopName='" + shopName + '\'' +
+                ", shopIntegral=" + shopIntegral +
+                ", integral=" + integral +
+                ", count=" + count +
+                ", createTime=" + createTime +
+                '}';
+    }
+
     public String getUuid() {
         return uuid;
     }

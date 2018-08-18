@@ -29,6 +29,21 @@ public class ParentMenus implements Serializable {
 
 	private String meunName;
 
+	@Override
+	public String toString() {
+		return "ParentMenus{" +
+				"uuid='" + uuid + '\'' +
+				", name='" + name + '\'' +
+				", code='" + code + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				", type=" + type +
+				", weight=" + weight +
+				", powers=" + powers +
+				", meunName='" + meunName + '\'' +
+				'}';
+	}
+
 	public String getMeunName() {
 		return meunName;
 	}

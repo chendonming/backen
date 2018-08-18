@@ -8,6 +8,14 @@ public class AppActivitysModel extends Activitys {
 
     private Boolean is_join_act;
 
+    @Override
+    public String toString() {
+        return "AppActivitysModel{" +
+                "is_join_act=" + is_join_act +
+                ",Activitys=" + super.toString() +
+                '}';
+    }
+
     public Boolean getIs_join_act() {
         return is_join_act;
     }

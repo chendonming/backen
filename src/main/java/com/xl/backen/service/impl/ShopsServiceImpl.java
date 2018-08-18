@@ -14,15 +14,20 @@ import java.util.UUID;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig(cacheNames = "shop")
 public class ShopsServiceImpl implements ShopsService {
 
 	@Autowired
 	private ShopsMapper sm;
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public int insertSelective(Shops record) {
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
 
@@ -38,16 +43,19 @@ public class ShopsServiceImpl implements ShopsService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Shops selectByPrimaryKey(String uuid) {
 		return sm.selectByPrimaryKey(uuid);
 	}
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public int updateByPrimaryKeySelective(Shops record) {
 		return sm.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Shops> query(Map<String, Object> map) {
 		Integer pageNum = (Integer)map.get("pageNum");
 		Integer pageSize = (Integer)map.get("pageSize");

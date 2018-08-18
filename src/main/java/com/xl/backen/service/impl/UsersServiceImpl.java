@@ -24,12 +24,16 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
+@CacheConfig(cacheNames = "permiss")
 public class UsersServiceImpl implements UsersService {
 
 	@Value("${server.session.timeout}")
@@ -39,6 +43,7 @@ public class UsersServiceImpl implements UsersService {
 	private UsersMapper usersMapper;
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Users findByMobile(Map<String,String> map) {
 		return usersMapper.findByMobile(map);
 	}
@@ -80,6 +85,7 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	@Transactional
+	@CacheEvict(allEntries=true)
 	public String Register(Users users) {
 		if (StringUtils.isEmpty(users.getMobile())) {
 			throw new BusinessException(BusinessStatus.USER_ERROR);
@@ -120,6 +126,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Users> queryAll(UsersPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
@@ -131,12 +138,14 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public int update(UsersRegisterRoleModel model) {
 		usersMapper.updateByPrimaryKeySelective(model.getUser());
 		return 1;
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Users findById(String uuid) {
 		return usersMapper.selectByPrimaryKey(uuid);
 	}

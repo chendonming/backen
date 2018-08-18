@@ -32,6 +32,25 @@ public class Shops implements Serializable {
 
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "Shops{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", integral=" + integral +
+                ", store=" + store +
+                ", createUser='" + createUser + '\'' +
+                ", createName='" + createName + '\'' +
+                ", status=" + status +
+                ", communityId='" + communityId + '\'' +
+                ", communityName='" + communityName + '\'' +
+                ", coverPic='" + coverPic + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     public Date getCreateTime() {
         return this.createTime;
     }

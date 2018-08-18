@@ -16,6 +16,17 @@ public class TasksPeoples implements Serializable {
 
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "TasksPeoples{" +
+                "uuid='" + uuid + '\'' +
+                ", taskId='" + taskId + '\'' +
+                ", peopleId='" + peopleId + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     public String getUuid() {
         return uuid;
     }

@@ -5,10 +5,7 @@ import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
 import com.xl.backen.service.GarbageRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/garbage")
@@ -28,8 +25,10 @@ public class GarbageRuleController {
         return new Result<>(BusinessStatus.SUCCESS);
     }
 
-    @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
-    public Result<GarbageRule> queryOne() {
-        return new Result<GarbageRule>(BusinessStatus.SUCCESS, grs.selectByPrimaryKey());
+    @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
+    public Result<GarbageRule> queryOne(@RequestParam("sysType") String sysType) {
+        System.out.println(sysType);
+        GarbageRule rg = grs.findBy(sysType);
+        return new Result<GarbageRule>(BusinessStatus.SUCCESS, rg);
     }
 }

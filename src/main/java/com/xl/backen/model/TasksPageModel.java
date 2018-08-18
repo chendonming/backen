@@ -13,6 +13,15 @@ public class TasksPageModel extends Tasks{
 
 	private int pageNum;
 
+	@Override
+	public String toString() {
+		return "TasksPageModel{" +
+				"pageSize=" + pageSize +
+				", pageNum=" + pageNum +
+				",super=" +super.toString() +
+				'}';
+	}
+
 	public Integer getPageSize() {
 		return this.pageSize;
 	}

@@ -30,14 +30,16 @@ public class Roles implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{" +
-			" uuid='" + getUuid() + "'" +
-			", name='" + getName() + "'" +
-			", description='" + getDescription() + "'" +
-			", createTime='" + getCreateTime() + "'" +
-			", updateTime='" + getUpdateTime() + "'" +
-			", status='" + getStatus() + "'" +
-			"}";
+		return "Roles{" +
+				"uuid='" + uuid + '\'' +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				", status=" + status +
+				", sysType='" + sysType + '\'' +
+				", createUser='" + createUser + '\'' +
+				'}';
 	}
 
 	public String getCreateUser() {

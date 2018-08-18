@@ -15,6 +15,9 @@ import com.xl.backen.service.CommunitysService;
 import com.xl.backen.util.MD5;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -24,6 +27,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@CacheConfig(cacheNames = "community")
 public class CommunitysServiceImpl implements CommunitysService {
 
     @Autowired
@@ -33,6 +37,7 @@ public class CommunitysServiceImpl implements CommunitysService {
     private UsersMapper um;
 
     @Override
+    @CacheEvict(allEntries=true)
     public int add(CommunitysForAddModel communitys) throws Exception {
         Users model = (Users) SecurityUtils.getSubject().getPrincipal();
         //新增
@@ -62,6 +67,7 @@ public class CommunitysServiceImpl implements CommunitysService {
     }
 
     @Override
+    @CacheEvict(allEntries=true)
     public int update(Communitys communitys) {
         if (StringUtils.isEmpty(communitys.getUuid())) {
             throw new BusinessException(BusinessStatus.UUID_REQ);
@@ -70,6 +76,7 @@ public class CommunitysServiceImpl implements CommunitysService {
     }
 
     @Override
+    @Cacheable(keyGenerator = "keyGenerator")
     public Page<Communitys> query(CommunitysPageModel model) {
         PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
@@ -81,6 +88,7 @@ public class CommunitysServiceImpl implements CommunitysService {
     }
 
     @Override
+    @Cacheable(keyGenerator = "keyGenerator")
     public Communitys findById(String uuid) {
         if (StringUtils.isEmpty(uuid)) {
             throw new BusinessException(BusinessStatus.UUID_REQ);

@@ -11,6 +11,8 @@ import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.Users;
+import com.xl.backen.handler.BusinessException;
+import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.PeoplesPageModel;
 import com.xl.backen.service.PeoplesService;
@@ -24,6 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
  * PeoplesServiceImpl
  */
 @Service
+@CacheConfig(cacheNames = "peoples")
 public class PeoplesServiceImpl implements PeoplesService {
 
 	private static Logger log = LoggerFactory.getLogger(PeoplesServiceImpl.class);
@@ -49,6 +55,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 	private Long sessionTimeOut;
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public int add(Peoples peoples) {
 		peoples.setUuid(UUID.randomUUID().toString().replace("-", ""));
 		peoples.setCreateTime(new Date());
@@ -63,6 +70,16 @@ public class PeoplesServiceImpl implements PeoplesService {
 	}
 
 	@Override
+	@CacheEvict(allEntries=true)
+	public int update(Peoples peoples) {
+		if(StringUtil.isEmpty(peoples.getUuid())) {
+			throw new BusinessException(BusinessStatus.UUID_REQ);
+		}
+		return pm.updateByPrimaryKeySelective(peoples);
+	}
+
+	@Override
+	@CacheEvict(allEntries=true)
 	public String exportPeople() throws IOException {
 		PeoplesPageModel pp = new PeoplesPageModel();
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
@@ -79,6 +96,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 
 	@Override
 	@Transactional
+	@CacheEvict(allEntries=true)
 	public int importPeople(MultipartFile file) throws Exception {
 		Users u = (Users) SecurityUtils.getSubject().getPrincipal();
 		List<Peoples> peoples = PeoplesPOI.importUser(file);
@@ -116,6 +134,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Peoples> query(PeoplesPageModel model) {
 		if (model.getPageNum() != null && model.getPageSize() != null) {
 			PageHelper.startPage(model.getPageNum(), model.getPageSize());

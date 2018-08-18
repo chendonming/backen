@@ -33,16 +33,19 @@ public class Communitys implements Serializable {
 	@Override
 	public String toString() {
 		return "Communitys{" +
-			"uuid='" + uuid + '\'' +
-			", name='" + name + '\'' +
-			", integral=" + integral +
-			", createUser='" + createUser + '\'' +
-			", totalIntegral=" + totalIntegral +
-			", remark='" + remark + '\'' +
-			", status=" + status +
-			", createTime=" + createTime +
-			", updateTime=" + updateTime +
-			'}';
+				"uuid='" + uuid + '\'' +
+				", name='" + name + '\'' +
+				", integral=" + integral +
+				", createUser='" + createUser + '\'' +
+				", totalIntegral=" + totalIntegral +
+				", remark='" + remark + '\'' +
+				", status=" + status +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				", sysType='" + sysType + '\'' +
+				", leaderName='" + leaderName + '\'' +
+				", leaderMobile='" + leaderMobile + '\'' +
+				'}';
 	}
 
 	public String getLeaderName() {

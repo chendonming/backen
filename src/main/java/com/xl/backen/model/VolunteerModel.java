@@ -1,9 +1,12 @@
 package com.xl.backen.model;
 
+import java.io.Serializable;
+
 /**
  * 志愿者model
  */
-public class VolunteerModel {
+public class VolunteerModel implements Serializable {
+    private static final long serialVersionUID = 1425940435476843175L;
     private String uuid;
 
     private String truename;
@@ -19,6 +22,20 @@ public class VolunteerModel {
     private Integer pageSize;
 
     private Integer pageNum;
+
+    @Override
+    public String toString() {
+        return "VolunteerModel{" +
+                "uuid='" + uuid + '\'' +
+                ", truename='" + truename + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", description='" + description + '\'' +
+                ", role=" + role +
+                ", identityFlag='" + identityFlag + '\'' +
+                ", pageSize=" + pageSize +
+                ", pageNum=" + pageNum +
+                '}';
+    }
 
     public String getIdentityFlag() {
         return identityFlag;

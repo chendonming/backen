@@ -7,6 +7,15 @@ public class RolesPowerModel {
 
 	private List<String> powers;
 
+	@Override
+	public String toString() {
+		return "RolesPowerModel{" +
+				"roleId='" + roleId + '\'' +
+				", powers=" + powers +
+				",super=" +super.toString() +
+				'}';
+	}
+
 	public String getRoleId() {
 		return roleId;
 	}

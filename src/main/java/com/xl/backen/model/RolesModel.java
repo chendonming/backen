@@ -13,6 +13,14 @@ public class RolesModel extends Roles {
         return users;
     }
 
+    @Override
+    public String toString() {
+        return "RolesModel{" +
+                "users=" + users +
+                ",super=" +super.toString() +
+                '}';
+    }
+
     public void setUsers(List<Users> users) {
         this.users = users;
     }

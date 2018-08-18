@@ -7,6 +7,5 @@ jdbc:
   url: jdbc:mysql://localhost:3306/db_backen?userUnicode=true&characterEncoding=utf-8&useSSL=false
   username: root
   password: Xlmysql2018.
-
 filePath: /work/projects/front/static/
 nginxPath:  http://120.79.177.219/static/

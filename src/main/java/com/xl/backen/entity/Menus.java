@@ -19,6 +19,18 @@ public class Menus implements Serializable {
 
 	private List<Powers> powers;
 
+	@Override
+	public String toString() {
+		return "Menus{" +
+				"uuid='" + uuid + '\'' +
+				", name='" + name + '\'' +
+				", code='" + code + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				", powers=" + powers +
+				'}';
+	}
+
 	public List<Powers> getPowers() {
 		return powers;
 	}

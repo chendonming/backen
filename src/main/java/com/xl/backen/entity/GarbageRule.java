@@ -20,6 +20,19 @@ public class GarbageRule implements Serializable {
 
     private String sysType;
 
+    @Override
+    public String toString() {
+        return "GarbageRule{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", content='" + content + '\'' +
+                ", sysType='" + sysType + '\'' +
+                '}';
+    }
+
     public String getSysType() {
 		return sysType;
 	}

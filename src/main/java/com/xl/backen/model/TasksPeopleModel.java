@@ -17,6 +17,17 @@ public class TasksPeopleModel extends TasksPeoples {
 
     private Integer pageNum;
 
+    @Override
+    public String toString() {
+        return "TasksPeopleModel{" +
+                "tasksList=" + tasksList +
+                ", peoplesList=" + peoplesList +
+                ", pageSize=" + pageSize +
+                ", pageNum=" + pageNum +
+                ",super=" +super.toString() +
+                '}';
+    }
+
     public Integer getPageSize() {
         return pageSize;
     }

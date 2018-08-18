@@ -52,6 +52,35 @@ public class Peoples implements Serializable {
 
     private String identityFlag;
 
+    @Override
+    public String toString() {
+        return "Peoples{" +
+                "uuid='" + uuid + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", truename='" + truename + '\'' +
+                ", headPic='" + headPic + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", sex=" + sex +
+                ", password='" + password + '\'' +
+                ", isRealName=" + isRealName +
+                ", idCard='" + idCard + '\'' +
+                ", communityId='" + communityId + '\'' +
+                ", communityName='" + communityName + '\'' +
+                ", totalIntegral=" + totalIntegral +
+                ", integral=" + integral +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", sysType='" + sysType + '\'' +
+                ", role=" + role +
+                ", openId='" + openId + '\'' +
+                ", code='" + code + '\'' +
+                ", sessionId='" + sessionId + '\'' +
+                ", description='" + description + '\'' +
+                ", identityFlag='" + identityFlag + '\'' +
+                '}';
+    }
+
     public Integer getRole() {
         return role;
     }

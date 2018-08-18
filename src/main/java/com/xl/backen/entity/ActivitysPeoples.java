@@ -17,6 +17,17 @@ public class ActivitysPeoples implements Serializable{
 
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "ActivitysPeoples{" +
+                "uuid='" + uuid + '\'' +
+                ", activityId='" + activityId + '\'' +
+                ", peopleId='" + peopleId + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     public String getUuid() {
         return uuid;
     }

@@ -2,6 +2,7 @@ package com.xl.backen.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Activitys implements Serializable {
 	private static final long serialVersionUID = 4972179174475594360L;
@@ -50,8 +51,41 @@ public class Activitys implements Serializable {
 
 	private String createName;
 
+	/*输出的数组*/
+	private List<String> coverpicList;
+
 	/*是否已经兑换积分*/
 	private Boolean isDistribute;
+
+	@Override
+	public String toString() {
+		return "Activitys{" +
+				"uuid='" + uuid + '\'' +
+				", name='" + name + '\'' +
+				", communityId='" + communityId + '\'' +
+				", communityName='" + communityName + '\'' +
+				", startTime=" + startTime +
+				", endTime=" + endTime +
+				", joinStartTime=" + joinStartTime +
+				", joinEndTime=" + joinEndTime +
+				", location='" + location + '\'' +
+				", limitPeople=" + limitPeople +
+				", integral=" + integral +
+				", joinPeople=" + joinPeople +
+				", dataForm=" + dataForm +
+				", createUser='" + createUser + '\'' +
+				", coverpic='" + coverpic + '\'' +
+				", description='" + description + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				", status=" + status +
+				", flag=" + flag +
+				", sysType='" + sysType + '\'' +
+				", createName='" + createName + '\'' +
+				", coverpicList=" + coverpicList +
+				", isDistribute=" + isDistribute +
+				'}';
+	}
 
 	public Boolean getDistribute() {
 		return isDistribute;
@@ -78,6 +112,14 @@ public class Activitys implements Serializable {
 		} else {
 			return super.equals(obj);
 		}
+	}
+
+	public List<String> getCoverpicList() {
+		return coverpicList;
+	}
+
+	public void setCoverpicList(List<String> coverpicList) {
+		this.coverpicList = coverpicList;
 	}
 
 	public String getCreateName() {

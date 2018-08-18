@@ -7,40 +7,34 @@ import com.xl.backen.entity.Activitys;
  */
 public class ActivitysPageModel extends Activitys {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private int pageSize;
+    private int pageSize;
 
-  private int pageNum;
+    private int pageNum;
 
-	/**
-	 * 1.报名未开始
-	 * 2.报名进行中
-	 * 3.报名已结束  活动未开始
-	 * 4.活动进行中
-	 * 5.活动已结束
-	 */
-	@Override
-	public String toString() {
-		return "{" +
-			" pageSize='" + getPageSize() + "'" +
-			", pageNum='" + getPageNum() + "'" +
-			", flag='" + getFlag() + "'" +
-			"}";
-	}
-	public int getPageSize() {
-		return this.pageSize;
-	}
+    @Override
+    public String toString() {
+        return "ActivitysPageModel{" +
+                "pageSize=" + pageSize +
+                ", pageNum=" + pageNum +
+                ", Activitys=" + super.toString() +
+                '}';
+    }
 
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
+    public int getPageSize() {
+        return this.pageSize;
+    }
 
-	public int getPageNum() {
-		return this.pageNum;
-	}
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
-	public void setPageNum(int pageNum) {
-		this.pageNum = pageNum;
-	}
+    public int getPageNum() {
+        return this.pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
 }

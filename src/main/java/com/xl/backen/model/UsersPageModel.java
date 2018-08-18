@@ -9,6 +9,15 @@ public class UsersPageModel extends Users {
 
 	private Integer pageNum;
 
+	@Override
+	public String toString() {
+		return "UsersPageModel{" +
+				"pageSize=" + pageSize +
+				", pageNum=" + pageNum +
+				",super=" +super.toString() +
+				'}';
+	}
+
 	public Integer getPageSize() {
 		return pageSize;
 	}

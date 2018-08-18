@@ -13,17 +13,22 @@ import com.xl.backen.service.VolunteerService;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
  * VolunteerServiceImpl
  */
 @Service
+@CacheConfig(cacheNames = "volunteer")
 public class VolunteerServiceImpl implements VolunteerService {
   @Autowired
   private PeoplesMapper pm;
 
   @Override
+  @CacheEvict(allEntries=true)
   public int add(VolunteerModel volunteerModel) {
     // 1.查询手机号码
     Peoples peoples = pm.findByMobile(volunteerModel.getMobile());
@@ -47,6 +52,7 @@ public class VolunteerServiceImpl implements VolunteerService {
   }
 
   @Override
+  @CacheEvict(allEntries=true)
   public int update(VolunteerModel volunteerModel) {
     Peoples p = new Peoples();
     p.setUuid(volunteerModel.getUuid());
@@ -59,6 +65,7 @@ public class VolunteerServiceImpl implements VolunteerService {
   }
 
   @Override
+  @Cacheable(keyGenerator = "keyGenerator")
   public VolunteerModel queryOne(String uuid) {
     Peoples peoples = pm.selectByPrimaryKey(uuid);
     VolunteerModel volunteerModel = new VolunteerModel();
@@ -73,6 +80,7 @@ public class VolunteerServiceImpl implements VolunteerService {
   }
 
   @Override
+  @Cacheable(keyGenerator = "keyGenerator")
   public Page<VolunteerModel> queryList(VolunteerModel volunteerModel) {
     if(volunteerModel.getPageSize() != null && volunteerModel.getPageSize() != null) {
       PageHelper.startPage(volunteerModel.getPageNum(), volunteerModel.getPageSize());

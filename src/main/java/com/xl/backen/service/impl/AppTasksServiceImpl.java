@@ -1,5 +1,6 @@
 package com.xl.backen.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.PeoplesIntegralIntMapper;
@@ -19,12 +20,16 @@ import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@CacheConfig(cacheNames = "task")
 public class AppTasksServiceImpl implements AppTasksService {
 
 	@Autowired
@@ -37,6 +42,7 @@ public class AppTasksServiceImpl implements AppTasksService {
 	private PeoplesIntegralIntMapper pil;
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Tasks> query(TasksPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
@@ -47,12 +53,19 @@ public class AppTasksServiceImpl implements AppTasksService {
 		Page<Tasks> tasks = tm.query(model);
 		for (Tasks i : tasks) {
 			i.setFlag(TimeUtil.compareTime(i.getStartTime(), i.getEndTime()));
+
+			if(!StringUtil.isEmpty(i.getCoverpic())) {
+				List<String> stringList = (List<String>) JSON.parse(i.getCoverpic());
+
+				i.setCoverpicList(stringList);
+			}
 		}
 		return tasks;
 	}
 
 	@Override
 	@Transactional
+	@CacheEvict(allEntries=true)
 	public int joinTask(String taskId) {
 		if (StringUtil.isEmpty(taskId)) {
 			throw new BusinessException(BusinessStatus.UUID_REQ);
@@ -89,6 +102,7 @@ public class AppTasksServiceImpl implements AppTasksService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Tasks> findByPeople(TasksPeopleModel tp) {
 		if (tp.getPageNum() != null && tp.getPageSize() != null) {
 			PageHelper.startPage(tp.getPageNum(), tp.getPageSize());
@@ -104,6 +118,12 @@ public class AppTasksServiceImpl implements AppTasksService {
 		for (Tasks i : tasks) {
 			int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
 			i.setFlag(f);
+
+			if(!StringUtil.isEmpty(i.getCoverpic())) {
+				List<String> stringList = (List<String>) JSON.parse(i.getCoverpic());
+
+				i.setCoverpicList(stringList);
+			}
 		}
 
 		Page<Tasks> tasksPage = (Page<Tasks>) tasks;
@@ -117,6 +137,7 @@ public class AppTasksServiceImpl implements AppTasksService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Tasks> findByPeopleId(TasksPeopleModel tp) {
 		if (tp.getPageNum() != null && tp.getPageSize() != null) {
 			PageHelper.startPage(tp.getPageNum(), tp.getPageSize());
@@ -134,6 +155,13 @@ public class AppTasksServiceImpl implements AppTasksService {
 		for (Tasks i : tasks) {
 			int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
 			i.setFlag(f);
+
+			if(!StringUtil.isEmpty(i.getCoverpic())) {
+				List<String> stringList = (List<String>) JSON.parse(i.getCoverpic());
+
+				i.setCoverpicList(stringList);
+			}
+
 			//告诉前端tasks是否已兑换
 			for(Tasks j: tasksSame) {
 				if(i == j) {
@@ -155,6 +183,7 @@ public class AppTasksServiceImpl implements AppTasksService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Peoples> findByTasksId(TasksPeopleModel tp) {
 		if (tp.getPageNum() != null && tp.getPageSize() != null) {
 			PageHelper.startPage(tp.getPageNum(), tp.getPageSize());
@@ -166,6 +195,7 @@ public class AppTasksServiceImpl implements AppTasksService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public AppTasksModel findOne(String taskId) {
 
 		AppTasksModel tasks = tm.findOne(taskId);
@@ -183,6 +213,12 @@ public class AppTasksServiceImpl implements AppTasksService {
 
 		int f = TimeUtil.compareTime(tasks.getStartTime(), tasks.getEndTime());
 		tasks.setFlag(f);
+
+		if(!StringUtil.isEmpty(tasks.getCoverpic())) {
+			List<String> stringList = (List<String>) JSON.parse(tasks.getCoverpic());
+
+			tasks.setCoverpicList(stringList);
+		}
 
 		return tasks;
 	}

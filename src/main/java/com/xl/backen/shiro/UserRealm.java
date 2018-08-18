@@ -88,4 +88,12 @@ public class UserRealm extends AuthorizingRealm {
 			return null;
 		}
 	}
+
+	/**
+	 * 清理权限缓存
+	 */
+	public void clearCachedAuthorization(){
+		//清空权限缓存
+		clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+	}
 }

@@ -35,12 +35,12 @@ public class PeopleRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		System.out.println("APP授权管理");
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
 		Object o = SecurityUtils.getSubject().getPrincipal();
 
 		if (o instanceof Peoples) {
+			System.out.println("APP授权管理");
 			String[] t = menus.split(",");
 
 			Set<String> permis = new HashSet<String>();

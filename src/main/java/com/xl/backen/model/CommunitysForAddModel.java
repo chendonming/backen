@@ -18,6 +18,15 @@ public class CommunitysForAddModel extends Communitys {
      */
     private String mobile;
 
+    @Override
+    public String toString() {
+        return "CommunitysForAddModel{" +
+                "communityLeader='" + communityLeader + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ",super=" +super.toString() +
+                '}';
+    }
+
     public String getMobile() {
         return mobile;
     }

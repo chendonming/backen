@@ -15,6 +15,9 @@ import com.xl.backen.util.TimeUtil;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +25,14 @@ import org.springframework.transaction.annotation.Transactional;
  * ActivitysServiceImpl
  */
 @Service
+@CacheConfig(cacheNames = "act")
 public class ActivitysServiceImpl implements ActivitysService {
 	@Autowired
 	private ActivitysMapper as;
 
 	@Override
 	@Transactional
+	@CacheEvict(allEntries=true)
 	public int add(Activitys activitys) {
 		activitys.setUuid(UUID.randomUUID().toString().replace("-", ""));
 
@@ -49,6 +54,7 @@ public class ActivitysServiceImpl implements ActivitysService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Activitys> query(ActivitysPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
@@ -65,11 +71,13 @@ public class ActivitysServiceImpl implements ActivitysService {
 	}
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public int update(Activitys tasks) {
 		return as.updateByPrimaryKeySelective(tasks);
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Activitys findById(String uuid) {
 		Activitys activitys = as.selectByPrimaryKey(uuid);
 		int flag = TimeUtil.compareTime(activitys.getStartTime(), activitys.getEndTime(), activitys.getJoinStartTime(),

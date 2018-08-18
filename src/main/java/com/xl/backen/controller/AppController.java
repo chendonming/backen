@@ -104,7 +104,7 @@ public class AppController {
 		log.info("根据用户id查询活动，参数={}", uuid);
 
 		ActivitysPeopleModel ap = new ActivitysPeopleModel();
-		ap.setUuid(uuid);
+		ap.setPeopleId(uuid);
 		ap.setPageNum(pageNum);
 		ap.setPageSize(pageSize);
 
@@ -120,7 +120,7 @@ public class AppController {
 		log.info("根据用户id查询任务，参数={}", uuid);
 
 		TasksPeopleModel tp = new TasksPeopleModel();
-		tp.setUuid(uuid);
+		tp.setPeopleId(uuid);
 		tp.setPageNum(pageNum);
 		tp.setPageSize(pageSize);
 

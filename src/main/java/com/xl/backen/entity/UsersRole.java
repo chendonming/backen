@@ -16,7 +16,17 @@ public class UsersRole implements Serializable{
     private String roleId;
     
     private Integer status;
-    
+
+    @Override
+    public String toString() {
+        return "UsersRole{" +
+                "uuid='" + uuid + '\'' +
+                ", userId='" + userId + '\'' +
+                ", roleId='" + roleId + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
     @Override
     public boolean equals(Object obj) {
     	if(obj instanceof UsersRole) {

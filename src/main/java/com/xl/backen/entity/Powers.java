@@ -1,8 +1,11 @@
 package com.xl.backen.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Powers {
+public class Powers implements Serializable {
+
+    private static final long serialVersionUID = -4385605550931291948L;
     private String uuid;
 
     private String code;
@@ -27,6 +30,23 @@ public class Powers {
     private Integer weight;
 
     private String frontPath;
+
+    @Override
+    public String toString() {
+        return "Powers{" +
+                "uuid='" + uuid + '\'' +
+                ", code='" + code + '\'' +
+                ", meunName='" + meunName + '\'' +
+                ", description='" + description + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", upMenusId='" + upMenusId + '\'' +
+                ", upMenusName='" + upMenusName + '\'' +
+                ", type=" + type +
+                ", weight=" + weight +
+                ", frontPath='" + frontPath + '\'' +
+                '}';
+    }
 
     public String getFrontPath() {
         return frontPath;

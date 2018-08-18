@@ -21,6 +21,20 @@ public class PeoplesIntegralInt implements Serializable {
 
     private String foreignName;
 
+    @Override
+    public String toString() {
+        return "PeoplesIntegralInt{" +
+                "uuid='" + uuid + '\'' +
+                ", peopleId='" + peopleId + '\'' +
+                ", integral=" + integral +
+                ", createTime=" + createTime +
+                ", type=" + type +
+                ", foreignId='" + foreignId + '\'' +
+                ", description='" + description + '\'' +
+                ", foreignName='" + foreignName + '\'' +
+                '}';
+    }
+
     public String getUuid() {
         return uuid;
     }

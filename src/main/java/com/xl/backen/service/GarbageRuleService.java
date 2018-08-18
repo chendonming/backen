@@ -9,7 +9,7 @@ public interface GarbageRuleService {
 
     int insertSelective(GarbageRule record);
 
-    GarbageRule selectByPrimaryKey();
+    GarbageRule findBy(String sysType);
 
     int updateByPrimaryKeySelective(GarbageRule record);
 

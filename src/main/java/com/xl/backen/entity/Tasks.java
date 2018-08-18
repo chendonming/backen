@@ -2,6 +2,7 @@ package com.xl.backen.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Tasks implements Serializable {
 
@@ -47,6 +48,9 @@ public class Tasks implements Serializable {
 
     private String sysType;
 
+    /*输出的数组*/
+    private List<String> coverpicList;
+
     /*是否已经兑换积分*/
     private Boolean isDistribute;
 
@@ -89,6 +93,14 @@ public class Tasks implements Serializable {
         } else {
             return super.equals(obj);
         }
+    }
+
+    public List<String> getCoverpicList() {
+        return coverpicList;
+    }
+
+    public void setCoverpicList(List<String> coverpicList) {
+        this.coverpicList = coverpicList;
     }
 
     public Boolean getDistribute() {

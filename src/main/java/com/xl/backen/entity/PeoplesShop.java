@@ -17,6 +17,18 @@ public class PeoplesShop implements Serializable {
 
     private Date createTime;
 
+    @Override
+    public String toString() {
+        return "PeoplesShop{" +
+                "uuid='" + uuid + '\'' +
+                ", peopleId='" + peopleId + '\'' +
+                ", shopId='" + shopId + '\'' +
+                ", count=" + count +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                '}';
+    }
+
     public String getUuid() {
         return uuid;
     }

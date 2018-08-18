@@ -13,6 +13,15 @@ public class CommunitysPageModel extends Communitys {
 	@NotNull
 	private Integer pageNum;
 
+	@Override
+	public String toString() {
+		return "CommunitysPageModel{" +
+				"pageSize=" + pageSize +
+				", pageNum=" + pageNum +
+				",super=" +super.toString() +
+				'}';
+	}
+
 	public Integer getPageSize() {
 		return pageSize;
 	}

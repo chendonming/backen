@@ -27,29 +27,29 @@
   <!--根据peopleId查询所有的任务id-->
   <select id="queryByPeopleId" resultMap="TasksMap">
     select foreign_id
-    from tb_ peoples_integral_int
+    from tb_peoples_integral_int
     where people_id=#{peopleId}
   </select>
 
   <!--根据peopleId查询所有的活动id-->
   <select id="queryActByPeopleId" resultMap="ActMap">
     select foreign_id
-    from tb_ peoples_integral_int
+    from tb_peoples_integral_int
     where people_id=#{peopleId}
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from "tb_ peoples_integral_int"
+    from tb_peoples_integral_int
     where uuid = #{uuid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from "tb_ peoples_integral_int"
+    delete from tb_peoples_integral_int
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
-    insert into "tb_ peoples_integral_int" (uuid, people_id, integral, 
+    insert into tb_peoples_integral_int (uuid, people_id, integral,
       create_time, type, foreign_id, 
       description, foreign_name)
     values (#{uuid,jdbcType=VARCHAR}, #{peopleId,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER}, 
@@ -57,7 +57,7 @@
       #{description,jdbcType=VARCHAR}, #{foreignName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
-    insert into "tb_ peoples_integral_int"
+    insert into tb_peoples_integral_int
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
         uuid,
@@ -112,7 +112,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
-    update "tb_ peoples_integral_int"
+    update tb_peoples_integral_int
     <set>
       <if test="peopleId != null">
         people_id = #{peopleId,jdbcType=VARCHAR},
@@ -139,7 +139,7 @@
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.PeoplesIntegralInt">
-    update "tb_ peoples_integral_int"
+    update tb_peoples_integral_int
     set people_id = #{peopleId,jdbcType=VARCHAR},
       integral = #{integral,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -17,15 +17,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from "tb_ peoples_integral_out"
+    from tb_peoples_integral_out
     where uuid = #{uuid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from "tb_ peoples_integral_out"
+    delete from tb_peoples_integral_out
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.xl.backen.entity.PeoplesIntegralOut">
-    insert into "tb_ peoples_integral_out" (uuid, people_id, shop_id, 
+    insert into tb_peoples_integral_out (uuid, people_id, shop_id,
       shop_name, shop_integral, integral, 
       count, create_time)
     values (#{uuid,jdbcType=VARCHAR}, #{peopleId,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR}, 
@@ -33,7 +33,7 @@
       #{count,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xl.backen.entity.PeoplesIntegralOut">
-    insert into "tb_ peoples_integral_out"
+    insert into tb_peoples_integral_out
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
         uuid,
@@ -88,7 +88,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.PeoplesIntegralOut">
-    update "tb_ peoples_integral_out"
+    update tb_peoples_integral_out
     <set>
       <if test="peopleId != null">
         people_id = #{peopleId,jdbcType=VARCHAR},
@@ -115,7 +115,7 @@
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.PeoplesIntegralOut">
-    update "tb_ peoples_integral_out"
+    update tb_peoples_integral_out
     set people_id = #{peopleId,jdbcType=VARCHAR},
       shop_id = #{shopId,jdbcType=VARCHAR},
       shop_name = #{shopName,jdbcType=VARCHAR},

@@ -1,9 +1,12 @@
 package com.xl.backen.shiro;
 
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.xl.backen.filter.LoginVolidFilter;
 import com.xl.backen.filter.PermissionsVolidFilter;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -55,7 +60,8 @@ public class ShiroConfig {
 	@Bean(name = "defaultWebSecurityManager")
 	public DefaultWebSecurityManager getDefaultWebSecurityManager(
 		@Qualifier("userRealm") UserRealm userRealm,
-		@Qualifier("peopleRealm") PeopleRealm peopleRealm
+		@Qualifier("peopleRealm") PeopleRealm peopleRealm,
+		@Qualifier("ehCacheManager") EhCacheManager ehCacheManager
 	) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		// 关联realm
@@ -63,11 +69,14 @@ public class ShiroConfig {
 		realmList.add(userRealm);
 		realmList.add(peopleRealm);
 		securityManager.setRealms(realmList);
+
+		securityManager.setCacheManager(ehCacheManager);
 		return securityManager;
 	}
 
 	@Bean(name = "userRealm")
 	public UserRealm userRealm() {
+		UserRealm ur = new UserRealm();
 		return new UserRealm();
 	}
 
@@ -90,6 +99,14 @@ public class ShiroConfig {
 		CustomizedModularRealmAuthenticator modularRealmAuthenticator = new CustomizedModularRealmAuthenticator();
 		modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
 		return modularRealmAuthenticator;
+	}
+
+	@Bean(name="ehCacheManager")
+	public EhCacheManager ehCacheManager(){
+		EhCacheManager ehCacheManager = new EhCacheManager();
+		//配置Ehcache缓存配置文件,该缓存配置文件默认位置为“classpath:org/apache/shiro/cache/ehcache/ehcache.xml”
+		//ehCacheManager.setCacheManagerConfigFile(FileLocation)
+		return ehCacheManager;
 	}
 
 }

@@ -14,7 +14,7 @@
   </sql>
 
   <!--queryLimit-->
-  <select id="queryLimit" resultMap="BaseResultMap">
+  <select id="queryLimit" parameterType="java.lang.String" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from tb_garbage_rule
     where sys_type=#{sysType}

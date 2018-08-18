@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface PeoplesService {
   int add(Peoples peoples);
+  int update(Peoples peoples);
 
   /**
    * 导出居民信息

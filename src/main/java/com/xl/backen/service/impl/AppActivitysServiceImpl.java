@@ -1,5 +1,6 @@
 package com.xl.backen.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.ActivitysMapper;
@@ -18,11 +19,15 @@ import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@CacheConfig(cacheNames = "act")
 public class AppActivitysServiceImpl implements AppActivitysService {
 	@Autowired
 	private ActivitysMapper as;
@@ -34,6 +39,7 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 	private PeoplesIntegralIntMapper pil;
 
 	@Override
+    @Cacheable(keyGenerator = "keyGenerator")
 	public Page<Activitys> query(ActivitysPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
@@ -45,11 +51,18 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 		for (Activitys i : activitys) {
 			int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
 			i.setFlag(flag);
+
+			if(!StringUtil.isEmpty(i.getCoverpic())) {
+				List<String> stringList = (List<String>)JSON.parse(i.getCoverpic());
+
+				i.setCoverpicList(stringList);
+			}
 		}
 		return activitys;
 	}
 
 	@Override
+    @CacheEvict(allEntries=true)
 	public int joinAct(String actId) {
 		if (StringUtil.isEmpty(actId)) {
 			throw new BusinessException(BusinessStatus.UUID_REQ);
@@ -86,6 +99,7 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 	}
 
 	@Override
+    @Cacheable(keyGenerator = "keyGenerator")
 	public Page<Activitys> findByPeople(ActivitysPeopleModel ap) {
 		if (ap.getPageNum() != null && ap.getPageSize() != null) {
 			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
@@ -102,6 +116,7 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 	 * @return
 	 */
 	@Override
+    @Cacheable(keyGenerator = "keyGenerator")
 	public Page<Activitys> findByPeopleId(ActivitysPeopleModel ap) {
 		if (ap.getPageNum() != null && ap.getPageSize() != null) {
 			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
@@ -119,6 +134,13 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 		for (Activitys i : tasks) {
 			int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
 			i.setFlag(f);
+
+            if(!StringUtil.isEmpty(i.getCoverpic())) {
+                List<String> stringList = (List<String>)JSON.parse(i.getCoverpic());
+
+                i.setCoverpicList(stringList);
+            }
+
 			//告诉前端tasks是否已兑换
 			for(Activitys j: tasksSame) {
 				if(i == j) {
@@ -133,6 +155,7 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 	}
 
 	@Override
+    @Cacheable(keyGenerator = "keyGenerator")
 	public Page<Peoples> findByActId(ActivitysPeopleModel ap) {
 		if (ap.getPageNum() != null && ap.getPageSize() != null) {
 			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
@@ -141,6 +164,7 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 	}
 
 	@Override
+    @Cacheable(keyGenerator = "keyGenerator")
 	public AppActivitysModel findOne(String actId) {
 		AppActivitysModel activitysModel = as.findOne(actId);
 
@@ -159,6 +183,12 @@ public class AppActivitysServiceImpl implements AppActivitysService {
 				activitysModel.getStartTime(), activitysModel.getEndTime());
 
 		activitysModel.setFlag(f);
+
+        if(!StringUtil.isEmpty(activitysModel.getCoverpic())) {
+            List<String> stringList = (List<String>)JSON.parse(activitysModel.getCoverpic());
+
+            activitysModel.setCoverpicList(stringList);
+        }
 
 		return activitysModel;
 	}
