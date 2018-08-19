@@ -141,4 +141,14 @@ public class PeoplesServiceImpl implements PeoplesService {
 		}
 		return pm.query(model);
 	}
+
+	@Override
+	public int queryIntegral(String peoples) {
+		return pm.queryIntegral(peoples);
+	}
+
+	@Override
+	public Peoples queryOne(String uuid) {
+		return pm.selectByPrimaryKey(uuid);
+	}
 }

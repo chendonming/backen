@@ -56,24 +56,30 @@ public class Tasks implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                " uuid='" + getUuid() + "'" +
-                ", name='" + getName() + "'" +
-                ", communityId='" + getCommunityId() + "'" +
-                ", startTime='" + getStartTime() + "'" +
-                ", endTime='" + getEndTime() + "'" +
-                ", location='" + getLocation() + "'" +
-                ", limitPeople='" + getLimitPeople() + "'" +
-                ", integral='" + getIntegral() + "'" +
-                ", joinPeople='" + getJoinPeople() + "'" +
-                ", dataForm='" + getDataForm() + "'" +
-                ", createUser='" + getCreateUser() + "'" +
-                ", coverpic='" + getCoverpic() + "'" +
-                ", description='" + getDescription() + "'" +
-                ", createTime='" + getCreateTime() + "'" +
-                ", updateTime='" + getUpdateTime() + "'" +
-                ", status='" + getStatus() + "'" +
-                "}";
+        return "Tasks{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", communityId='" + communityId + '\'' +
+                ", communityName='" + communityName + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", location='" + location + '\'' +
+                ", limitPeople=" + limitPeople +
+                ", integral=" + integral +
+                ", joinPeople=" + joinPeople +
+                ", dataForm=" + dataForm +
+                ", createUser='" + createUser + '\'' +
+                ", createName='" + createName + '\'' +
+                ", coverpic='" + coverpic + '\'' +
+                ", description='" + description + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", flag=" + flag +
+                ", sysType='" + sysType + '\'' +
+                ", coverpicList=" + coverpicList +
+                ", isDistribute=" + isDistribute +
+                '}';
     }
 
     @Override

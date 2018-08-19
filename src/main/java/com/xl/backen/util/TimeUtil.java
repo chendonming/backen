@@ -23,6 +23,27 @@ public class TimeUtil {
     return true;
   }
 
+  /**
+   * 活动时间校验
+   * @param sDate 开始时间
+   * @param eDate 结束时间
+   * @param bsData 报名开始时间
+   * @param beData 报名结束时间
+   * @return
+   */
+  public static Boolean volidTime(Date sDate, Date eDate,Date bsData, Date beData) {
+    volidTime(sDate,eDate);
+    volidTime(bsData,beData);
+
+    /*开始报名时间大于开始时间*/
+    if(beData.getTime() >= sDate.getTime()) {
+      throw new BusinessException(BusinessStatus.TIME_ERROR);
+    }
+
+    return true;
+  }
+
+
 
   public static int compareTime(Date sDate, Date eDate) {
     Long startTime = sDate.getTime();

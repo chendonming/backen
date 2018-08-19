@@ -43,4 +43,9 @@ public interface PeoplesMapper {
 	Peoples queryByOpenId(String openId);
 
 	Page<VolunteerModel> queryList(String communityId);
+
+	/**
+	 * 根据peopleic查询剩余积分
+	 */
+	int queryIntegral(String peoples);
 }

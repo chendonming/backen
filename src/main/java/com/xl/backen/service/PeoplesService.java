@@ -32,4 +32,11 @@ public interface PeoplesService {
    * 条件查询居民分页
    */
   Page<Peoples> query(PeoplesPageModel model);
+
+  /**
+   * 根据peopleic查询剩余积分
+   */
+  int queryIntegral(String peoples);
+
+  Peoples queryOne(String uuid);
 }

@@ -7,6 +7,8 @@ import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.ResultForPage;
 import com.xl.backen.model.PeoplesPageModel;
 import com.xl.backen.service.WxUsersService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,8 @@ import com.xl.backen.service.PeoplesService;
 @RestController
 @RequestMapping("/people")
 public class PeoplesController {
+    private static Logger log = LoggerFactory.getLogger(PeoplesController.class);
+
     @Autowired
     private PeoplesService ps;
 
@@ -36,24 +40,28 @@ public class PeoplesController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result<Object> add(@RequestBody Peoples pe) {
+        log.info("居民新增: peoples={}",pe);
         ps.add(pe);
         return new Result<>(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Result<Object> update(@RequestBody Peoples pe) {
+        log.info("居民修改: peoples={}",pe);
         ps.update(pe);
         return new Result<>(BusinessStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/queryByExport", method = RequestMethod.GET)
     public Result<String> exportPeople() throws IOException {
+        log.info("居民导出----------------");
         String file = ps.exportPeople();
         return new Result<String>(BusinessStatus.SUCCESS, file);
     }
 
     @RequestMapping(value = "/addByImport", method = RequestMethod.POST)
     public Result<String> importPeople(@RequestParam("file") MultipartFile file) throws Exception {
+        log.info("居民导入---------------");
         int count = ps.importPeople(file);
         return new Result<String>(BusinessStatus.SUCCESS, count + "条记录改变");
     }
@@ -75,6 +83,26 @@ public class PeoplesController {
     public Result<Object> verified(@RequestBody Peoples peoples){
         uss.authentication(peoples);
         return new Result<>(BusinessStatus.SUCCESS);
+    }
+
+    /**
+     * 根据peoples查询剩余积分
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/queryIntegral", method = RequestMethod.GET)
+    public Result<Object> queryIntegral(@RequestParam("peopleId") String peopleId){
+        return new Result<>(BusinessStatus.SUCCESS,ps.queryIntegral(peopleId));
+    }
+
+    /**
+     * 查询单个
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
+    public Result<Object> queryOne(@RequestParam("peopleId") String peopleId){
+        return new Result<>(BusinessStatus.SUCCESS,ps.queryOne(peopleId));
     }
 
 }

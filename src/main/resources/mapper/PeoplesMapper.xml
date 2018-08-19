@@ -52,6 +52,13 @@
     where mobile=#{mobile} and status=1
   </select>
 
+  <!--根据peopleId查询积分-->
+  <select id="queryIntegral" resultType="java.lang.Integer">
+    select integral
+    from tb_peoples
+    where uuid = #{peopleId}
+  </select>
+
   <!-- 条件分页查询 -->
   <select id="query" resultMap="BaseResultMap">
   	select
@@ -160,6 +167,9 @@
       <if test="identityFlag != null">
         identity_flag,
       </if>
+      <if test="description != null">
+        description,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
@@ -199,6 +209,9 @@
       </if>
       <if test="identityFlag != null">
         #{identityFlag, jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description, jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

@@ -52,6 +52,9 @@ public class Peoples implements Serializable {
 
     private String identityFlag;
 
+    /*积分是否兑换*/
+    private Boolean isDistribute;
+
     @Override
     public String toString() {
         return "Peoples{" +
@@ -78,7 +81,16 @@ public class Peoples implements Serializable {
                 ", sessionId='" + sessionId + '\'' +
                 ", description='" + description + '\'' +
                 ", identityFlag='" + identityFlag + '\'' +
+                ", isDistribute='" + isDistribute + '\'' +
                 '}';
+    }
+
+    public Boolean getDistribute() {
+        return isDistribute;
+    }
+
+    public void setDistribute(Boolean distribute) {
+        isDistribute = distribute;
     }
 
     public Integer getRole() {

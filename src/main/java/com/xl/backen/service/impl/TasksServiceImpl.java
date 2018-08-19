@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
  * TasksServiceImpl
  */
 @Service
-@CacheConfig(cacheNames = "task")
 public class TasksServiceImpl implements TasksService {
     private static Logger log = LoggerFactory.getLogger(TasksServiceImpl.class);
 
@@ -36,7 +35,6 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     @Transactional
-    @CacheEvict(allEntries=true)
     public int add(Tasks tasks) {
         log.info("新增任务task = {}", tasks);
 
@@ -57,7 +55,6 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    @Cacheable(keyGenerator = "keyGenerator")
     public Page<Tasks> query(TasksPageModel model) {
         PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
@@ -76,13 +73,14 @@ public class TasksServiceImpl implements TasksService {
      * 更新操作
      */
     @Override
-    @CacheEvict(allEntries=true)
     public int update(Tasks tasks) {
+        if(tasks.getStartTime() != null && tasks.getEndTime() != null) {
+            TimeUtil.volidTime(tasks.getStartTime(),tasks.getEndTime());
+        }
         return tm.updateByPrimaryKeySelective(tasks);
     }
 
     @Override
-    @Cacheable(keyGenerator = "keyGenerator")
     public Tasks findById(String uuid) {
         Tasks tasks = tm.selectByPrimaryKey(uuid);
 

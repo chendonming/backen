@@ -20,6 +20,10 @@
     <id column="foreign_id" jdbcType="VARCHAR" property="uuid" />
   </resultMap>
 
+  <resultMap id="PeopleMap" type="com.xl.backen.entity.Peoples">
+    <id column="people_id" jdbcType="VARCHAR" property="uuid" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     uuid, people_id, integral, create_time, type, foreign_id, description, foreign_name
   </sql>
@@ -36,6 +40,19 @@
     select foreign_id
     from tb_peoples_integral_int
     where people_id=#{peopleId}
+  </select>
+
+  <select id="countByPeopleIdAndForeignId" resultType="java.lang.Integer">
+    select count(*)
+    from tb_peoples_integral_int
+    where people_id=#{peopleId} and foreign_id = #{foreignId}
+  </select>
+
+  <!--queryPeopleByAct  根据actId查询people-->
+  <select id="queryPeopleByAct" resultMap="PeopleMap" >
+    select people_id
+    from tb_peoples_integral_int
+    where foreign_id=#{actId}
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

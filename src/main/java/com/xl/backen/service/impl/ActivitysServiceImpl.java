@@ -25,64 +25,66 @@ import org.springframework.transaction.annotation.Transactional;
  * ActivitysServiceImpl
  */
 @Service
-@CacheConfig(cacheNames = "act")
 public class ActivitysServiceImpl implements ActivitysService {
-	@Autowired
-	private ActivitysMapper as;
+    @Autowired
+    private ActivitysMapper as;
 
-	@Override
-	@Transactional
-	@CacheEvict(allEntries=true)
-	public int add(Activitys activitys) {
-		activitys.setUuid(UUID.randomUUID().toString().replace("-", ""));
+    @Override
+    @Transactional
+    public int add(Activitys activitys) {
+        activitys.setUuid(UUID.randomUUID().toString().replace("-", ""));
 
-		Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
-		String uuid = usersModel.getUuid();
-		activitys.setCreateUser(uuid);
+        Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
+        String uuid = usersModel.getUuid();
+        activitys.setCreateUser(uuid);
 
-		Date sDate = activitys.getStartTime();
-		Date eDate = activitys.getEndTime();
-		Date jsdDate = activitys.getJoinStartTime();
-		Date jseDate = activitys.getJoinEndTime();
-		TimeUtil.volidTime(jsdDate, jseDate);
-		TimeUtil.volidTime(sDate, eDate);
-		activitys.setStatus(CommonConst.NORMAL_STATUS);
+        Date sDate = activitys.getStartTime();
+        Date eDate = activitys.getEndTime();
+        Date jsdDate = activitys.getJoinStartTime();
+        Date jseDate = activitys.getJoinEndTime();
+        TimeUtil.volidTime(sDate, eDate, jsdDate, jseDate);
+        activitys.setStatus(CommonConst.NORMAL_STATUS);
 
-		activitys.setCreateTime(new Date());
-		activitys.setUpdateTime(new Date());
-		return as.insertSelective(activitys);
-	}
+        activitys.setCreateTime(new Date());
+        activitys.setUpdateTime(new Date());
+        return as.insertSelective(activitys);
+    }
 
-	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
-	public Page<Activitys> query(ActivitysPageModel model) {
-		PageHelper.startPage(model.getPageNum(), model.getPageSize());
+    @Override
+    public Page<Activitys> query(ActivitysPageModel model) {
+        PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
-		Users users = (Users) SecurityUtils.getSubject().getPrincipal();
-		model.setCommunityId(users.getCommunityId());
-		model.setSysType(users.getSysType());
+        Users users = (Users) SecurityUtils.getSubject().getPrincipal();
+        model.setCommunityId(users.getCommunityId());
+        model.setSysType(users.getSysType());
 
-		Page<Activitys> activitys = as.query(model);
-		for (Activitys i : activitys) {
-			int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
-			i.setFlag(flag);
-		}
-		return activitys;
-	}
+        Page<Activitys> activitys = as.query(model);
+        for (Activitys i : activitys) {
+            int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
+            i.setFlag(flag);
+        }
+        return activitys;
+    }
 
-	@Override
-	@CacheEvict(allEntries=true)
-	public int update(Activitys tasks) {
-		return as.updateByPrimaryKeySelective(tasks);
-	}
+    @Override
+    public int update(Activitys tasks) {
 
-	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
-	public Activitys findById(String uuid) {
-		Activitys activitys = as.selectByPrimaryKey(uuid);
-		int flag = TimeUtil.compareTime(activitys.getStartTime(), activitys.getEndTime(), activitys.getJoinStartTime(),
-				activitys.getJoinEndTime());
-		activitys.setFlag(flag);
-		return activitys;
-	}
+        if (tasks.getStartTime() != null && tasks.getEndTime() != null &&
+                tasks.getJoinStartTime() != null &&
+                tasks.getJoinEndTime() != null
+        ) {
+            TimeUtil.volidTime(tasks.getStartTime(), tasks.getEndTime(), tasks.getJoinStartTime(), tasks.getJoinEndTime());
+        }
+
+        return as.updateByPrimaryKeySelective(tasks);
+    }
+
+    @Override
+    public Activitys findById(String uuid) {
+        Activitys activitys = as.selectByPrimaryKey(uuid);
+        int flag = TimeUtil.compareTime(activitys.getStartTime(), activitys.getEndTime(), activitys.getJoinStartTime(),
+                activitys.getJoinEndTime());
+        activitys.setFlag(flag);
+        return activitys;
+    }
 }

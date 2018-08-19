@@ -27,169 +27,182 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-@CacheConfig(cacheNames = "act")
 public class AppActivitysServiceImpl implements AppActivitysService {
-	@Autowired
-	private ActivitysMapper as;
+    @Autowired
+    private ActivitysMapper as;
 
-	@Autowired
-	private ActivitysPeoplesMapper apm;
+    @Autowired
+    private ActivitysPeoplesMapper apm;
 
-	@Autowired
-	private PeoplesIntegralIntMapper pil;
+    @Autowired
+    private PeoplesIntegralIntMapper pil;
 
-	@Override
-    @Cacheable(keyGenerator = "keyGenerator")
-	public Page<Activitys> query(ActivitysPageModel model) {
-		PageHelper.startPage(model.getPageNum(), model.getPageSize());
+    @Override
+    public Page<Activitys> query(ActivitysPageModel model) {
+        PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
-		Peoples users = (Peoples) SecurityUtils.getSubject().getPrincipal();
-		model.setCommunityId(users.getCommunityId());
-		model.setSysType(users.getSysType());
+        Peoples users = (Peoples) SecurityUtils.getSubject().getPrincipal();
+        model.setCommunityId(users.getCommunityId());
+        model.setSysType(users.getSysType());
 
-		Page<Activitys> activitys = as.query(model);
-		for (Activitys i : activitys) {
-			int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
-			i.setFlag(flag);
+        Page<Activitys> activitys = as.query(model);
+        for (Activitys i : activitys) {
+            int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
+            i.setFlag(flag);
 
-			if(!StringUtil.isEmpty(i.getCoverpic())) {
-				List<String> stringList = (List<String>)JSON.parse(i.getCoverpic());
+            if (!StringUtil.isEmpty(i.getCoverpic())) {
+                List<String> stringList = (List<String>) JSON.parse(i.getCoverpic());
 
-				i.setCoverpicList(stringList);
-			}
-		}
-		return activitys;
-	}
+                i.setCoverpicList(stringList);
+            }
+        }
+        return activitys;
+    }
 
-	@Override
-    @CacheEvict(allEntries=true)
-	public int joinAct(String actId) {
-		if (StringUtil.isEmpty(actId)) {
-			throw new BusinessException(BusinessStatus.UUID_REQ);
-		}
+    @Override
+    public int joinAct(String actId) {
+        if (StringUtil.isEmpty(actId)) {
+            throw new BusinessException(BusinessStatus.UUID_REQ);
+        }
 
-		ActivitysPeoples ap = new ActivitysPeoples();
-		ap.setCreateTime(new Date());
-		ap.setUpdateTime(new Date());
-		ap.setPeopleId(((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
-		ap.setActivityId(actId);
-		ap.setUuid(UUID.randomUUID().toString().replace("-", ""));
+        ActivitysPeoples ap = new ActivitysPeoples();
+        ap.setCreateTime(new Date());
+        ap.setUpdateTime(new Date());
+        ap.setPeopleId(((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
+        ap.setActivityId(actId);
+        ap.setUuid(UUID.randomUUID().toString().replace("-", ""));
 
-		int count = apm.insertSelective(ap);
-		if (count <= 0) {
-			throw new BusinessException(BusinessStatus.INSERT_ERROR);
-		}
+        int count = apm.insertSelective(ap);
+        if (count <= 0) {
+            throw new BusinessException(BusinessStatus.INSERT_ERROR);
+        }
 
-		// 根据任务id进行修改
-		synchronized (ap) {
-			Activitys act = as.selectByPrimaryKey(actId);
+        // 根据任务id进行修改
+        synchronized (ap) {
+            Activitys act = as.selectByPrimaryKey(actId);
 
-			int joinPeople = act.getJoinPeople() == null ? 0 : act.getJoinPeople();
+            int joinPeople = act.getJoinPeople() == null ? 0 : act.getJoinPeople();
 
-			act.setJoinPeople(joinPeople + 1);
+            act.setJoinPeople(joinPeople + 1);
 
-			count = as.updateByPrimaryKeySelective(act);
+            count = as.updateByPrimaryKeySelective(act);
 
-			if (count <= 0) {
-				throw new BusinessException(BusinessStatus.UPDATE_ERROR);
-			}
-		}
-		
-		return 1;
-	}
+            if (count <= 0) {
+                throw new BusinessException(BusinessStatus.UPDATE_ERROR);
+            }
+        }
 
-	@Override
-    @Cacheable(keyGenerator = "keyGenerator")
-	public Page<Activitys> findByPeople(ActivitysPeopleModel ap) {
-		if (ap.getPageNum() != null && ap.getPageSize() != null) {
-			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
-		}
+        return 1;
+    }
 
-		ap.setPeopleId(((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
+    @Override
+    public Page<Activitys> findByPeople(ActivitysPeopleModel ap) {
+        if (ap.getPageNum() != null && ap.getPageSize() != null) {
+            PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
+        }
 
-		return apm.findByPeople(ap);
-	}
+        ap.setPeopleId(((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
 
-	/**
-	 * 根据peopleid查询活动
-	 * @param ap
-	 * @return
-	 */
-	@Override
-    @Cacheable(keyGenerator = "keyGenerator")
-	public Page<Activitys> findByPeopleId(ActivitysPeopleModel ap) {
-		if (ap.getPageNum() != null && ap.getPageSize() != null) {
-			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
-		}
+        return apm.findByPeople(ap);
+    }
 
-		Page<Activitys> t = apm.findByPeople(ap);
-		/*peopleid拥有的已兑换的任务列表*/
-		List<Activitys> tasksList = pil.queryActByPeopleId(ap.getPeopleId());
-		/*peopleid拥有的任务*/
-		List<Activitys> tasks = t.getResult();
+    /**
+     * 根据peopleid查询活动
+     *
+     * @param ap
+     * @return
+     */
+    @Override
+    public Page<Activitys> findByPeopleId(ActivitysPeopleModel ap) {
+        if (ap.getPageNum() != null && ap.getPageSize() != null) {
+            PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
+        }
 
-		/*任务已兑换*/
-		List<Activitys> tasksSame = ArrayUtil.compareArrSame(tasks,tasksList);
+        Page<Activitys> t = apm.findByPeople(ap);
+        /*peopleid拥有的已兑换的任务列表*/
+        List<Activitys> tasksList = pil.queryActByPeopleId(ap.getPeopleId());
+        /*peopleid拥有的任务*/
+        List<Activitys> tasks = t.getResult();
 
-		for (Activitys i : tasks) {
-			int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
-			i.setFlag(f);
+        /*任务已兑换*/
+        List<Activitys> tasksSame = ArrayUtil.compareArrSame(tasks, tasksList);
 
-            if(!StringUtil.isEmpty(i.getCoverpic())) {
-                List<String> stringList = (List<String>)JSON.parse(i.getCoverpic());
+        for (Activitys i : tasks) {
+            int f = TimeUtil.compareTime(i.getStartTime(), i.getEndTime());
+            i.setFlag(f);
+
+            if (!StringUtil.isEmpty(i.getCoverpic())) {
+                List<String> stringList = (List<String>) JSON.parse(i.getCoverpic());
 
                 i.setCoverpicList(stringList);
             }
 
-			//告诉前端tasks是否已兑换
-			for(Activitys j: tasksSame) {
-				if(i == j) {
-					/*已兑换*/
-					i.setDistribute(true);
-				}
-			}
-		}
+            //告诉前端tasks是否已兑换
+            for (Activitys j : tasksSame) {
+                if (i == j) {
+                    /*已兑换*/
+                    i.setDistribute(true);
+                }
+            }
+        }
 
-		Page<Activitys> tasksPage = (Page<Activitys>) tasks;
-		return apm.findByPeople(ap);
-	}
+        Page<Activitys> tasksPage = (Page<Activitys>) tasks;
+        return apm.findByPeople(ap);
+    }
 
-	@Override
-    @Cacheable(keyGenerator = "keyGenerator")
-	public Page<Peoples> findByActId(ActivitysPeopleModel ap) {
-		if (ap.getPageNum() != null && ap.getPageSize() != null) {
-			PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
-		}
-		return apm.findByActId(ap);
-	}
+    @Override
+    public Page<Peoples> findByActId(ActivitysPeopleModel ap) {
+        if (ap.getPageNum() != null && ap.getPageSize() != null) {
+            PageHelper.startPage(ap.getPageNum(), ap.getPageSize());
+        }
 
-	@Override
-    @Cacheable(keyGenerator = "keyGenerator")
-	public AppActivitysModel findOne(String actId) {
-		AppActivitysModel activitysModel = as.findOne(actId);
+        Page<Peoples> peoples = apm.findByActId(ap);
 
-		Map<String, String> map = new HashMap<>();
-		map.put("peopleId", ((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
-		map.put("actId", actId);
-		int i = apm.exist(map);
+        /*根据活动id查询到的peoples List*/
+        List<Peoples> peoplesList = peoples.getResult();
 
-		if (i > 0) {
-			activitysModel.setIs_join_act(true);
-		} else {
-			activitysModel.setIs_join_act(false);
-		}
+        /*根据活动查询到的已派发的people LIST*/
+        List<Peoples> pilPeoples = pil.queryPeopleByAct(ap.getActivityId());
 
-		int f = TimeUtil.compareTime(activitysModel.getJoinStartTime(), activitysModel.getJoinEndTime(),
-				activitysModel.getStartTime(), activitysModel.getEndTime());
+        for (Peoples p : peoplesList) {
+            for (Peoples i : pilPeoples) {
+                if (p.getUuid().equals(i.getUuid())) {
+                    p.setDistribute(true);
+                }
+            }
+        }
 
-		activitysModel.setFlag(f);
+        Page<Peoples> peoplePage = (Page<Peoples>) peoplesList;
 
-        if(!StringUtil.isEmpty(activitysModel.getCoverpic())) {
-            List<String> stringList = (List<String>)JSON.parse(activitysModel.getCoverpic());
+        return peoplePage;
+    }
+
+    @Override
+    public AppActivitysModel findOne(String actId) {
+        AppActivitysModel activitysModel = as.findOne(actId);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("peopleId", ((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
+        map.put("actId", actId);
+        int i = apm.exist(map);
+
+        if (i > 0) {
+            activitysModel.setIs_join_act(true);
+        } else {
+            activitysModel.setIs_join_act(false);
+        }
+
+        int f = TimeUtil.compareTime(activitysModel.getJoinStartTime(), activitysModel.getJoinEndTime(),
+                activitysModel.getStartTime(), activitysModel.getEndTime());
+
+        activitysModel.setFlag(f);
+
+        if (!StringUtil.isEmpty(activitysModel.getCoverpic())) {
+            List<String> stringList = (List<String>) JSON.parse(activitysModel.getCoverpic());
 
             activitysModel.setCoverpicList(stringList);
         }
 
-		return activitysModel;
-	}
+        return activitysModel;
+    }
 }

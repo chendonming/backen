@@ -29,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-@CacheConfig(cacheNames = "task")
 public class AppTasksServiceImpl implements AppTasksService {
 
 	@Autowired
@@ -42,7 +41,6 @@ public class AppTasksServiceImpl implements AppTasksService {
 	private PeoplesIntegralIntMapper pil;
 
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Tasks> query(TasksPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
@@ -65,7 +63,6 @@ public class AppTasksServiceImpl implements AppTasksService {
 
 	@Override
 	@Transactional
-	@CacheEvict(allEntries=true)
 	public int joinTask(String taskId) {
 		if (StringUtil.isEmpty(taskId)) {
 			throw new BusinessException(BusinessStatus.UUID_REQ);
@@ -102,7 +99,6 @@ public class AppTasksServiceImpl implements AppTasksService {
 	}
 
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Tasks> findByPeople(TasksPeopleModel tp) {
 		if (tp.getPageNum() != null && tp.getPageSize() != null) {
 			PageHelper.startPage(tp.getPageNum(), tp.getPageSize());
@@ -137,7 +133,6 @@ public class AppTasksServiceImpl implements AppTasksService {
 	 * @return
 	 */
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Tasks> findByPeopleId(TasksPeopleModel tp) {
 		if (tp.getPageNum() != null && tp.getPageSize() != null) {
 			PageHelper.startPage(tp.getPageNum(), tp.getPageSize());
@@ -183,7 +178,6 @@ public class AppTasksServiceImpl implements AppTasksService {
 	 * @return
 	 */
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Peoples> findByTasksId(TasksPeopleModel tp) {
 		if (tp.getPageNum() != null && tp.getPageSize() != null) {
 			PageHelper.startPage(tp.getPageNum(), tp.getPageSize());
@@ -195,7 +189,6 @@ public class AppTasksServiceImpl implements AppTasksService {
 	}
 
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public AppTasksModel findOne(String taskId) {
 
 		AppTasksModel tasks = tm.findOne(taskId);

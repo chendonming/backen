@@ -4,6 +4,8 @@ import com.xl.backen.dao.PeoplesIntegralIntMapper;
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.entity.PeoplesIntegralInt;
+import com.xl.backen.handler.BusinessException;
+import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.service.IntegralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,16 @@ public class IntegralServiceImpl implements IntegralService {
     @Override
     @Transactional
     public int distribute(PeoplesIntegralInt pil) {
+        //避免重复验证
+        if(!pil.getType().equals(3)) {
+            //不是垃圾分类
+            int count = pilm.countByPeopleIdAndForeignId(pil);
+            if(count > 0) {
+                throw new BusinessException(BusinessStatus.INTEGRAL_PF);
+            }
+        }
+
+
         //新增积分记录
         pil.setUuid(UUID.randomUUID().toString().replace("-",""));
         pil.setCreateTime(new Date());

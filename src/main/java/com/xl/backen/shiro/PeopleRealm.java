@@ -74,6 +74,8 @@ public class PeopleRealm extends AuthorizingRealm {
 					WxUsers u = new WxUsers();
 					//以前也没有登录过 则添加数据
 					String uuid = UUID.randomUUID().toString().replace("-", "");
+					u.setIsRealName(CommonConst.NO_REAL_NAME);
+					u.setNickName(tokenPeoples.getNickname());
 					u.setUuid(uuid);
 					u.setCreateTime(new Date());
 					u.setUpdateTime(new Date());

@@ -58,6 +58,7 @@ public enum BusinessStatus {
      */
     OPENID_RQ(406, "微信登录 OPENID必须"),
     AUTHC_APP_RQ(407, "微信实名认证，手机号码和身份证至少选择其中一个"),
+    INTEGRAL_PF(409, "不能重复派发"),
     AUTHC_APP_NULL(408, "所选择的手机号码不存在");
 
     BusinessStatus(Integer code, String msg) {

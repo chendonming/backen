@@ -48,8 +48,8 @@ public class CommonConst {
     public static final Integer COMMUNITY_TYPE = 2; //社区
 
     //微信app id
-    public static final String APPID = "wx886ac99b96a07e94";
-    public static final String APPSECRET = "4c2dce496c53dc2d655822ae25bebd8b";
+    public static final String APPID = "wx6de76409aae82cdc";
+    public static final String APPSECRET = "870320ddfec0ed3db24933b6a86abf56";
 
 
     /**
