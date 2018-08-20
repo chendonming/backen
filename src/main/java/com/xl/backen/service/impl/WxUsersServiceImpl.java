@@ -19,11 +19,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
+@CacheConfig(cacheNames = "peoples")
 public class WxUsersServiceImpl implements WxUsersService {
 
 	private static Logger logger = LoggerFactory.getLogger(WxUsersServiceImpl.class);
@@ -77,6 +80,7 @@ public class WxUsersServiceImpl implements WxUsersService {
 	 * @return
 	 */
 	@Override
+	@CacheEvict(allEntries=true)
 	public int authentication(Peoples peoples) {
 		if(StringUtil.isEmpty(peoples.getMobile()) && StringUtil.isEmpty(peoples.getIdCard())) {
 			throw new BusinessException(BusinessStatus.AUTHC_APP_RQ);
@@ -109,6 +113,8 @@ public class WxUsersServiceImpl implements WxUsersService {
 		p.setIntegral(CommonConst.INIT_INTEGRAL);
 		//设置状态
 		p.setStatus(CommonConst.NORMAL_STATUS);
+		//设置systype
+		p.setSysType(app.getSysType());
 
 		pm.updateByPrimaryKeySelective(p);
 		return 1;
