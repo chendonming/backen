@@ -18,18 +18,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `tb_ peoples_integral_int`
 -- ----------------------------
-DROP TABLE IF EXISTS `tb_ peoples_integral_int`;
-CREATE TABLE `tb_ peoples_integral_int` (
-  `uuid` varchar(255) NOT NULL,
-  `people_id` varchar(255) NOT NULL COMMENT '用户id',
-  `integral` int(1) NOT NULL COMMENT '获得的积分',
-  `create_time` datetime NOT NULL COMMENT '收入时间',
-  `type` int(1) NOT NULL COMMENT '获取积分的途径（1. 活动  2.任务 3.垃圾分类）',
-  `foreign_id` varchar(255) DEFAULT NULL COMMENT '来源id',
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户收入表';
-
+//删了一个表
 -- ----------------------------
 -- Records of tb_ peoples_integral_int
 -- ----------------------------
