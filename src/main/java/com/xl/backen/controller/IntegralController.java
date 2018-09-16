@@ -3,6 +3,7 @@ package com.xl.backen.controller;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Activitys;
 import com.xl.backen.entity.PeoplesIntegralInt;
+import com.xl.backen.entity.PeoplesIntegralOut;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.Result;
@@ -26,6 +27,12 @@ public class IntegralController {
     @RequestMapping(value = "/distribute", method = RequestMethod.POST)
     public Result<Object> queryAct(@RequestBody PeoplesIntegralInt pil) {
         is.distribute(pil);
+        return new Result(BusinessStatus.SUCCESS);
+    }
+
+    @RequestMapping(value = "/exchange", method = RequestMethod.POST)
+    public Result<Object> exchange(@RequestBody @Valid PeoplesIntegralOut pio) {
+        is.exchange(pio);
         return new Result(BusinessStatus.SUCCESS);
     }
 }

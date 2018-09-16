@@ -1,6 +1,7 @@
 package com.xl.backen.service;
 
 import com.xl.backen.entity.PeoplesIntegralInt;
+import com.xl.backen.entity.PeoplesIntegralOut;
 import com.xl.backen.entity.Tasks;
 
 import java.util.List;
@@ -19,4 +20,9 @@ public interface IntegralService {
      *  foreign_name: (外键name)
      */
     int distribute(PeoplesIntegralInt pil);
+
+    /**
+     * 积分兑换
+     */
+    int exchange(PeoplesIntegralOut pio);
 }

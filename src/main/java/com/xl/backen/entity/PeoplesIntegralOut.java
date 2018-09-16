@@ -1,5 +1,7 @@
 package com.xl.backen.entity;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,14 +11,19 @@ public class PeoplesIntegralOut implements Serializable {
 
     private String peopleId;
 
+    @NotEmpty
     private String shopId;
 
+    @NotEmpty
     private String shopName;
 
+    @NotNull
     private Integer shopIntegral;
 
+    @NotNull
     private Integer integral;
 
+    @NotNull
     private Integer count;
 
     private Date createTime;
