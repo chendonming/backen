@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8091
   servlet:
     context-path: /backen
 jdbc:
@@ -8,5 +8,5 @@ jdbc:
   username: root
   password: 123456
 
-filePath: D:/codeplace/view/static/
-nginxPath:  http://localhost/static/
+filePath:   /home/chendm/文档/views
+nginxPath:  http://localhost:8090/

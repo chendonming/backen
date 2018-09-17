@@ -571,3 +571,18 @@ INSERT INTO `tb_wx_users` VALUES ('5fa8b32accfb457ebf0c9ca7c36e0d26', null, null
 INSERT INTO `tb_wx_users` VALUES ('ad97ec58958c49b39182029dee6d2a05', null, null, 'oBzz60KcpdjYEAe_rN91SL6r0cBU', null, '1', 'https://wx.qlogo.cn/mmopen/vi_32/pbjIJqM0Sxv6iaIXmrrqb8saO0weAVqaBhC2u68tmNNxJ7BGGsebVeQgKye8b37ykXFdauXic7TST7QsJEuYicsng/132', '2018-08-13 20:38:29', '2018-08-13 20:38:29');
 INSERT INTO `tb_wx_users` VALUES ('c154baa55fbd48d7a0d76690b31b5824', '一点痕寂', null, 'oBzz60NTwxlBs6oBn4Dh7WBKWoNE', null, '0', 'https://wx.qlogo.cn/mmopen/vi_32/ewrXbOtA5T85wLOjAksn7nkqnuCibAHv6Zcl5xOaY9IRPzibPfk2OnicMEm18TSNpRn1yhFxOVWP3icnD1l7Xa8gQg/132', '2018-08-09 18:45:18', '2018-08-09 18:45:18');
 INSERT INTO `tb_wx_users` VALUES ('e33a3d4ffe6f4e0ca1cfa161752d35fd', null, null, null, null, null, null, '2018-08-09 21:56:24', '2018-08-09 21:56:24');
+
+-- ----------------------------
+-- Table structure for `tb_notices`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_notices`;
+CREATE TABLE `tb_notices` (
+  `uuid` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `content` varchar(3000) DEFAULT NULL COMMENT '公告内容',
+  `community_id` varchar(255) DEFAULT NULL COMMENT '社区Id',
+  `community_name` varchar(255) DEFAULT NULL COMMENT '社区名称',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告表';

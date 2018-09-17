@@ -17,10 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * shiro不做任何拦截的控制器
- */
-
 @RestController
 @RequestMapping("/user")
 public class UsersController {
