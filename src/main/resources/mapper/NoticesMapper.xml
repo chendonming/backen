@@ -15,7 +15,7 @@
   </sql>
   
   <!-- 分页查询全部 -->
-  <select id="queryAll" parameterMap="com.xl.backen.entity.Notices" resultMap="BaseResultMap">
+  <select id="queryAll" parameterType="com.xl.backen.entity.Notices" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" />
   	from tb_notices
   	where

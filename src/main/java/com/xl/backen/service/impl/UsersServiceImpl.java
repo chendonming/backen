@@ -52,6 +52,7 @@ public class UsersServiceImpl implements UsersService {
 	public Users login(String username, String password, Integer loginType) {
 		System.out.println("username: " + username);
 		System.out.println("password:  " + password);
+
 		if (StringUtils.isEmpty(username)) {
 			throw new BusinessException(BusinessStatus.USERNAME_REQ);
 		}
