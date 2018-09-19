@@ -56,4 +56,9 @@ public class CommonConst {
      * 积分
      */
     public static final Integer INIT_INTEGRAL = 20; //首次实名认证
+
+    // 圈子状态 1、待审核 2、已通过 3、草稿箱
+    public static final Integer CIRCLE_STATUS_AUDIT  = 1;
+    public static final Integer CIRCLE_STATUS_PASSED  = 2;
+    public static final Integer CIRCLE_STATUS_DRAFT  = 3;
 }

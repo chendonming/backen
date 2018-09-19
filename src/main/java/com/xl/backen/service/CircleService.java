@@ -10,5 +10,9 @@ public interface CircleService {
 
     int update(Circle circle);
 
+    int del(Circle circle);
+
+    Circle queryOne(Circle circle);
+
     Page<Circle> query(Map<String, Object> map);
 }
