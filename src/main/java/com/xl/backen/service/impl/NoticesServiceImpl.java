@@ -4,6 +4,7 @@
 package com.xl.backen.service.impl;
 
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,8 @@ public class NoticesServiceImpl implements NoticesService {
 	 */
 	@Override
 	public int add(Notices notices) {
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		notices.setUuid(uuid);
 		return nm.insertSelective(notices);
 	}
 
