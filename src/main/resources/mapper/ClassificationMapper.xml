@@ -8,21 +8,25 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="flag" jdbcType="INTEGER" property="flag" />
     <result column="up_id" jdbcType="VARCHAR" property="upId" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
   </resultMap>
   <sql id="Base_Column_List">
-    uuid, name, create_time, update_time, flag, up_id
+    uuid, name, create_time, update_time, flag, up_id, pic, community_id
   </sql>
-
-  <!-- 查询全部(条件查询) -->
+    <!-- 查询全部(条件查询) -->
   <select id="queryAll" parameterType="com.xl.backen.entity.Classification" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from tb_classification
     where
     <if test="name != null and name != ''">
-      name like CONCAT(#{name}, '%') and
+        name like CONCAT(#{name}, '%') and
     </if>
     <if test="upId != null and upId != ''">
-      up_id = #{upId} and
+        up_id = #{upId} and
+    </if>
+    <if test="communityId != null and communityId != ''">
+        community_id = #{communityId} and
     </if>
     flag = 1
   </select>
@@ -39,11 +43,11 @@
   </delete>
   <insert id="insert" parameterType="com.xl.backen.entity.Classification">
     insert into tb_classification (uuid, name, create_time, 
-      update_time, flag, up_id
-      )
+      update_time, flag, up_id, 
+      pic, community_id)
     values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}, #{upId,jdbcType=VARCHAR}
-      )
+      #{updateTime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}, #{upId,jdbcType=VARCHAR}, 
+      #{pic,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xl.backen.entity.Classification">
     insert into tb_classification
@@ -66,6 +70,12 @@
       <if test="upId != null">
         up_id,
       </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="communityId != null">
+        community_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -85,6 +95,12 @@
       </if>
       <if test="upId != null">
         #{upId,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        #{communityId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -106,6 +122,12 @@
       <if test="upId != null">
         up_id = #{upId,jdbcType=VARCHAR},
       </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
@@ -115,7 +137,9 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       flag = #{flag,jdbcType=INTEGER},
-      up_id = #{upId,jdbcType=VARCHAR}
+      up_id = #{upId,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Classification implements Serializable {
-    private static final long serialVersionUID = -1681822154118417643L;
-
+    private static final long serialVersionUID = 4228457675046849147L;
     private String uuid;
 
     private String name;
@@ -19,23 +18,11 @@ public class Classification implements Serializable {
 
     private String upId;
 
-    /**
-     * 所属的classification: ------ 树形管理
-     */
-    private List<Classification> list;
+    private String pic;
 
-    @Override
-    public String toString() {
-        return "Classification{" +
-                "uuid='" + uuid + '\'' +
-                ", name='" + name + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", flag=" + flag +
-                ", upId='" + upId + '\'' +
-                ", list=" + list +
-                '}';
-    }
+    private String communityId;
+
+    private List<Classification> list;
 
     public List<Classification> getList() {
         return list;
@@ -91,5 +78,21 @@ public class Classification implements Serializable {
 
     public void setUpId(String upId) {
         this.upId = upId == null ? null : upId.trim();
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic == null ? null : pic.trim();
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId == null ? null : communityId.trim();
     }
 }

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50717
+Source Server         : localhost_3306
+Source Server Version : 50561
 Source Host           : localhost:3306
 Source Database       : db_backen
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50561
 File Encoding         : 65001
 
-Date: 2018-08-13 23:34:10
+Date: 2018-09-23 13:08:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `tb_ peoples_integral_int` (
   `people_id` varchar(255) NOT NULL COMMENT '用户id',
   `integral` int(1) NOT NULL COMMENT '获得的积分',
   `create_time` datetime NOT NULL COMMENT '收入时间',
-  `type` int(1) NOT NULL COMMENT '获取积分的途径（1. 活动  2.任务 3.垃圾分类）',
+  `type` int(1) NOT NULL COMMENT '获取积分的途径（ 1. 帖子点赞 2.帖子<comment>评论  3.帖子发布）',
   `foreign_id` varchar(255) DEFAULT NULL COMMENT '来源id',
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`uuid`)
@@ -114,6 +114,113 @@ INSERT INTO `tb_activitys_peoples` VALUES ('33f1ca6e3f194bd9994c991807e63c56', '
 INSERT INTO `tb_activitys_peoples` VALUES ('c91d409b1b7a49fc9c904cb61255a016', '40413c006b1e49529666bbade0f50bef', '3e8ec0e988144edfa79d5057538f2eb5', '2018-08-13 22:25:39', '2018-08-13 22:25:39');
 
 -- ----------------------------
+-- Table structure for `tb_circle`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_circle`;
+CREATE TABLE `tb_circle` (
+  `uuid` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `orgId` varchar(255) NOT NULL,
+  `weight` int(1) NOT NULL,
+  `head_pic` varchar(255) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '状态（1 正常  2.推荐）',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL COMMENT '是否有效（1，有效 2无效）',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_circle
+-- ----------------------------
+INSERT INTO `tb_circle` VALUES ('9e8ee6d584464f0ea1004d4d595ecb1f', '圈子1', '47e3a4ddc7b24609b995da160a815eb2', '0', null, null, '1', '2018-09-19 20:35:04', '2018-09-22 01:20:21', '1');
+INSERT INTO `tb_circle` VALUES ('aa303b510cd34478acde6ea727363699', 'sdsd1', '47e3a4ddc7b24609b995da160a815eb2', '0', 'http://192.168.199.231/ueditor/jsp/upload/image/2018/9/22/7107992e7a484d4ba29032a5e65bc6b4.jpg', '21323', '1', '2018-09-22 00:39:20', '2018-09-22 01:22:25', '1');
+
+-- ----------------------------
+-- Table structure for `tb_circle_people`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_circle_people`;
+CREATE TABLE `tb_circle_people` (
+  `uuid` varchar(255) DEFAULT NULL,
+  `circle_id` varchar(255) DEFAULT NULL COMMENT '圈子ID',
+  `people_id` varchar(255) DEFAULT NULL COMMENT '加入圈子peopleID',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL COMMENT '是否有效（1有效 2无效）'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_circle_people
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_circle_posts`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_circle_posts`;
+CREATE TABLE `tb_circle_posts` (
+  `uuid` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `content` varchar(2000) DEFAULT NULL COMMENT '内容',
+  `picture` varchar(255) DEFAULT NULL COMMENT '图片',
+  `circle_id` varchar(255) DEFAULT NULL,
+  `create_id` varchar(255) DEFAULT NULL,
+  `thumbs` int(1) DEFAULT NULL COMMENT '点赞次数',
+  `flag` int(1) DEFAULT NULL COMMENT '状态（1有效2无效）',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` date DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '状态( 1.待审核 2.已通过（正常） 3.草稿  4.推荐 )',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='圈子帖子表';
+
+-- ----------------------------
+-- Records of tb_circle_posts
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_circle_post_comment`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_circle_post_comment`;
+CREATE TABLE `tb_circle_post_comment` (
+  `uuid` varchar(255) NOT NULL,
+  `content` varchar(2000) DEFAULT NULL COMMENT '内容',
+  `create_id` varchar(255) DEFAULT NULL COMMENT '发布人',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL COMMENT '是否有效（1. 有效 2无效）',
+  `post_id` varchar(255) DEFAULT NULL COMMENT '帖子ID',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_circle_post_comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_classification`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_classification`;
+CREATE TABLE `tb_classification` (
+  `uuid` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL COMMENT '是否有效（1.有效 2无效）',
+  `up_id` varchar(255) DEFAULT NULL COMMENT '上级ID',
+  `pic` varchar(255) DEFAULT NULL COMMENT '图标',
+  PRIMARY KEY (`uuid`),
+  KEY `name` (`up_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分类管理表';
+
+-- ----------------------------
+-- Records of tb_classification
+-- ----------------------------
+INSERT INTO `tb_classification` VALUES ('2a3a4677d4b44f3299d39f8a2985fa04', '父分类', '2018-09-22 00:50:29', '2018-09-22 00:50:29', '1', '0', null);
+INSERT INTO `tb_classification` VALUES ('a314ee381c304214af28541914cca06d', '孙子子分类1', '2018-09-22 00:58:42', '2018-09-22 00:58:42', '1', 'fbbf123eeea44272965ea158d26726ef', null);
+INSERT INTO `tb_classification` VALUES ('e993a86bf36f4a1183fb7df504d0f240', '子分类2', '2018-09-22 00:58:23', '2018-09-22 00:58:23', '1', '2a3a4677d4b44f3299d39f8a2985fa04', null);
+INSERT INTO `tb_classification` VALUES ('fbbf123eeea44272965ea158d26726ef', '子分类1', '2018-09-22 00:58:19', '2018-09-22 00:58:19', '1', '2a3a4677d4b44f3299d39f8a2985fa04', null);
+
+-- ----------------------------
 -- Table structure for `tb_communitys`
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_communitys`;
@@ -141,6 +248,48 @@ INSERT INTO `tb_communitys` VALUES ('47e3a4ddc7b24609b995da160a815eb2', '八方A
 INSERT INTO `tb_communitys` VALUES ('c5df0f89e8bf4936a916d11075741557', '八方b', '20000', '24102ea95a394ddb8e1302dc15b48323', '20000', 'adasd', '2018-08-07 23:32:58', '2018-08-07 23:32:58', '1', '0ec9448b84e042ab8f983e20b89148c1', 'bbbb', '18588773302');
 
 -- ----------------------------
+-- Table structure for `tb_complaint`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_complaint`;
+CREATE TABLE `tb_complaint` (
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT 'uuid',
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `content` varchar(2000) NOT NULL COMMENT '内容',
+  `create_id` varchar(255) DEFAULT NULL COMMENT '创建人id',
+  `create_name` varchar(255) NOT NULL COMMENT '姓名',
+  `phone` varchar(255) NOT NULL COMMENT '手机号码',
+  `files` varchar(2000) NOT NULL COMMENT '图片',
+  `status` int(11) DEFAULT NULL COMMENT '状态（1、未回复，2、回复）',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `community_id` varchar(255) DEFAULT NULL COMMENT '组织机构',
+  `flag` int(11) DEFAULT NULL COMMENT '是否有效 1、有效  2、无效',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='建议投诉';
+
+-- ----------------------------
+-- Records of tb_complaint
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_complaint_comment`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_complaint_comment`;
+CREATE TABLE `tb_complaint_comment` (
+  `uuid` varchar(255) NOT NULL DEFAULT '',
+  `complaint_uuid` varchar(255) DEFAULT NULL COMMENT '关联投诉建议主键',
+  `content` varchar(2000) NOT NULL COMMENT '内容',
+  `files` varchar(2000) NOT NULL COMMENT '图片',
+  `create_time` date NOT NULL COMMENT '创建时间',
+  `flag` int(11) DEFAULT NULL COMMENT '是否有效 1、有效  2、无效',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_complaint_comment
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `tb_garbage_rule`
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_garbage_rule`;
@@ -159,6 +308,23 @@ CREATE TABLE `tb_garbage_rule` (
 -- Records of tb_garbage_rule
 -- ----------------------------
 INSERT INTO `tb_garbage_rule` VALUES ('a25f7275ab3e4abe90f06811912d0936', '12412424', '124', null, null, '{\"domains1\":[{\"value\":\"214\",\"value1\":\"214\"}],\"domains2\":[{\"value\":\"214\",\"value1\":\"214\"}],\"domains3\":[{\"value\":\"124\",\"value1\":\"214\"}]}', '0ec9448b84e042ab8f983e20b89148c1');
+
+-- ----------------------------
+-- Table structure for `tb_hotline`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_hotline`;
+CREATE TABLE `tb_hotline` (
+  `uuid` varchar(255) NOT NULL DEFAULT '',
+  `phone` varchar(255) DEFAULT NULL COMMENT '服务热线',
+  `update_time` datetime DEFAULT NULL,
+  `community_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='服务热线';
+
+-- ----------------------------
+-- Records of tb_hotline
+-- ----------------------------
+INSERT INTO `tb_hotline` VALUES ('aeff9a024f7e4ec099a8734ac11313a1', '18588773304', '2018-09-22 02:50:10', '47e3a4ddc7b24609b995da160a815eb2');
 
 -- ----------------------------
 -- Table structure for `tb_menus`
@@ -180,6 +346,31 @@ CREATE TABLE `tb_menus` (
 INSERT INTO `tb_menus` VALUES ('2ec6095845eb4b00b9df3069244d84a8', '任务管理', 'task', '2018-07-28 20:52:46', '2018-07-28 20:52:48', 'cf6ac315faf048f7bb9016726914b8c4\r');
 INSERT INTO `tb_menus` VALUES ('c3d436685e1c493fa2554c87a21dec89', ' 权限管理', 'permiss', '2018-07-29 18:11:41', '2018-07-29 18:11:43', 'cf6ac315faf048f7bb9016726914b8c4\r');
 INSERT INTO `tb_menus` VALUES ('f8c2d15acb374a16a03cc881548fbd14', '活动管理', 'activity', '2018-07-28 20:53:14', '2018-07-28 20:53:17', 'cf6ac315faf048f7bb9016726914b8c4\r');
+
+-- ----------------------------
+-- Table structure for `tb_notices`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_notices`;
+CREATE TABLE `tb_notices` (
+  `uuid` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `content` varchar(3000) DEFAULT NULL COMMENT '公告内容',
+  `community_id` varchar(255) DEFAULT NULL COMMENT '社区Id',
+  `community_name` varchar(255) DEFAULT NULL COMMENT '社区名称',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `type` int(1) DEFAULT NULL COMMENT '1系统发布 2.圈子发布',
+  `circle_id` varchar(255) DEFAULT NULL COMMENT '所属圈子Id（没有置空）',
+  `flag` int(1) DEFAULT NULL COMMENT '是否有效（1 有效 2无效）',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告表';
+
+-- ----------------------------
+-- Records of tb_notices
+-- ----------------------------
+INSERT INTO `tb_notices` VALUES ('09d9dc5bcdf9497c8879d47e70cbe51a', '213213123213sd', '<p>213123dsfdsf</p><p>qwewqesd</p><p>sdfsdf</p><p>sdf</p><p>dsfsdf</p><p><img src=\"http://192.168.199.231/ueditor/jsp/upload/image/2018/9/21/b9fc719760ab49bdbe975424fb7bafd6.jpg\"/></p>', '47e3a4ddc7b24609b995da160a815eb2', null, '2018-09-21 23:51:05', '2018-09-21 23:51:05', '1', null, '1');
+INSERT INTO `tb_notices` VALUES ('2ed54cb798a04ae0815979e8a55ce2f9', '213213', '<p>213123</p>', '47e3a4ddc7b24609b995da160a815eb2', null, '2018-09-21 23:44:08', '2018-09-21 23:44:08', '1', null, '1');
+INSERT INTO `tb_notices` VALUES ('33b6c080a7024a1aabf69ae2db511cee', '21321', '<p>3213</p>', '47e3a4ddc7b24609b995da160a815eb2', null, '2018-09-21 23:32:09', '2018-09-21 23:32:09', '1', null, '2');
 
 -- ----------------------------
 -- Table structure for `tb_parent_menus`
@@ -266,6 +457,24 @@ CREATE TABLE `tb_peoples_shop` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `tb_post_people_thumbs`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_post_people_thumbs`;
+CREATE TABLE `tb_post_people_thumbs` (
+  `uuid` varchar(255) NOT NULL DEFAULT '',
+  `post_id` varchar(255) DEFAULT NULL COMMENT '帖子Id',
+  `people_id` varchar(255) DEFAULT NULL COMMENT 'people id',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `flag` int(1) DEFAULT NULL COMMENT '是否有效（1，有效 2无效）',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='帖子点赞表';
+
+-- ----------------------------
+-- Records of tb_post_people_thumbs
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `tb_powers`
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_powers`;
@@ -297,6 +506,7 @@ INSERT INTO `tb_powers` VALUES ('75d331a9519a468d9a74156be9048038', 'permiss', '
 INSERT INTO `tb_powers` VALUES ('9605275ee5744fddab35a6c9934536cb', 'people', '居民管理', '权限管理所有的权限', '2018-07-28 20:52:00', '2018-07-28 20:52:00', '720f8eba80e448e2be9afa14bbc3240d', '/home/zhtCommunity/personnel', '1', '99');
 INSERT INTO `tb_powers` VALUES ('a45df126794f44f881999e5d9e6ad2eb', 'activity', '活动管理', '权限管理所有的权限', '2018-07-28 20:52:00', '2018-07-28 20:52:00', '35ee463e182e4d03b1578192e2a65a97', '/home/sqContern/activity', '2', '60');
 INSERT INTO `tb_powers` VALUES ('b58fc43daa8d4e29b502d476b008334f', 'volunteer', '志愿者管理', '权限管理所有的权限', '2018-07-28 20:52:00', '2018-07-28 20:52:00', 'b0ed1083bfef45ecabe9137332827274', '/home/sqCommunity/volunteer', '1', '99');
+INSERT INTO `tb_powers` VALUES ('b61d5793b4774e7d8d47dc4a5d8b1c33', 'notice', '公告管理', '公告管理', '2018-09-18 21:51:04', '2018-09-18 21:51:07', 'cf6ac315faf048f7bb9016726914b8c4', '/home/zhtContern/notice', '1', '100');
 INSERT INTO `tb_powers` VALUES ('c3d436685e1c493fa2554c87a21dec89', 'garbage', '垃圾分类', '权限管理所有的权限', '2018-07-29 18:11:00', '2018-07-29 18:11:00', 'cf6ac315faf048f7bb9016726914b8c4', '/home/zhtContern/garbageType', '1', '60');
 INSERT INTO `tb_powers` VALUES ('ec4435e28c9c42c7a80c5d6b60175945', 'people', '居民管理', '权限管理所有的权限', '2018-07-28 20:52:00', '2018-07-28 20:52:00', 'b0ed1083bfef45ecabe9137332827274', '/home/sqCommunity/personnel', '2', '100');
 INSERT INTO `tb_powers` VALUES ('f8c2d15acb374a16a03cc881548fbd14', 'activity', '活动管理', '权限管理所有的权限', '2018-07-28 20:53:00', '2018-07-28 20:53:00', 'cf6ac315faf048f7bb9016726914b8c4', '/home/zhtContern/activity', '1', '58');
@@ -346,6 +556,7 @@ CREATE TABLE `tb_roles_power` (
 -- Records of tb_roles_power
 -- ----------------------------
 INSERT INTO `tb_roles_power` VALUES ('0696a3d702ab4fb1b770d6f0fb68c6f7', '1c5b369b85504e27ab1f49dc1d0bd80f', '1d519affd43d4f12aabd6645796d218c', '1');
+INSERT INTO `tb_roles_power` VALUES ('0696a3d702ab4fb1b770d6f0fb68c6f74', 'b61d5793b4774e7d8d47dc4a5d8b1c33', '9393b172278e449585d192ff72a02f88', '1');
 INSERT INTO `tb_roles_power` VALUES ('080ad8b8452c4253be9b19798d27c70', 'a45df126794f44f881999e5d9e6ad2eb', '30f8d2eb12514bd4aaf847d2ebe1594d', '1');
 INSERT INTO `tb_roles_power` VALUES ('080ad8b8452c4253be9b19798d27c70f', '75d331a9519a468d9a74156be9048038', '1d519affd43d4f12aabd6645796d218c', '1');
 INSERT INTO `tb_roles_power` VALUES ('180a994d72f148459109e3419d34503b', 'f8c2d15acb374a16a03cc881548fbd14', '9393b172278e449585d192ff72a02f88', '1');
@@ -571,18 +782,3 @@ INSERT INTO `tb_wx_users` VALUES ('5fa8b32accfb457ebf0c9ca7c36e0d26', null, null
 INSERT INTO `tb_wx_users` VALUES ('ad97ec58958c49b39182029dee6d2a05', null, null, 'oBzz60KcpdjYEAe_rN91SL6r0cBU', null, '1', 'https://wx.qlogo.cn/mmopen/vi_32/pbjIJqM0Sxv6iaIXmrrqb8saO0weAVqaBhC2u68tmNNxJ7BGGsebVeQgKye8b37ykXFdauXic7TST7QsJEuYicsng/132', '2018-08-13 20:38:29', '2018-08-13 20:38:29');
 INSERT INTO `tb_wx_users` VALUES ('c154baa55fbd48d7a0d76690b31b5824', '一点痕寂', null, 'oBzz60NTwxlBs6oBn4Dh7WBKWoNE', null, '0', 'https://wx.qlogo.cn/mmopen/vi_32/ewrXbOtA5T85wLOjAksn7nkqnuCibAHv6Zcl5xOaY9IRPzibPfk2OnicMEm18TSNpRn1yhFxOVWP3icnD1l7Xa8gQg/132', '2018-08-09 18:45:18', '2018-08-09 18:45:18');
 INSERT INTO `tb_wx_users` VALUES ('e33a3d4ffe6f4e0ca1cfa161752d35fd', null, null, null, null, null, null, '2018-08-09 21:56:24', '2018-08-09 21:56:24');
-
--- ----------------------------
--- Table structure for `tb_notices`
--- ----------------------------
-DROP TABLE IF EXISTS `tb_notices`;
-CREATE TABLE `tb_notices` (
-  `uuid` varchar(255) NOT NULL,
-  `title` varchar(255) DEFAULT NULL COMMENT '标题',
-  `content` varchar(3000) DEFAULT NULL COMMENT '公告内容',
-  `community_id` varchar(255) DEFAULT NULL COMMENT '社区Id',
-  `community_name` varchar(255) DEFAULT NULL COMMENT '社区名称',
-  `create_time` datetime DEFAULT NULL,
-  `update_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告表';
