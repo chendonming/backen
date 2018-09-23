@@ -1,8 +1,6 @@
 package com.xl.backen.controller;
 
-import com.xl.backen.dao.HotlineMapper;
 import com.xl.backen.entity.Hotline;
-import com.xl.backen.entity.Notices;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.Result;
 import com.xl.backen.service.HotlineService;
@@ -20,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/hotline")
 public class HotlineController {
-    private static Logger log = LoggerFactory.getLogger(ActivityController.class);
+    private static Logger log = LoggerFactory.getLogger(HotlineController.class);
 
     @Autowired
     private HotlineService ho;

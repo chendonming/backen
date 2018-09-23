@@ -27,6 +27,24 @@ public class Complaint {
 
     private Integer flag;
 
+    @Override
+    public String toString() {
+        return "Complaint{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", createId='" + createId + '\'' +
+                ", createName='" + createName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", files='" + files + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", communityId='" + communityId + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
+
     public String getUuid() {
         return uuid;
     }
