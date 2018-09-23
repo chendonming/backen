@@ -1,8 +1,11 @@
 package com.xl.backen.entity;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class Complaint {
+public class Complaint implements Serializable {
+    private static final long serialVersionUID = -8466044251316455915L;
     private String uuid;
 
     private String name;
@@ -27,6 +30,12 @@ public class Complaint {
 
     private Integer flag;
 
+    // 发布人头像
+    private String headPic;
+
+    // 发布人的姓名
+    private String truename;
+
     @Override
     public String toString() {
         return "Complaint{" +
@@ -43,6 +52,22 @@ public class Complaint {
                 ", communityId='" + communityId + '\'' +
                 ", flag=" + flag +
                 '}';
+    }
+
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
+    }
+
+    public String getTruename() {
+        return truename;
+    }
+
+    public void setTruename(String truename) {
+        this.truename = truename;
     }
 
     public String getUuid() {

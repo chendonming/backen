@@ -14,6 +14,8 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="community_id" jdbcType="VARCHAR" property="communityId" />
     <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="u_create_name" jdbcType="VARCHAR" property="truename"/>
+    <result column="u_head_pic" jdbcType="VARCHAR" property="headPic"/>
   </resultMap>
   <sql id="Base_Column_List">
     uuid, name, content, create_id, create_name, phone, files, status, create_time, update_time, 
@@ -21,13 +23,13 @@
   </sql>
   <select id="queryAll" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from tb_complaint
+    c.*, u.truename as u_create_name , u.head_pic as u_head_pic
+    from tb_complaint c left join tb_peoples u on u.uuid = c.create_id
     where
-      create_id = #{creatId,jdbcType=VARCHAR} and
-      name = #{name.jdbcType=VARCHAR} and
+    c.create_id = #{creatId,jdbcType=VARCHAR} and
+    c.name = #{name.jdbcType=VARCHAR} and
     <if test="status!= null and status != ''">
-      status = #{status.jdbcType=VARCHAR}
+      c.status = #{status.jdbcType=VARCHAR}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
