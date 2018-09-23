@@ -21,19 +21,19 @@
   </sql>
   <select id="queryAll" parameterType="com.xl.backen.entity.Complaint" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from tb_complaint
+    c.*,  u.truename as u_create_name , u.head_pic as u_head_pic
+    from tb_complaint c left join tb_peoples u on u.uuid = c.create_id
     where
     <if test="createId != null and createId!= ''">
-      create_id = #{createId,jdbcType=VARCHAR} and
+        c.create_id = #{createId,jdbcType=VARCHAR} and
     </if>
     <if test="name != null and name != ''">
-      name = #{name.jdbcType=VARCHAR} and
+        c.name = #{name.jdbcType=VARCHAR} and
     </if>
     <if test="status!= null and status != ''">
-      status = #{status.jdbcType=VARCHAR} and
+        c.status = #{status.jdbcType=VARCHAR} and
     </if>
-    flag = 1
+      c.flag = 1
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
