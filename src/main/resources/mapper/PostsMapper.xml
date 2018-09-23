@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.PostsMapper">
+  <resultMap id="BaseResultMap" type="com.xl.backen.entity.Posts">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="circle_id" jdbcType="VARCHAR" property="circleId" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="thumbs" jdbcType="INTEGER" property="thumbs" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+
+  <!-- 帖子及评论 -->
+  <resultMap id="PostResultMap" type="com.xl.backen.model.PostModel" extends="BaseResultMap">
+    <collection property="commentList" ofType="com.xl.backen.model.CommentModel">
+      <result column="c_content" jdbcType="VARCHAR" property="content"/>
+      <result column="c_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+      <result column="c_create_id" jdbcType="VARCHAR" property="createId"/>
+      <result column="c_create_name" jdbcType="VARCHAR" property="createName"/>
+      <result column="c_head_pic" jdbcType="VARCHAR" property="headPic"/>
+    </collection>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    uuid, title, content, picture, circle_id, create_id, thumbs, flag, create_time, update_time, 
+    status
+  </sql>
+
+  <!-- 查询我的点赞帖子 -->
+  <select id="queryMyThumbPosts" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from tb_post_people_thumbs ppt right join tb_circle_posts cp on ppt.post_id = cp.uuid
+    where ppt.flag = 1
+  </select>
+
+  <!-- 分页查询符合条件的帖子 -->
+  <select id="queryPosts" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from tb_circle_posts
+    where
+    <if test="circleId != null and circleId !=''">
+      circle_id = #{circleId} and
+    </if>
+    flag = 1
+  </select>
+
+
+  <!-- 根据帖子uuid查询帖子详情及其评论 -->
+  <select id="queryOne" resultMap="PostResultMap">
+    
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_circle_posts
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_circle_posts
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xl.backen.entity.Posts">
+    insert into tb_circle_posts (uuid, title, content, 
+      picture, circle_id, create_id, 
+      thumbs, flag, create_time, 
+      update_time, status)
+    values (#{uuid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{picture,jdbcType=VARCHAR}, #{circleId,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{thumbs,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=DATE}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.backen.entity.Posts">
+    insert into tb_circle_posts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="circleId != null">
+        circle_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="thumbs != null">
+        thumbs,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="circleId != null">
+        #{circleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbs != null">
+        #{thumbs,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Posts">
+    update tb_circle_posts
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="circleId != null">
+        circle_id = #{circleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbs != null">
+        thumbs = #{thumbs,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Posts">
+    update tb_circle_posts
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      circle_id = #{circleId,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      thumbs = #{thumbs,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=DATE},
+      status = #{status,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

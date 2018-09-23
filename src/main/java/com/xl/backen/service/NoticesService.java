@@ -17,4 +17,5 @@ public interface NoticesService {
 	int update(Notices notices);
 	int del(Notices notices);
 	Page<Notices> query(Map<String, Object> map);
+	Notices queryOne(String uuid);
 }

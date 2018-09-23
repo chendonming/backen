@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.HotlineMapper">
+  <resultMap id="BaseResultMap" type="com.xl.backen.entity.Hotline">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, phone, update_time, community_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_hotline
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_hotline
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xl.backen.entity.Hotline">
+    insert into tb_hotline (uuid, phone, update_time, 
+      community_id)
+    values (#{uuid,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{communityId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.backen.entity.Hotline">
+    insert into tb_hotline
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="communityId != null">
+        community_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="communityId != null">
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Hotline">
+    update tb_hotline
+    <set>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Hotline">
+    update tb_hotline
+    set phone = #{phone,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      community_id = #{communityId,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

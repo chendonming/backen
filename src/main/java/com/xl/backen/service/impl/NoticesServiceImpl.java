@@ -3,9 +3,11 @@
  */
 package com.xl.backen.service.impl;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+import com.xl.backen.handler.CommonConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,9 @@ public class NoticesServiceImpl implements NoticesService {
 	public int add(Notices notices) {
 		String uuid = UUID.randomUUID().toString().replace("-", "");
 		notices.setUuid(uuid);
+		notices.setFlag(CommonConst.NORMAL_STATUS);
+		notices.setCreateTime(new Date());
+		notices.setUpdateTime(new Date());
 		return nm.insertSelective(notices);
 	}
 
@@ -74,6 +79,11 @@ public class NoticesServiceImpl implements NoticesService {
 		}
 		Page<Notices> notices = nm.queryAll(map);
 		return notices;
+	}
+
+	@Override
+	public Notices queryOne(String uuid) {
+		return nm.selectByPrimaryKey(uuid);
 	}
 
 }

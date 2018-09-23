@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xl.backen.dao.CircleMapper">
-  <resultMap id="BaseResultMap" type="com.xl.backen.enity.Circle">
+  <resultMap id="BaseResultMap" type="com.xl.backen.entity.Circle">
     <id column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="orgId" jdbcType="VARCHAR" property="orgid" />
@@ -25,6 +25,9 @@
     <if test="name != null and name != ''">
         name like CONCAT(#{name}, "%") and
     </if>
+    <if test="orgid != null and orgid != ''">
+        orgId = #{orgid} and
+    </if>
     flag = 1
   </select>
 
@@ -38,7 +41,7 @@
     delete from tb_circle
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.xl.backen.enity.Circle">
+  <insert id="insert" parameterType="com.xl.backen.entity.Circle">
     insert into tb_circle (uuid, name, orgId, 
       weight, head_pic, description, 
       status, create_time, update_time, 
@@ -48,7 +51,7 @@
       #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{flag,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.xl.backen.enity.Circle">
+  <insert id="insertSelective" parameterType="com.xl.backen.entity.Circle">
     insert into tb_circle
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -115,7 +118,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.enity.Circle">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Circle">
     update tb_circle
     <set>
       <if test="name != null">
@@ -148,7 +151,7 @@
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xl.backen.enity.Circle">
+  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Circle">
     update tb_circle
     set name = #{name,jdbcType=VARCHAR},
       orgId = #{orgid,jdbcType=VARCHAR},

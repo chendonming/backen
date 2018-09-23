@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.handler.PageInfo;
+import net.sf.ehcache.search.expression.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,11 @@ public class NoticesController {
 		Page<Notices> noticesPage = ns.query(map);
 		PageInfo<Notices> noticesPageInfo = new PageInfo<>(noticesPage);
 		return new Result<>(BusinessStatus.SUCCESS, noticesPageInfo);
+	}
+
+	@RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+	public Result<Notices> queryOne(@RequestBody @Valid Map<String, Object> map) {
+		Notices notices = ns.queryOne((String) map.get("uuid"));
+		return new Result<>(BusinessStatus.SUCCESS, notices);
 	}
 }

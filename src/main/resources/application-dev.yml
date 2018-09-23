@@ -9,4 +9,4 @@ jdbc:
   password: 123456
 
 filePath:   D:/work/view/ueditor/jsp/upload/image/
-nginxPath:  http://localhost/ueditor/jsp/upload/image/
+nginxPath:  http://192.168.199.231/ueditor/jsp/upload/image/

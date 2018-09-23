@@ -1,50 +1,29 @@
 package com.xl.backen.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Notices {
+public class Notices implements Serializable {
+    private static final long serialVersionUID = -3977758963777590292L;
     private String uuid;
 
     private String title;
 
     private String content;
 
-    private Date createTime;
-
-    private Date updateTime;
-
     private String communityId;
 
     private String communityName;
 
-    @Override
-    public String toString() {
-        return "Notices{" +
-                "uuid='" + uuid + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", communityId='" + communityId + '\'' +
-                ", communityName='" + communityName + '\'' +
-                '}';
-    }
+    private Date createTime;
 
-    public String getCommunityId() {
-        return communityId;
-    }
+    private Date updateTime;
 
-    public void setCommunityId(String communityId) {
-        this.communityId = communityId;
-    }
+    private Integer type;
 
-    public String getCommunityName() {
-        return communityName;
-    }
+    private String circleId;
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
-    }
+    private Integer flag;
 
     public String getUuid() {
         return uuid;
@@ -70,6 +49,22 @@ public class Notices {
         this.content = content == null ? null : content.trim();
     }
 
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId == null ? null : communityId.trim();
+    }
+
+    public String getCommunityName() {
+        return communityName;
+    }
+
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName == null ? null : communityName.trim();
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -84,5 +79,29 @@ public class Notices {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getCircleId() {
+        return circleId;
+    }
+
+    public void setCircleId(String circleId) {
+        this.circleId = circleId == null ? null : circleId.trim();
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 }

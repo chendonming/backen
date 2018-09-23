@@ -46,7 +46,7 @@ public class CircleController {
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public Result<Object> del(@RequestBody @Valid Circle circle){
         log.info("圈子删除，参数circle={}", circle);
-        cs.update(circle);
+        cs.del(circle);
         return new Result<>(BusinessStatus.SUCCESS);
     }
 

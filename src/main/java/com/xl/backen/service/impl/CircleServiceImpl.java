@@ -22,9 +22,8 @@ public class CircleServiceImpl implements CircleService {
     private CircleMapper cm;
 
 
-
     @Override
-    public int del(Circle circle){
+    public int del(Circle circle) {
         if (StringUtil.isEmpty(circle.getUuid())) {
             throw new BusinessException(500, "uuid不能为空");
         }
@@ -41,9 +40,11 @@ public class CircleServiceImpl implements CircleService {
     public int add(Circle circle) {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         circle.setUuid(uuid);
-        circle.setStatus(CommonConst.CIRCLE_STATUS_AUDIT);
+        circle.setStatus(CommonConst.CIRCLE_NORMAL_STATUS);
+        circle.setFlag(CommonConst.NORMAL_STATUS);
         circle.setCreateTime(new Date());
         circle.setUpdateTime(new Date());
+        circle.setWeight(0);
         return cm.insertSelective(circle);
     }
 
@@ -58,8 +59,8 @@ public class CircleServiceImpl implements CircleService {
 
     @Override
     public Page<Circle> query(Map<String, Object> map) {
-        if(map.get("pageSize") != null && map.get("pageNum") != null) {
-            PageHelper.startPage((Integer) map.get("pageSize"), (Integer)map.get("pageNum"));
+        if (map.get("pageSize") != null && map.get("pageNum") != null) {
+            PageHelper.startPage((Integer) map.get("pageNum"), (Integer) map.get("pageSize"));
         }
         Page<Circle> circlePage = cm.queryAll(map);
         return circlePage;

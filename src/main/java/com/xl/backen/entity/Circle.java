@@ -23,6 +23,22 @@ public class Circle {
 
     private Integer flag;
 
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", orgid='" + orgid + '\'' +
+                ", weight=" + weight +
+                ", headPic='" + headPic + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", flag=" + flag +
+                '}';
+    }
+
     public String getUuid() {
         return uuid;
     }
