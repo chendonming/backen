@@ -19,6 +19,17 @@
     uuid, name, content, create_id, create_name, phone, files, status, create_time, update_time, 
     community_id, flag
   </sql>
+  <select id="queryAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_complaint
+    where
+      create_id = #{creatId,jdbcType=VARCHAR} and
+      name = #{name.jdbcType=VARCHAR} and
+    <if test="status!= null and status != ''">
+      status = #{status.jdbcType=VARCHAR}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

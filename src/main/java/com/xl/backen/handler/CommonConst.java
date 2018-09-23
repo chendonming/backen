@@ -60,4 +60,8 @@ public class CommonConst {
     // 圈子状态 1、正常 2.推荐
     public static final Integer CIRCLE_NORMAL_STATUS  = 1;
     public static final Integer CIRCLE_RECOMMAND_STATUS  = 2;
+
+    //建议投诉 1、未回复 2、已回复
+    public static final Integer COMPLAINT_NOREPYY_STATUS = 1;
+    public static final Integer COMPLAINT_REPYY_STATUS = 2;
 }
