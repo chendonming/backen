@@ -29,7 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/notices")
 public class NoticesController {
-	private static Logger log = LoggerFactory.getLogger(ActivityController.class);
+	private static Logger log = LoggerFactory.getLogger(NoticesController.class);
 
 	@Autowired
 	private NoticesService ns;
