@@ -1,9 +1,9 @@
 package com.xl.backen.controller;
 
 import com.github.pagehelper.Page;
-import com.xl.backen.handler.PageInfo;
 import com.xl.backen.entity.Complaint;
 import com.xl.backen.handler.BusinessStatus;
+import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.Result;
 import com.xl.backen.service.ComplaintService;
 import org.slf4j.Logger;
@@ -32,6 +32,12 @@ public class ComplaintController  {
         Page<Complaint> complaints = co.queryAll(map);
         PageInfo<Complaint> complaintPageInfo = new PageInfo<>(complaints);
         return new Result<>(BusinessStatus.SUCCESS, complaintPageInfo);
+    }
+
+    @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+    public Result<Complaint> queryOne(@RequestBody @Valid Map<String, Object> map) {
+        Complaint complaint = co.quertOne((String) map.get("uuid"));
+        return new Result<>(BusinessStatus.SUCCESS, complaint);
     }
 
     //新增

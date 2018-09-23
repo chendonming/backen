@@ -14,23 +14,26 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="community_id" jdbcType="VARCHAR" property="communityId" />
     <result column="flag" jdbcType="INTEGER" property="flag" />
-    <result column="u_create_name" jdbcType="VARCHAR" property="truename"/>
-    <result column="u_head_pic" jdbcType="VARCHAR" property="headPic"/>
   </resultMap>
   <sql id="Base_Column_List">
     uuid, name, content, create_id, create_name, phone, files, status, create_time, update_time, 
     community_id, flag
   </sql>
-  <select id="queryAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="queryAll" parameterType="com.xl.backen.entity.Complaint" resultMap="BaseResultMap">
     select
-    c.*, u.truename as u_create_name , u.head_pic as u_head_pic
-    from tb_complaint c left join tb_peoples u on u.uuid = c.create_id
+    <include refid="Base_Column_List" />
+    from tb_complaint
     where
-    c.create_id = #{creatId,jdbcType=VARCHAR} and
-    c.name = #{name.jdbcType=VARCHAR} and
-    <if test="status!= null and status != ''">
-      c.status = #{status.jdbcType=VARCHAR}
+    <if test="createId != null and createId!= ''">
+      create_id = #{createId,jdbcType=VARCHAR} and
     </if>
+    <if test="name != null and name != ''">
+      name = #{name.jdbcType=VARCHAR} and
+    </if>
+    <if test="status!= null and status != ''">
+      status = #{status.jdbcType=VARCHAR} and
+    </if>
+    flag = 1
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
