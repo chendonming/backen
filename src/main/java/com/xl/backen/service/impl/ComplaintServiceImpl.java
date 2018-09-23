@@ -57,7 +57,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public Page<Complaint> queryAll(Map<String, Object> map) {
         if (map.get("pageNum") != null && map.get("pageSize") != null) {
-            PageHelper.startPage((Integer) map.get("pageNum"), (Integer) map.get("pageSize"));
+            PageHelper.startPage( Integer.valueOf(String.valueOf(map.get("pageNum"))), Integer.valueOf(String.valueOf(map.get("pageSize"))));
         }
         Page<Complaint> complaints = co.queryAll(map);
         return complaints;

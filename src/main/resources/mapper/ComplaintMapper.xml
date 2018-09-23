@@ -19,16 +19,21 @@
     uuid, name, content, create_id, create_name, phone, files, status, create_time, update_time, 
     community_id, flag
   </sql>
-  <select id="queryAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="queryAll" parameterType="com.xl.backen.entity.Complaint" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tb_complaint
     where
-      create_id = #{creatId,jdbcType=VARCHAR} and
-      name = #{name.jdbcType=VARCHAR} and
-    <if test="status!= null and status != ''">
-      status = #{status.jdbcType=VARCHAR}
+    <if test="createId != null and createId!= ''">
+      create_id = #{createId,jdbcType=VARCHAR} and
     </if>
+    <if test="name != null and name != ''">
+      name = #{name.jdbcType=VARCHAR} and
+    </if>
+    <if test="status!= null and status != ''">
+      status = #{status.jdbcType=VARCHAR} and
+    </if>
+    flag = 1
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
