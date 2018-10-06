@@ -154,6 +154,21 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public Posts queryOne(String uuid) {
-        return pm.selectByPrimaryKey(uuid);
+        Peoples peoples = (Peoples) SecurityUtils.getSubject().getPrincipal();
+        PostPeopleThumbs ppt = new PostPeopleThumbs();
+        ppt.setPostId(uuid);
+        ppt.setPeopleId(peoples.getUuid());
+        List<PostPeopleThumbs> postPeopleThumbs = pptm.queryByPeopleAndPost(ppt);
+
+        Posts posts = pm.selectByPrimaryKey(uuid);
+        posts.setCommentCount(pm.commentCount(posts.getUuid()) == null ? 0: pm.commentCount(posts.getUuid()));
+        if(postPeopleThumbs.size() > 0) {
+            // 设置已点赞
+            posts.setIsThumbs(1);
+        }else{
+            // 设置未点赞
+            posts.setIsThumbs(2);
+        }
+        return posts;
     }
 }

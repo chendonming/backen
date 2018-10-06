@@ -76,6 +76,7 @@
                 and pic = #{pic}
             </if>
         </where>
+        order by weight desc
     </select>
 
     <!--新增所有列-->

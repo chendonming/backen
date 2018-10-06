@@ -82,7 +82,7 @@
   <!--</select>-->
 
   <!-- 查询单个帖子的点赞数量 -->
-  <select id="thumbCount" resultMap="java.lang.Integer">
+  <select id="thumbCount" resultType="java.lang.Integer">
       select count(*)
     from tb_post_people_thumbs ppt right join tb_circle_posts cp on ppt.post_id = cp.uuid
     where ppt.flag = 1 and ppt.post_id = #{uuid}
@@ -96,10 +96,12 @@
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_circle_posts
-    where uuid = #{uuid,jdbcType=VARCHAR}
+    select p.*, u.truename as create_name, u.head_pic as head_pic, c.name as circle_name
+    from tb_circle c  left join  tb_circle_posts p on c.uuid = p.circle_id
+
+    left join tb_users u on p.create_id = u.uuid
+
+    where p.flag = 1 and p.uuid = #{uuid}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_circle_posts

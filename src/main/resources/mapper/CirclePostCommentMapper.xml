@@ -10,6 +10,8 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="flag" column="flag" jdbcType="INTEGER"/>
         <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="trueName" column="true_name" jdbcType="VARCHAR"/>
+        <result property="headPic" column="head_pic" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
@@ -35,37 +37,37 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="CirclePostCommentMap">
         select
-          uuid, content, create_id, create_time, update_time, flag, post_id
-        from db_backen.tb_circle_post_comment
+          c.*,p.truename as true_name, p.head_pic as head_pic
+        from db_backen.tb_circle_post_comment c left join tb_peoples p on p.uuid = c.create_id
         <where>
             <if test="uuid != null and uuid != ''">
-                and uuid = #{uuid}
+                and c.uuid = #{uuid}
             </if>
             <if test="content != null and content != ''">
-                and content = #{content}
+                and c.content = #{content}
             </if>
             <if test="createId != null and createId != ''">
-                and create_id = #{createId}
+                and c.create_id = #{createId}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and c.create_time = #{createTime}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime}
+                and c.update_time = #{updateTime}
             </if>
             <if test="flag != null">
-                and flag = #{flag}
+                and c.flag = #{flag}
             </if>
             <if test="postId != null and postId != ''">
-                and post_id = #{postId}
+                and c.post_id = #{postId}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="uuid" useGeneratedKeys="true">
-        insert into db_backen.tb_circle_post_comment(content, create_id, create_time, update_time, flag, post_id)
-        values (#{content}, #{createId}, #{createTime}, #{updateTime}, #{flag}, #{postId})
+        insert into db_backen.tb_circle_post_comment(uuid, content, create_id, create_time, update_time, flag, post_id)
+        values (#{uuid}, #{content}, #{createId}, #{createTime}, #{updateTime}, #{flag}, #{postId})
     </insert>
 
     <!--通过主键修改数据-->

@@ -6,6 +6,6 @@ jdbc:
   driver: com.mysql.jdbc.Driver
   url: jdbc:mysql://localhost:3306/db_backen?userUnicode=true&characterEncoding=utf-8&useSSL=false
   username: root
-  password: Xlmysql2018.
-filePath: /work/projects/front/static/
-nginxPath:  https://www.xxsghp.cn/static/
+  password: Pg19950905..
+filePath: /work/projects/front/weDream/static/
+nginxPath:  https://www.xxsghp.cn/weDream/static/

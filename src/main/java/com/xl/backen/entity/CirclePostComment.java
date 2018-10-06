@@ -30,7 +30,26 @@ public class CirclePostComment implements Serializable {
 
 	private Integer pageNum;
 
-    
+	private String trueName;
+
+	private String headPic;
+
+    public String getTrueName() {
+        return trueName;
+    }
+
+    public void setTrueName(String trueName) {
+        this.trueName = trueName;
+    }
+
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
+    }
+
     public String getUuid() {
         return uuid;
     }
