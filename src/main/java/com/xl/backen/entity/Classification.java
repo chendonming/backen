@@ -22,7 +22,28 @@ public class Classification implements Serializable {
 
     private String communityId;
 
+    private Integer type;
+
     private List<Classification> list;
+
+    // 权重
+    private Integer weight;
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public List<Classification> getList() {
         return list;

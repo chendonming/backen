@@ -18,6 +18,17 @@
     flag
   </sql>
 
+  <!-- 是否加入圈子 -->
+  <select id="isJoinCircle" resultType="java.lang.Integer">
+    select count(*) from tb_circle_people where circle_id = #{uuid} and people_id = #{peopleId} and flag = 1
+  </select>
+
+  <!-- 加入圈子 -->
+  <select id="joinCircle">
+    insert into tb_circle_people (uuid, people_id, circle_id, flag, create_time, update_time)
+    values (#{uuid}, #{peopleId}, #{circleId}, #{flag}, #{createTime}, #{updateTime})
+  </select>
+
   <select id="queryAll" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from tb_circle

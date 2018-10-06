@@ -15,7 +15,7 @@
 
   <!-- 查询是否点赞 -->
   <select id="queryByPeopleAndPost" parameterType="com.xl.backen.entity.PostPeopleThumbs" resultMap="BaseResultMap">
-    select count(*) from tb_post_people_thumbs
+    select * from tb_post_people_thumbs
     where post_id = #{postId} and people_id = #{peopleId} and flag = 1
   </select>
 

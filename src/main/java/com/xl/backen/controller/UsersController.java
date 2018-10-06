@@ -53,6 +53,11 @@ public class UsersController {
 		return new Result<Peoples>(BusinessStatus.SUCCESS,uss.login(peoples));
 	}
 
+	@RequestMapping(value = "/wxlogin", method = RequestMethod.POST)
+	public Result<Peoples> wxlogin(@RequestBody Peoples peoples) {
+		return new Result<Peoples>(BusinessStatus.SUCCESS,uss.wxlogin(peoples.getMobile(),peoples.getPassword(),peoples.getLoginType()));
+	}
+
 	/**
 	 * 退出登录
 	 */

@@ -67,63 +67,93 @@ public class PostsServiceImpl implements PostsService {
      */
     @Override
     @Transactional
-    public int thumbsUp(Posts posts) {
+    public Posts thumbsUp(Posts posts) {
         Peoples peoples = (Peoples) SecurityUtils.getSubject().getPrincipal();
         synchronized (posts) {
             // 判断是否点赞
             PostPeopleThumbs ppt = new PostPeopleThumbs();
             ppt.setPostId(posts.getUuid());
             ppt.setPeopleId(peoples.getUuid());
-            int count = pptm.queryByPeopleAndPost(ppt);
+            List<PostPeopleThumbs> postPeopleThumbs = pptm.queryByPeopleAndPost(ppt);
+            int count = postPeopleThumbs.size();
+            System.out.println("count ------------" + count);
 
-            int thumbs = pm.selectByPrimaryKey(posts.getUuid()).getThumbs();
+            int thumbs = pm.selectByPrimaryKey(posts.getUuid()).getThumbs() == null ? 0 : pm.selectByPrimaryKey(posts.getUuid()).getThumbs();
             if (count == 0) {
+                ppt.setUuid(UUID.randomUUID().toString().replace("-", ""));
+                ppt.setCreateTime(new Date());
+                ppt.setUpdateTime(new Date());
+                ppt.setFlag(CommonConst.NORMAL_STATUS);
+                pptm.insertSelective(ppt);
+
                 // 帖子点赞数 +1
                 posts.setThumbs(thumbs + 1);
+                // 设置点赞状态
+                posts.setIsThumbs(1);
             } else {
                 // 取消点赞
+                PostPeopleThumbs pt = postPeopleThumbs.get(0);
+                pt.setFlag(CommonConst.DEL_STATUS);
+                pptm.updateByPrimaryKeySelective(pt);
                 posts.setThumbs(thumbs - 1);
+                // 设置未点赞状态
+                posts.setIsThumbs(2);
             }
             pm.updateByPrimaryKeySelective(posts);
         }
+
 
         synchronized (peoples) {
             // 添加积分
         }
 
-        return 0;
+        return posts;
     }
 
+    /**
+     *  map: loginType( 1.PC添加  2.微信端添加的 )
+     * @param map( pageSize, pageNum , circleId)
+     * @return
+     */
     @Override
     public Page<Posts> queryAll(Map<String, Object> map) {
-        Peoples peoples = (Peoples) SecurityUtils.getSubject().getPrincipal();
+        String uuid = null;
+        Object obj = SecurityUtils.getSubject().getPrincipal();
+        if(obj instanceof Peoples) {
+            uuid = ((Peoples) obj).getUuid();
+        }
+        if(obj instanceof Users) {
+            uuid = ((Users) obj).getUuid();
+        }
         if (map.get("pageSize") != null && map.get("pageNum") != null) {
-            PageHelper.startPage((Integer) map.get("pageSize"), (Integer) map.get("pageNum"));
+            PageHelper.startPage((Integer) map.get("pageNum"), (Integer) map.get("pageSize"));
         }
         // 所有符合条件的posts
         Page<Posts> posts = pm.queryPosts(map);
         // 我点赞的posts
-        Page<Posts> myPosts = pm.queryMyThumbPosts(peoples.getUuid());
+        Page<Posts> myPosts = pm.queryMyThumbPosts(uuid);
 
         // 取数组交集
         List<Posts> postsList = ArrayUtil.compareArrSame(posts.getResult(), myPosts.getResult());
 
         for (Posts i : posts) {
-            int flag = 2;
+
+            i.setCommentCount(pm.commentCount(i.getUuid()) == null ? 0: pm.commentCount(i.getUuid()));
+
             for (Posts j : postsList) {
                 // 已点赞
                 if (i.getUuid().equals(j.getUuid())) {
-                    flag = 1;
+                    int flag = 1;
+                    i.setIsThumbs(flag);
                 }
             }
-            i.setIsThumbs(flag);
         }
 
         return (Page<Posts>) posts;
     }
 
     @Override
-    public PostModel queryOne(String uuid) {
-        return null;
+    public Posts queryOne(String uuid) {
+        return pm.selectByPrimaryKey(uuid);
     }
 }

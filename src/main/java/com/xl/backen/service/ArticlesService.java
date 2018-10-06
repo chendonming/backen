@@ -1,16 +1,16 @@
 package com.xl.backen.service;
 
-import com.xl.backen.entity.Notices;
+import com.xl.backen.entity.Articles;
 import java.util.List;
 import com.github.pagehelper.Page;
 
 /**
- * 公告表(TbNotices)表服务接口
+ * 文章表(TbArticles)表服务接口
  *
  * @author chendm
  * @since 2018-10-04 19:50:09
  */
-public interface NoticesService {
+public interface ArticlesService {
 
     /**
      * 通过ID查询单条数据
@@ -18,7 +18,7 @@ public interface NoticesService {
      * @param uuid 主键
      * @return 实例对象
      */
-    Notices queryById(String uuid);
+    Articles queryById(String uuid);
 
     /**
      * 查询多条数据
@@ -27,23 +27,23 @@ public interface NoticesService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Notices> queryAllByLimit(int offset, int limit);
+    List<Articles> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param notices 实例对象
+     * @param articles 实例对象
      * @return 实例对象
      */
-    Notices insert(Notices notices);
+    Articles insert(Articles articles);
 
     /**
      * 修改数据
      *
-     * @param notices 实例对象
+     * @param articles 实例对象
      * @return 实例对象
      */
-    Notices update(Notices notices);
+    Articles update(Articles articles);
 
     /**
      * 通过主键删除数据
@@ -56,8 +56,8 @@ public interface NoticesService {
      /**
      * 通过实体作为筛选条件查询
      *
-     * @param notices 实例对象
+     * @param articles 实例对象
      * @return 对象列表
      */
-    Page<Notices> queryAll(Notices notices);
+    Page<Articles> queryAll(Articles articles);
 }

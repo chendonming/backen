@@ -7,24 +7,27 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="picture" jdbcType="VARCHAR" property="picture" />
     <result column="circle_id" jdbcType="VARCHAR" property="circleId" />
+    <result column="circle_name" jdbcType="VARCHAR" property="circleName"/>
     <result column="create_id" jdbcType="VARCHAR" property="createId" />
     <result column="thumbs" jdbcType="INTEGER" property="thumbs" />
     <result column="flag" jdbcType="INTEGER" property="flag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="DATE" property="updateTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createName" jdbcType="INTEGER" property="create_name" />
+    <result column="headPic" jdbcType="INTEGER" property="head_pic" />
   </resultMap>
 
   <!-- 帖子及评论 -->
-  <resultMap id="PostResultMap" type="com.xl.backen.model.PostModel" extends="BaseResultMap">
-    <collection property="commentList" ofType="com.xl.backen.model.CommentModel">
-      <result column="c_content" jdbcType="VARCHAR" property="content"/>
-      <result column="c_create_time" jdbcType="TIMESTAMP" property="createTime"/>
-      <result column="c_create_id" jdbcType="VARCHAR" property="createId"/>
-      <result column="c_create_name" jdbcType="VARCHAR" property="createName"/>
-      <result column="c_head_pic" jdbcType="VARCHAR" property="headPic"/>
-    </collection>
-  </resultMap>
+  <!--<resultMap id="PostResultMap" type="com.xl.backen.model.PostModel" extends="BaseResultMap">-->
+    <!--<collection property="commentList" ofType="com.xl.backen.model.CommentModel">-->
+      <!--<result column="c_content" jdbcType="VARCHAR" property="content"/>-->
+      <!--<result column="c_create_time" jdbcType="TIMESTAMP" property="createTime"/>-->
+      <!--<result column="c_create_id" jdbcType="VARCHAR" property="createId"/>-->
+      <!--<result column="c_create_name" jdbcType="VARCHAR" property="createName"/>-->
+      <!--<result column="c_head_pic" jdbcType="VARCHAR" property="headPic"/>-->
+    <!--</collection>-->
+  <!--</resultMap>-->
 
   <sql id="Base_Column_List">
     uuid, title, content, picture, circle_id, create_id, thumbs, flag, create_time, update_time, 
@@ -33,26 +36,63 @@
 
   <!-- 查询我的点赞帖子 -->
   <select id="queryMyThumbPosts" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"/>
+    select cp.*
     from tb_post_people_thumbs ppt right join tb_circle_posts cp on ppt.post_id = cp.uuid
-    where ppt.flag = 1
+    where ppt.flag = 1 and ppt.people_id = #{uuid}
   </select>
 
   <!-- 分页查询符合条件的帖子 -->
   <select id="queryPosts" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"/>
-    from tb_circle_posts
+    (select p.*, u.truename as create_name, u.head_pic as head_pic, c.name as circle_name
+    from tb_circle c  left join  tb_circle_posts p on c.uuid = p.circle_id
+
+    left join tb_users u on p.create_id = u.uuid
+
     where
     <if test="circleId != null and circleId !=''">
-      circle_id = #{circleId} and
+      p.circle_id = #{circleId} and
     </if>
-    flag = 1
+    <if test="status != null and status != ''">
+      p.status = #{status} and
+    </if>
+    p.flag = 1)
+
+    union
+
+    (select p.*, u.truename as create_name, u.head_pic as head_pic, c.name as circle_name
+    from tb_circle c  left join  tb_circle_posts p on c.uuid = p.circle_id
+
+    left join tb_peoples u on p.create_id = u.uuid
+
+    where
+    <if test="circleId != null and circleId !=''">
+      p.circle_id = #{circleId} and
+    </if>
+    <if test="status != null and status != ''">
+      p.status = #{status} and
+    </if>
+    p.flag = 1)
+
   </select>
 
 
-  <!-- 根据帖子uuid查询帖子详情及其评论 -->
-  <select id="queryOne" resultMap="PostResultMap">
-    
+  <!-- 根据帖子uuid查询帖子详情及其评论 微信端用-->
+  <!--<select id="queryOne" resultMap="PostResultMap">-->
+    <!---->
+  <!--</select>-->
+
+  <!-- 查询单个帖子的点赞数量 -->
+  <select id="thumbCount" resultMap="java.lang.Integer">
+      select count(*)
+    from tb_post_people_thumbs ppt right join tb_circle_posts cp on ppt.post_id = cp.uuid
+    where ppt.flag = 1 and ppt.post_id = #{uuid}
+  </select>
+
+  <!-- 查询单个帖子的评论数量 -->
+  <select id="commentCount" resultType="java.lang.Integer">
+      select count(*)
+    from tb_circle_post_comment ppt right join tb_circle_posts p on p.uuid = ppt.post_id
+    where ppt.flag = 1 and p.uuid = #{uuid}
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

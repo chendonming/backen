@@ -4,12 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.entity.Peoples;
+import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.service.WxUsersService;
 import com.xl.backen.shiro.CustomizedToken;
 import com.xl.backen.util.HttpUrlUtil;
+import com.xl.backen.util.MD5;
 import com.xl.backen.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
@@ -36,6 +39,8 @@ public class WxUsersServiceImpl implements WxUsersService {
 
 	@Value("${server.session.timeout}")
 	private Long sessionTimeOut;
+
+
 
 	@Override
 	public Peoples login(Peoples peoples) {
@@ -118,5 +123,41 @@ public class WxUsersServiceImpl implements WxUsersService {
 
 		pm.updateByPrimaryKeySelective(p);
 		return 1;
+	}
+
+	@Override
+	public Peoples wxlogin(String username, String password, Integer loginType) {
+		System.out.println("username: " + username);
+		System.out.println("password:  " + password);
+
+		if (StringUtils.isEmpty(username)) {
+			throw new BusinessException(BusinessStatus.USERNAME_REQ);
+		}
+		if (StringUtils.isEmpty(password)) {
+			throw new BusinessException(BusinessStatus.PASSWORD_REQ);
+		}
+
+		Subject subject = SecurityUtils.getSubject();
+		CustomizedToken token = null;
+
+		try {
+			token = new CustomizedToken();
+			token.setUserName(username);
+			token.setPassWord(MD5.md5(password));
+			token.setLoginType(loginType);
+		} catch (Exception e) {
+			throw new BusinessException(BusinessStatus.MD5_ERROR);
+		}
+
+		try {
+			subject.login(token);
+			subject.getSession().setTimeout(sessionTimeOut);
+			Peoples usersModel = (Peoples) subject.getPrincipal();
+			return usersModel;
+		} catch (UnknownAccountException e) {
+			throw new BusinessException(BusinessStatus.USER_ERROR);
+		} catch (IncorrectCredentialsException e) {
+			throw new BusinessException(BusinessStatus.PASSWORD_ERROR);
+		}
 	}
 }

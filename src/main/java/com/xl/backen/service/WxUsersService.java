@@ -17,4 +17,11 @@ public interface WxUsersService {
 	 * APP端实名认证
 	 */
 	int authentication(Peoples peoples);
+
+	/**
+	 * 微信密码登陆
+	 * @param peoples
+	 * @return
+	 */
+	Peoples wxlogin(String username, String password, Integer loginType);
 }

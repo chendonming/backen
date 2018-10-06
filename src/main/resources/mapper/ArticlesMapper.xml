@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.ArticlesMapper">
+
+    <resultMap type="com.xl.backen.entity.Articles" id="ArticlesMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="flag" column="flag" jdbcType="INTEGER"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="classify" column="classify" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="pic" column="pic" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="INTEGER"/>
+        <result property="contentType" column="content_type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArticlesMap">
+        select
+          uuid, title, create_time, update_time, content, flag, create_id, classify, type, pic,description,content_type
+        from db_backen.tb_articles
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArticlesMap">
+        select
+        uuid, title, create_time, update_time, content, flag, create_id, classify, type, pic,description,content_type
+        from db_backen.tb_articles
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArticlesMap">
+        select
+          a.*, c.name as class_name
+        from db_backen.tb_articles a left join tb_classification c on c.uuid = a.classify
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and a.uuid = #{uuid}
+            </if>
+            <if test="title != null and title != ''">
+                and a.title = #{title}
+            </if>
+            <if test="createTime != null">
+                and a.create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and a.update_time = #{updateTime}
+            </if>
+            <if test="content != null and content != ''">
+                and a.content = #{content}
+            </if>
+            <if test="flag != null">
+                and a.flag = #{flag}
+            </if>
+            <if test="createId != null and createId != ''">
+                and a.create_id = #{createId}
+            </if>
+            <if test="classify != null and classify != ''">
+                and a.classify = #{classify}
+            </if>
+            <if test="type != null">
+                and a.type = #{type}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into  db_backen.tb_articles(uuid,title, create_time, update_time, content, flag, create_id, classify, type, pic,description,content_type)
+        values (#{uuid},#{title}, #{createTime}, #{updateTime}, #{content}, #{flag}, #{createId}, #{classify}, #{type},#{pic}, #{description}, #{contentType})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_backen.tb_articles
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="flag != null">
+                flag = #{flag},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id = #{createId},
+            </if>
+            <if test="classify != null and classify != ''">
+                classify = #{classify},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="pic != null and pic != ''">
+                pic = #{pic},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="contentType != null and contentType != ''">
+                content_type = #{contentType},
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from db_backen.tb_articles where uuid = #{uuid}
+    </delete>
+
+</mapper>

@@ -1,9 +1,8 @@
 package com.xl.backen.model;
 
-import com.xl.backen.entity.Comment;
+import com.xl.backen.entity.CirclePostComment;
 import com.xl.backen.entity.Posts;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,13 +12,13 @@ public class PostModel extends Posts {
 
     private static final long serialVersionUID = -3045682964966970736L;
 
-    private List<CommentModel> commentList;
+    private List<CirclePostComment> commentList;
 
-    public List<CommentModel> getCommentList() {
+    public List<CirclePostComment> getCommentList() {
         return commentList;
     }
 
-    public void setCommentList(List<CommentModel> commentList) {
+    public void setCommentList(List<CirclePostComment> commentList) {
         this.commentList = commentList;
     }
 }

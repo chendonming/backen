@@ -25,9 +25,9 @@ mybatis_config_file: mybatis-config.xml
 mapper_path: /mapper/**.xml
 entity_package: com.xl.backen.entity
 
-# 权限菜单配置
+# 权限菜单配置 garbage,post,circle,classification,articles
 permission:
-  menusModel: task,activity,community,permiss,trash,people,volunteer,shop,app,garbage
+  menusModel: task,activity,community,permiss,trash,people,volunteer,shop,app
 server:
     session:
       timeout: 86400000

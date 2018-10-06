@@ -1,15 +1,14 @@
 package com.xl.backen.shiro;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import com.xl.backen.dao.PeoplesMapper;
 import com.xl.backen.dao.WxUsersMapper;
 import com.xl.backen.entity.Peoples;
+import com.xl.backen.entity.Users;
 import com.xl.backen.entity.WxUsers;
 import com.xl.backen.handler.CommonConst;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -93,6 +92,12 @@ public class PeopleRealm extends AuthorizingRealm {
 				//有数据直接登录
 				return new SimpleAuthenticationInfo(peoples, peoples.getOpenId(), this.getName());
 			}
+		}
+
+		if(token.getLoginType() == CommonConst.LOGIN_TYPE_WX) {
+			System.out.println("wx login");
+			Peoples usersModel = (Peoples) pm.findByMobile(token.getUserName());
+			return new SimpleAuthenticationInfo(usersModel, usersModel.getPassword(), this.getName());
 		}
 		return null;
 	}

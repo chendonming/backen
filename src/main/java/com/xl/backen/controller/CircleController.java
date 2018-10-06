@@ -2,6 +2,7 @@ package com.xl.backen.controller;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Circle;
+import com.xl.backen.entity.CirclePeople;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.Result;
@@ -55,6 +56,13 @@ public class CircleController {
         log.info("圈子单个查询，参数circle={}", circle);
         Circle circle1 = cs.queryOne(circle);
         return new Result(BusinessStatus.SUCCESS, circle1);
+    }
+
+    @RequestMapping(value = "/joinCircle", method = RequestMethod.POST)
+    public Result<Object> joinCircle(@RequestBody @Valid CirclePeople cp) {
+        log.info("加入圈子，参数CirclePeople={}", cp);
+        cs.joinCircle(cp);
+        return new Result(BusinessStatus.SUCCESS);
     }
 
 }

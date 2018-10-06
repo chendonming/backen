@@ -34,7 +34,7 @@ public class CustomizedToken extends UsernamePasswordToken {
      */
     @Override
     public Object getPrincipal() {
-        if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE) {
+        if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE || LoginType == CommonConst.LOGIN_TYPE_WX) {
             return getUserName();
         }else{
             return getPeoples().getOpenId();
@@ -46,7 +46,7 @@ public class CustomizedToken extends UsernamePasswordToken {
      */
     @Override
     public Object getCredentials() {
-        if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE) {
+        if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE || LoginType == CommonConst.LOGIN_TYPE_WX) {
             return getPassWord();
         }else{
             return getPeoples().getOpenId();

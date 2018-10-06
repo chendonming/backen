@@ -21,4 +21,11 @@ public interface ClassificationService {
      * @return
      */
     List<Classification> queryByIf(Classification classification);
+
+    /**
+     * 查询单个
+     * @param uuid
+     * @return
+     */
+    Classification queryOne(String uuid);
 }

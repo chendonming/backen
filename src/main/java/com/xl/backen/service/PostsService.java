@@ -16,7 +16,7 @@ public interface PostsService {
      * @param posts
      * @return
      */
-    int thumbsUp(Posts posts);
+    Posts thumbsUp(Posts posts);
 
     /**
      * 分页查询帖子
@@ -29,5 +29,5 @@ public interface PostsService {
      * 查询帖子详情
      * @return
      */
-    PostModel queryOne(String uuid);
+    Posts queryOne(String uuid);
 }

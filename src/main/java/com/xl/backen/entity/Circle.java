@@ -23,6 +23,9 @@ public class Circle {
 
     private Integer flag;
 
+    // 是否已加入圈子(1。已加入 2。未加入 )
+    private Integer isJoin;
+
     @Override
     public String toString() {
         return "Circle{" +
@@ -37,6 +40,14 @@ public class Circle {
                 ", updateTime=" + updateTime +
                 ", flag=" + flag +
                 '}';
+    }
+
+    public Integer getIsJoin() {
+        return isJoin;
+    }
+
+    public void setIsJoin(Integer isJoin) {
+        this.isJoin = isJoin;
     }
 
     public String getUuid() {

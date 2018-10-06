@@ -32,13 +32,17 @@ public class ClassificationController {
     }
 
     @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
-    public Result<Object> queryAll() {
-        Classification classification = new Classification();
+    public Result<Object> queryAll(@RequestBody @Valid Classification classification) {
         return new Result<>(BusinessStatus.SUCCESS, cs.queryAll(classification));
     }
 
     @RequestMapping(value = "/queryByIf", method = RequestMethod.POST)
     public Result<Object> queryByIf(@RequestBody Classification classification) {
         return new Result<>(BusinessStatus.SUCCESS, cs.queryByIf(classification));
+    }
+
+    @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+    public Result<Object> queryOne(@RequestBody Classification classification) {
+        return new Result<>(BusinessStatus.SUCCESS, cs.queryOne(classification.getUuid()));
     }
 }

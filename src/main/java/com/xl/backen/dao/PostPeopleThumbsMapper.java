@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.xl.backen.entity.PostPeopleThumbs;
 import com.xl.backen.entity.Posts;
 
+import java.util.List;
+
 public interface PostPeopleThumbsMapper {
     int deleteByPrimaryKey(String uuid);
 
@@ -22,5 +24,5 @@ public interface PostPeopleThumbsMapper {
      * @param postPeopleThumbs
      * @return
      */
-    int queryByPeopleAndPost(PostPeopleThumbs postPeopleThumbs);
+    List<PostPeopleThumbs> queryByPeopleAndPost(PostPeopleThumbs postPeopleThumbs);
 }

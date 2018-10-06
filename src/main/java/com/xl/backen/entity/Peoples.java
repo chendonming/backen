@@ -51,6 +51,15 @@ public class Peoples implements Serializable {
     private String description;
 
     private String identityFlag;
+    private Integer loginType;
+
+    public Integer getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(Integer loginType) {
+        this.loginType = loginType;
+    }
 
     /*积分是否兑换*/
     private Boolean isDistribute;

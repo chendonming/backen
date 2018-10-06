@@ -3,6 +3,7 @@ package com.xl.backen.dao;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Posts;
 import com.xl.backen.model.PostModel;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public interface PostsMapper {
      * @param peopleId
      * @return
      */
-    Page<Posts> queryMyThumbPosts(String peopleId);
+    Page<Posts> queryMyThumbPosts(@Param(value="uuid")String peopleId);
 
 
     /**
@@ -42,4 +43,16 @@ public interface PostsMapper {
      * @return
      */
     PostModel queryOne(String uuid);
+
+    /**
+     * 查询单个帖子的点赞数量
+     * @return
+     */
+    Integer thumbCount(@Param(value = "uuid") String uuid);
+
+    /**
+     * 查询单个帖子的评论数量
+     * @return
+     */
+    Integer commentCount(@Param(value = "uuid") String uuid);
 }

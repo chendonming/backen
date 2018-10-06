@@ -1,63 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xl.backen.dao.CirclePeopleMapper">
-  <resultMap id="BaseResultMap" type="com.xl.backen.entity.CirclePeople">
-    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
-    <result column="circle_id" jdbcType="VARCHAR" property="circleId" />
-    <result column="people_id" jdbcType="VARCHAR" property="peopleId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="flag" jdbcType="INTEGER" property="flag" />
-  </resultMap>
-  <insert id="insert" parameterType="com.xl.backen.entity.CirclePeople">
-    insert into tb_circle_people (uuid, circle_id, people_id, 
-      create_time, update_time, flag
-      )
-    values (#{uuid,jdbcType=VARCHAR}, #{circleId,jdbcType=VARCHAR}, #{peopleId,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.xl.backen.entity.CirclePeople">
-    insert into tb_circle_people
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uuid != null">
-        uuid,
-      </if>
-      <if test="circleId != null">
-        circle_id,
-      </if>
-      <if test="peopleId != null">
-        people_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="flag != null">
-        flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uuid != null">
-        #{uuid,jdbcType=VARCHAR},
-      </if>
-      <if test="circleId != null">
-        #{circleId,jdbcType=VARCHAR},
-      </if>
-      <if test="peopleId != null">
-        #{peopleId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="flag != null">
-        #{flag,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+
+    <resultMap type="com.xl.backen.entity.CirclePeople" id="CirclePeopleMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="circleId" column="circle_id" jdbcType="VARCHAR"/>
+        <result property="peopleId" column="people_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="flag" column="flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CirclePeopleMap">
+        select
+          uuid, circle_id, people_id, create_time, update_time, flag
+        from db_backen.tb_circle_people
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CirclePeopleMap">
+        select
+        uuid, circle_id, people_id, create_time, update_time, flag
+        from db_backen.tb_circle_people
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CirclePeopleMap">
+        select
+          uuid, circle_id, people_id, create_time, update_time, flag
+        from db_backen.tb_circle_people
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+            <if test="circleId != null and circleId != ''">
+                and circle_id = #{circleId}
+            </if>
+            <if test="peopleId != null and peopleId != ''">
+                and people_id = #{peopleId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="flag != null">
+                and flag = #{flag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into  db_backen.tb_circle_people(uuid,circle_id, people_id, create_time, update_time, flag)
+        values (#{uuid},#{circleId}, #{peopleId}, #{createTime}, #{updateTime}, #{flag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_backen.tb_circle_people
+        <set>
+            <if test="circleId != null and circleId != ''">
+                and circle_id = #{circleId}
+            </if>
+            <if test="peopleId != null and peopleId != ''">
+                and people_id = #{peopleId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="flag != null">
+                and flag = #{flag}
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from db_backen.tb_circle_people where uuid = #{uuid}
+    </delete>
+
 </mapper>

@@ -2,6 +2,7 @@ package com.xl.backen.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class Posts implements Serializable {
     private static final long serialVersionUID = -6176880599388137679L;
@@ -16,6 +17,8 @@ public class Posts implements Serializable {
 
     private String circleId;
 
+    private String circleName;
+
     private String createId;
 
     private Integer thumbs;
@@ -28,10 +31,62 @@ public class Posts implements Serializable {
 
     private Integer status;
 
+    private String createName;
+
+    private String headPic;
+
     /**
      * 是否点赞（1.点赞 2.未点赞）
      */
     private Integer isThumbs;
+
+    private Integer commentCount;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Posts)) return false;
+        Posts posts = (Posts) o;
+        return Objects.equals(getUuid(), posts.getUuid());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUuid());
+    }
+
+    public String getCircleName() {
+        return circleName;
+    }
+
+    public void setCircleName(String circleName) {
+        this.circleName = circleName;
+    }
+
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getCreateName() {
+        return createName;
+    }
+
+    public void setCreateName(String createName) {
+        this.createName = createName;
+    }
+
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
+    }
 
     public Integer getIsThumbs() {
         return isThumbs;

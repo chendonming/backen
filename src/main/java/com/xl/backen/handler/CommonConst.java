@@ -33,6 +33,8 @@ public class CommonConst {
     public static final int LOGIN_TYPE_COMMUNITY = 2; //pc社区
 
     public static final int LOGIN_TYPE_APP = 3; //app登录
+    public static final int LOGIN_TYPE_WX = 4; //wx登录
+
 
     //社区默认的密码
     public static final String PASSWORD = "123456";

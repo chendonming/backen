@@ -1,89 +1,117 @@
-/**
- * 
- */
 package com.xl.backen.service.impl;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
-
-import com.xl.backen.handler.CommonConst;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xl.backen.entity.Notices;
+import com.xl.backen.dao.NoticesMapper;
+import com.xl.backen.entity.Users;
+import com.xl.backen.service.NoticesService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.xl.backen.dao.NoticesMapper;
-import com.xl.backen.entity.Notices;
+import java.util.Date;
+import java.util.UUID;
+import com.xl.backen.handler.CommonConst;
 import com.xl.backen.handler.BusinessException;
-import com.xl.backen.service.NoticesService;
 import com.xl.backen.util.StringUtil;
 
 /**
- * @author chendm
+ * 公告表(TbNotices)表服务实现类
  *
+ * @author chendm
+ * @since 2018-10-04 19:50:09
  */
 @Service
 public class NoticesServiceImpl implements NoticesService {
-	@Autowired
-	private NoticesMapper nm;
+    @Resource
+    private NoticesMapper noticesDao;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.xl.backen.service.NoticesService#add(com.xl.backen.entity.Notices)
-	 */
-	@Override
-	public int add(Notices notices) {
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		notices.setUuid(uuid);
-		notices.setFlag(CommonConst.NORMAL_STATUS);
-		notices.setCreateTime(new Date());
-		notices.setUpdateTime(new Date());
-		return nm.insertSelective(notices);
-	}
+    
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param uuid 主键
+     * @return 实例对象
+     */
+    @Override
+    public Notices queryById(String uuid) {
+        return this.noticesDao.queryById(uuid);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.xl.backen.service.NoticesService#update(com.xl.backen.entity.Notices)
-	 */
-	@Override
-	public int update(Notices notices) {
-		return nm.updateByPrimaryKeySelective(notices);
-	}
+    /**
+     * 查询多条数据
+     *
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 对象列表
+     */
+    @Override
+    public List<Notices> queryAllByLimit(int offset, int limit) {
+        return this.noticesDao.queryAllByLimit(offset, limit);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.xl.backen.service.NoticesService#del(com.xl.backen.entity.Notices)
-	 */
-	@Override
-	public int del(Notices notices) {
-		if (StringUtil.isEmpty(notices.getUuid())) {
-			throw new BusinessException(500, "公告uuid必传");
-		}
-		return nm.deleteByPrimaryKey(notices.getUuid());
-	}
+    /**
+     * 新增数据
+     *
+     * @param notices 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public Notices insert(Notices notices) {
+        notices.setUuid(UUID.randomUUID().toString().replace("-", ""));
+        notices.setUpdateTime(new Date());
+        notices.setCreateTime(new Date());
+        notices.setFlag(CommonConst.NORMAL_STATUS);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.xl.backen.service.NoticesService#query(java.util.Map)
-	 */
-	@Override
-	public Page<Notices> query(Map<String, Object> map) {
-		if (map.get("pageNum") != null && map.get("pageSize") != null) {
-			PageHelper.startPage((Integer) map.get("pageNum"), (Integer) map.get("pageSize"));
-		}
-		Page<Notices> notices = nm.queryAll(map);
-		return notices;
-	}
+        Users i = (Users)SecurityUtils.getSubject().getPrincipal();
+        notices.setCreateId(i.getUuid());
 
-	@Override
-	public Notices queryOne(String uuid) {
-		return nm.selectByPrimaryKey(uuid);
-	}
+        this.noticesDao.insert(notices);
+        return notices;
+    }
 
+    /**
+     * 修改数据
+     *
+     * @param notices 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public Notices update(Notices notices) {
+        if(StringUtil.isEmpty(notices.getUuid())) {
+            throw new BusinessException(500, "uuid必传");
+        }
+        notices.setUpdateTime(new Date());
+        this.noticesDao.update(notices);
+        return this.queryById(notices.getUuid());
+    }
+
+    /**
+     * 通过主键删除数据
+     *
+     * @param uuid 主键
+     * @return 是否成功
+     */
+    @Override
+    public boolean deleteById(String uuid) {
+        return this.noticesDao.deleteById(uuid) > 0;
+    }
+
+
+    /**
+     * 通过实体作为筛选条件查询(分页查询)
+     *
+     * @param notices 实例对象
+     * @return 对象列表
+     */
+    @Override
+    public Page<Notices> queryAll(Notices notices) {
+        if(notices.getPageSize() != null && notices.getPageNum() != null) {
+            PageHelper.startPage(notices.getPageNum(), notices.getPageSize());
+        }
+        Page<Notices> pages =  this.noticesDao.queryAll(notices);
+        return pages;
+    }
 }

@@ -41,14 +41,19 @@ public class PostsController {
 
     @RequestMapping(value = "/thumb", method = RequestMethod.POST)
     public Result<Object> thumb(@RequestBody @Valid Posts posts) {
-        ps.thumbsUp(posts);
-        return new Result<>(BusinessStatus.SUCCESS);
+        return new Result<>(BusinessStatus.SUCCESS,ps.thumbsUp(posts));
     }
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    public ResultForPage<Posts> thumb(@RequestBody @Valid Map<String,Object> map) {
+    public ResultForPage<Posts> query(@RequestBody @Valid Map<String,Object> map) {
         Page<Posts> postsPage = ps.queryAll(map);
         PageInfo<Posts> postsPageInfo = new PageInfo<>(postsPage);
         return new ResultForPage<>(BusinessStatus.SUCCESS,postsPageInfo);
+    }
+
+    @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+    public Result<Posts> queryOne(@RequestBody Map<String,String> map) {
+        Posts posts = ps.queryOne(map.get("uuid"));
+        return new Result<>(BusinessStatus.SUCCESS,posts);
     }
 }

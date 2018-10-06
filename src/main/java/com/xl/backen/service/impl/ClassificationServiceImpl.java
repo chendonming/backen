@@ -48,6 +48,8 @@ public class ClassificationServiceImpl implements ClassificationService {
         // 查询所有的父级分类
         Classification c = new Classification();
         c.setUpId("0");
+        if(classification.getType() != null)
+            c.setType(classification.getType());
         List<Classification> classificationList1 = cm.queryAll(c);
 
         // 所有条件查询结果
@@ -66,7 +68,11 @@ public class ClassificationServiceImpl implements ClassificationService {
 
     @Override
     public List<Classification> queryByIf(Classification classification) {
-
         return cm.queryAll(classification);
+    }
+
+    @Override
+    public Classification queryOne(String uuid) {
+        return cm.selectByPrimaryKey(uuid);
     }
 }
