@@ -10,7 +10,7 @@ import com.github.pagehelper.Page;
  * (TbMerchant)表数据库访问层
  *
  * @author chendm
- * @since 2018-10-06 16:05:45
+ * @since 2018-10-07 21:55:18
  */
 public interface MerchantMapper {
 

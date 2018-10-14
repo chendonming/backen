@@ -1,18 +1,18 @@
 package com.xl.backen.dao;
 
-import com.xl.backen.entity.ComplaintComment;
+import com.xl.backen.entity.Coupon;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import com.github.pagehelper.Page;
 
 
 /**
- * (TbComplaintComment)表数据库访问层
+ * 优惠券(TbCoupon)表数据库访问层
  *
  * @author chendm
- * @since 2018-10-06 21:44:00
+ * @since 2018-10-13 09:04:19
  */
-public interface ComplaintCommentMapper {
+public interface CouponMapper {
 
     /**
      * 通过ID查询单条数据
@@ -20,7 +20,7 @@ public interface ComplaintCommentMapper {
      * @param uuid 主键
      * @return 实例对象
      */
-    ComplaintComment queryById(@Param(value="uuid")String uuid);
+    Coupon queryById(@Param(value="uuid")String uuid);
 
     /**
      * 查询指定行数据
@@ -29,32 +29,32 @@ public interface ComplaintCommentMapper {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<ComplaintComment> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Coupon> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param complaintComment 实例对象
+     * @param coupon 实例对象
      * @return 对象列表
      */
-    Page<ComplaintComment> queryAll(ComplaintComment complaintComment);
+    Page<Coupon> queryAll(Coupon coupon);
 
     /**
      * 新增数据
      *
-     * @param complaintComment 实例对象
+     * @param coupon 实例对象
      * @return 影响行数
      */
-    int insert(ComplaintComment complaintComment);
+    int insert(Coupon coupon);
 
     /**
      * 修改数据
      *
-     * @param complaintComment 实例对象
+     * @param coupon 实例对象
      * @return 影响行数
      */
-    int update(ComplaintComment complaintComment);
+    int update(Coupon coupon);
 
     /**
      * 通过主键删除数据

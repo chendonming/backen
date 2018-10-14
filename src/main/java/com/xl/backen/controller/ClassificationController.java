@@ -45,4 +45,9 @@ public class ClassificationController {
     public Result<Object> queryOne(@RequestBody Classification classification) {
         return new Result<>(BusinessStatus.SUCCESS, cs.queryOne(classification.getUuid()));
     }
+
+    @RequestMapping(value = "/queryAndArticle", method = RequestMethod.POST)
+    public Result<Object> queryAndArticle(@RequestBody Classification classification) {
+        return new Result<>(BusinessStatus.SUCCESS, cs.queryAndArticle(classification));
+    }
 }

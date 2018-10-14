@@ -45,11 +45,18 @@ public class ShiroConfig {
 
 		map.put("/user/**", "anon");
 
+		map.put("/app/**", "anon");
+
 		for (int i = 0; i < t.length; i++) {
 			if(t[i].equals("permiss")) {
 				map.put("/permiss/**/**", "authc,perms[permiss]");
 			}else {
-				map.put("/" + t[i] + "/**", "authc,perms[" + t[i] + "]");
+				map.put("/" + t[i] + "/**add**", "authc,perms[" + t[i] + "]");
+				map.put("/" + t[i] + "/**update**", "authc,perms[" + t[i] + "]");
+				map.put("/" + t[i] + "/**del**", "authc,perms[" + t[i] + "]");
+				map.put("/" + t[i] + "/**thumb**", "authc,perms[" + t[i] + "]");
+				map.put("/" + t[i] + "/**My**", "authc,perms[" + t[i] + "]");
+				map.put("/" + t[i] + "/**join**", "authc,perms[" + t[i] + "]");
 			}
 		}
 

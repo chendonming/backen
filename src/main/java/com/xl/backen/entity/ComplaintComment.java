@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (TbComplaintComment)实体类
  *
  * @author chendm
- * @since 2018-09-23 20:31:00
+ * @since 2018-10-06 21:44:00
  */
 public class ComplaintComment implements Serializable {
-    private static final long serialVersionUID = -97315016364302266L;
+    private static final long serialVersionUID = 614386772834166139L;
     
     private String uuid;
     //关联投诉建议主键
@@ -32,28 +32,7 @@ public class ComplaintComment implements Serializable {
 
 	private Integer pageNum;
 
-    // 发布人头像
-    private String headPic;
-
-    // 发布人的姓名
-    private String truename;
-
-    public String getHeadPic() {
-        return headPic;
-    }
-
-    public void setHeadPic(String headPic) {
-        this.headPic = headPic;
-    }
-
-    public String getTruename() {
-        return truename;
-    }
-
-    public void setTruename(String truename) {
-        this.truename = truename;
-    }
-
+    
     public String getUuid() {
         return uuid;
     }

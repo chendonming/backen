@@ -25,6 +25,9 @@ public class Articles implements Serializable {
     private Integer flag;
     //发布人
     private String createId;
+
+    private String createName;
+
     //所属分类
     private String classify;
     private String className;
@@ -43,6 +46,14 @@ public class Articles implements Serializable {
 
 	//内容类型（1. 无图 2. 1张图 3. 2张图  4.3张或以上  5.视频  6.音频）
 	private Integer contentType;
+
+    public String getCreateName() {
+        return createName;
+    }
+
+    public void setCreateName(String createName) {
+        this.createName = createName;
+    }
 
     public String getPic() {
         return pic;

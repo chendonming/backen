@@ -134,6 +134,30 @@ public class PermissController {
         return new Result<List<Powers>>(BusinessStatus.SUCCESS, lp);
     }
 
+
+    /**
+     * 新增菜单
+     * @param powers
+     * @return
+     */
+    @RequestMapping(value = "/powers/add", method = RequestMethod.POST)
+    public Result<Object> powersAdd(@RequestBody Powers powers) {
+        ps.insertPowers(powers);
+        return new Result<>(BusinessStatus.SUCCESS);
+    }
+
+    /**
+     * 删除菜单
+     * @param powers
+     * @return
+     */
+    @RequestMapping(value = "/powers/del", method = RequestMethod.POST)
+    public Result<Object> powersDel(String uuid) {
+        ps.delPowers(uuid);
+        return new Result<>(BusinessStatus.SUCCESS);
+    }
+
+
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
     public Result<Object> register(@RequestBody @Valid UsersRegisterRoleModel model) {

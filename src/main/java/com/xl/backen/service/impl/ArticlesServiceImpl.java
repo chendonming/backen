@@ -2,7 +2,9 @@ package com.xl.backen.service.impl;
 
 import com.xl.backen.entity.Articles;
 import com.xl.backen.dao.ArticlesMapper;
+import com.xl.backen.entity.Users;
 import com.xl.backen.service.ArticlesService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,10 +60,15 @@ public class ArticlesServiceImpl implements ArticlesService {
      */
     @Override
     public Articles insert(Articles articles) {
+        Users users = (Users)SecurityUtils.getSubject().getPrincipal();
+
         articles.setUuid(UUID.randomUUID().toString().replace("-", ""));
         articles.setUpdateTime(new Date());
         articles.setCreateTime(new Date());
         articles.setFlag(CommonConst.NORMAL_STATUS);
+        articles.setCreateId(users.getUuid());
+
+
         this.articlesDao.insert(articles);
         return articles;
     }

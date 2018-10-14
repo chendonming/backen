@@ -11,8 +11,6 @@
         <result property="flag" column="flag" jdbcType="INTEGER"/>
         <result property="createId" column="create_id" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result column="u_create_name" jdbcType="VARCHAR" property="truename"/>
-        <result column="u_head_pic" jdbcType="VARCHAR" property="headPic"/>
     </resultMap>
 
     <!--查询单个-->
@@ -22,7 +20,7 @@
         from db_backen.tb_complaint_comment
         <where>
             <if test="uuid != null and uuid != ''">
-                and uuid = #{uuid},
+                and uuid = #{uuid}
             </if>
         </where>
     </select>
@@ -38,40 +36,40 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ComplaintCommentMap">
         select
-          t.*,  u.truename as u_create_name , u.head_pic as u_head_pic
-        from db_backen.tb_complaint_comment t left join tb_peoples u on u.uuid = t.create_id
+          uuid, complaint_uuid, content, files, create_time, flag, create_id, update_time
+        from db_backen.tb_complaint_comment
         <where>
             <if test="uuid != null and uuid != ''">
-                and t.uuid = #{uuid},
+                and uuid = #{uuid}
             </if>
             <if test="complaintUuid != null and complaintUuid != ''">
-                and t.complaint_uuid = #{complaintUuid},
+                and complaint_uuid = #{complaintUuid}
             </if>
             <if test="content != null and content != ''">
-                and t.content = #{content},
+                and content = #{content}
             </if>
             <if test="files != null and files != ''">
-                and t.files = #{files},
+                and files = #{files}
             </if>
             <if test="createTime != null">
-                and t.create_time = #{createTime},
+                and create_time = #{createTime}
             </if>
             <if test="flag != null">
-                and t.flag = #{flag},
+                and flag = #{flag}
             </if>
             <if test="createId != null and createId != ''">
-                and t.create_id = #{createId},
+                and create_id = #{createId}
             </if>
             <if test="updateTime != null">
-                and t.update_time = #{updateTime},
+                and update_time = #{updateTime}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="uuid" useGeneratedKeys="true">
-        insert into db_backen.tb_complaint_comment(complaint_uuid, content, files, create_time, flag, create_id, update_time)
-        values (#{complaintUuid}, #{content}, #{files}, #{createTime}, #{flag}, #{createId}, #{updateTime})
+    <insert id="insert">
+        insert into  db_backen.tb_complaint_comment(uuid,complaint_uuid, content, files, create_time, flag, create_id, update_time)
+        values (#{uuid},#{complaintUuid}, #{content}, #{files}, #{createTime}, #{flag}, #{createId}, #{updateTime})
     </insert>
 
     <!--通过主键修改数据-->
@@ -79,25 +77,25 @@
         update db_backen.tb_complaint_comment
         <set>
             <if test="complaintUuid != null and complaintUuid != ''">
-                and complaint_uuid = #{complaintUuid},
+                complaint_uuid = #{complaintUuid},
             </if>
             <if test="content != null and content != ''">
-                and content = #{content},
+                content = #{content},
             </if>
             <if test="files != null and files != ''">
-                and files = #{files},
+                files = #{files},
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime},
+                create_time = #{createTime},
             </if>
             <if test="flag != null">
-                and flag = #{flag},
+                flag = #{flag},
             </if>
             <if test="createId != null and createId != ''">
-                and create_id = #{createId},
+                create_id = #{createId},
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime},
+                update_time = #{updateTime},
             </if>
         </set>
         where uuid = #{uuid}

@@ -19,7 +19,7 @@ import com.xl.backen.util.StringUtil;
  * (TbMerchant)表服务实现类
  *
  * @author chendm
- * @since 2018-10-06 16:05:45
+ * @since 2018-10-07 21:55:18
  */
 @Service
 public class MerchantServiceImpl implements MerchantService {

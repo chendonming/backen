@@ -154,10 +154,19 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public Posts queryOne(String uuid) {
-        Peoples peoples = (Peoples) SecurityUtils.getSubject().getPrincipal();
+        String auuid = null;
+        Object obj = SecurityUtils.getSubject().getPrincipal();
+        if(obj instanceof Peoples) {
+            auuid = ((Peoples) obj).getUuid();
+        }
+        if(obj instanceof Users) {
+            auuid = ((Users) obj).getUuid();
+        }
+
+
         PostPeopleThumbs ppt = new PostPeopleThumbs();
         ppt.setPostId(uuid);
-        ppt.setPeopleId(peoples.getUuid());
+        ppt.setPeopleId(auuid);
         List<PostPeopleThumbs> postPeopleThumbs = pptm.queryByPeopleAndPost(ppt);
 
         Posts posts = pm.selectByPrimaryKey(uuid);

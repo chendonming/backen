@@ -64,7 +64,7 @@
     <include refid="parent_menus_list"/>,
     <include refid="powers_list"/>
     from tb_roles_power rp right join tb_powers p on p.uuid = rp.power_id
-    left join tb_parent_menus m on m.uuid = p.up_menus_id
+    right join tb_parent_menus m on m.uuid = p.up_menus_id
     where rp.role_id=#{roleId} and p.type = #{type} and rp.status=1 order by m.weight desc, p.weight desc
   </select>
 
@@ -73,13 +73,13 @@
     <include refid="parent_menus_list"/>,
     <include refid="powers_list"/>
     from  tb_powers p
-    left join tb_parent_menus m on m.uuid = p.up_menus_id
-    where p.type = #{type} order by m.weight desc, p.weight desc
+    right join tb_parent_menus m on m.uuid = p.up_menus_id
+    where m.type = #{type} order by m.weight desc, p.weight desc
   </select>
 
   <select id="queryAll" resultMap="BaseResultMap">
   	select p.*,pm.name as up_menus_name
-  	from tb_powers p left join  tb_parent_menus pm on pm.uuid = p.up_menus_id
+  	from tb_powers p right join  tb_parent_menus pm on pm.uuid = p.up_menus_id
   	where p.type=#{type}
   </select>
   
@@ -122,6 +122,18 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="upMenusId != null">
+        up_menus_id,
+      </if>
+      <if test="frontPath != null">
+        front_path,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -142,6 +154,18 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="upMenusId != null">
+        #{upMenusId, jdbcType=VARCHAR},
+      </if>
+      <if test="frontPath != null">
+        #{frontPath, jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight, jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type, jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Powers">
@@ -161,6 +185,18 @@
       </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        up_menus_id = #{upMenusId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        front_path = #{frontPath,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        weight = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}

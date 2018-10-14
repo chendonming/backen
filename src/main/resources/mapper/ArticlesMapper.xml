@@ -10,6 +10,7 @@
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="flag" column="flag" jdbcType="INTEGER"/>
         <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result column="true_name" property="createName" jdbcType="VARCHAR"/>
         <result property="classify" column="classify" jdbcType="VARCHAR"/>
         <result property="className" column="class_name" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
@@ -41,8 +42,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ArticlesMap">
         select
-          a.*, c.name as class_name
-        from db_backen.tb_articles a left join tb_classification c on c.uuid = a.classify
+          a.*, c.name as class_name, u.truename as true_name
+        from tb_classification c left join db_backen.tb_articles a  on c.uuid = a.classify left join tb_users u on a.create_id = u.uuid
         <where>
             <if test="uuid != null and uuid != ''">
                 and a.uuid = #{uuid}

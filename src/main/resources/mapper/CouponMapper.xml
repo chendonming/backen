@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.CouponMapper">
+
+    <resultMap type="com.xl.backen.entity.Coupon" id="CouponMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="flag" column="flag" jdbcType="INTEGER"/>
+        <result property="merchantId" column="merchant_id" jdbcType="VARCHAR"/>
+        <result property="merchantName" column="merchant_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CouponMap">
+        select
+          uuid, create_time, update_time, name, description, start_time, end_time, flag, merchant_id
+        from db_backen.tb_coupon
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CouponMap">
+        select
+        uuid, create_time, update_time, name, description, start_time, end_time, flag, merchant_id
+        from db_backen.tb_coupon
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CouponMap">
+        select
+          c.*, m.name as merchant_name
+        from db_backen.tb_coupon c left join tb_merchant m on m.uuid = c.merchant_id
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and c.uuid = #{uuid}
+            </if>
+            <if test="createTime != null">
+                and c.create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and c.update_time = #{updateTime}
+            </if>
+            <if test="name != null and name != ''">
+                and c.name = #{name}
+            </if>
+            <if test="description != null and description != ''">
+                and c.description = #{description}
+            </if>
+            <if test="startTime != null">
+                and c.start_time = #{startTime}
+            </if>
+            <if test="endTime != null">
+                and c.end_time = #{endTime}
+            </if>
+            <if test="flag != null">
+                and c.flag = #{flag}
+            </if>
+            <if test="merchantId != null and merchantId != ''">
+                and c.merchant_id = #{merchantId}
+            </if>
+        </where>
+        order by c.end_time desc
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into  db_backen.tb_coupon(uuid,create_time, update_time, name, description, start_time, end_time, flag, merchant_id)
+        values (#{uuid},#{createTime}, #{updateTime}, #{name}, #{description}, #{startTime}, #{endTime}, #{flag}, #{merchantId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_backen.tb_coupon
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="flag != null">
+                flag = #{flag},
+            </if>
+            <if test="merchantId != null and merchantId != ''">
+                merchant_id = #{merchantId},
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from db_backen.tb_coupon where uuid = #{uuid}
+    </delete>
+
+</mapper>

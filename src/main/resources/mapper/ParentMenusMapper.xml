@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.ParentMenusMapper">
+
+    <resultMap type="com.xl.backen.entity.ParentMenus" id="ParentMenusMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="weight" column="weight" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="meunName" column="meun_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ParentMenusMap">
+        select
+          uuid, name, code, create_time, update_time, weight, type, meun_name
+        from db_backen.tb_parent_menus
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ParentMenusMap">
+        select
+        uuid, name, code, create_time, update_time, weight, type, meun_name
+        from db_backen.tb_parent_menus
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ParentMenusMap">
+        select
+          uuid, name, code, create_time, update_time, weight, type, meun_name
+        from db_backen.tb_parent_menus
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="meunName != null and meunName != ''">
+                and meun_name = #{meunName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into  db_backen.tb_parent_menus(uuid,name, code, create_time, update_time, weight, type, meun_name)
+        values (#{uuid},#{name}, #{code}, #{createTime}, #{updateTime}, #{weight}, #{type}, #{meunName})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_backen.tb_parent_menus
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="meunName != null and meunName != ''">
+                meun_name = #{meunName},
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from db_backen.tb_parent_menus where uuid = #{uuid}
+    </delete>
+
+</mapper>

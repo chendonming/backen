@@ -46,9 +46,12 @@
     (select p.*, u.truename as create_name, u.head_pic as head_pic, c.name as circle_name
     from tb_circle c  left join  tb_circle_posts p on c.uuid = p.circle_id
 
-    left join tb_users u on p.create_id = u.uuid
+    right join tb_users u on p.create_id = u.uuid
 
     where
+    <if test="title != null and title !=''">
+      p.title like CONCAT('%', #{title}, '%') and
+    </if>
     <if test="circleId != null and circleId !=''">
       p.circle_id = #{circleId} and
     </if>
@@ -62,9 +65,12 @@
     (select p.*, u.truename as create_name, u.head_pic as head_pic, c.name as circle_name
     from tb_circle c  left join  tb_circle_posts p on c.uuid = p.circle_id
 
-    left join tb_peoples u on p.create_id = u.uuid
+    right join tb_peoples u on p.create_id = u.uuid
 
     where
+    <if test="title != null and title !=''">
+      p.title like CONCAT('%', #{title}, '%') and
+    </if>
     <if test="circleId != null and circleId !=''">
       p.circle_id = #{circleId} and
     </if>

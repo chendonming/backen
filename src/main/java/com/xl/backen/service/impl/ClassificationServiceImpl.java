@@ -1,15 +1,20 @@
 package com.xl.backen.service.impl;
 
+import com.github.pagehelper.Page;
+import com.xl.backen.dao.ArticlesMapper;
 import com.xl.backen.dao.ClassificationMapper;
+import com.xl.backen.entity.Articles;
 import com.xl.backen.entity.Classification;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.CommonConst;
+import com.xl.backen.model.ClassificationListModel;
 import com.xl.backen.service.ClassificationService;
 import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TreeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +23,9 @@ import java.util.UUID;
 public class ClassificationServiceImpl implements ClassificationService {
     @Autowired
     private ClassificationMapper cm;
+
+    @Autowired
+    private ArticlesMapper am;
 
     @Override
     public int add(Classification classification) {
@@ -74,5 +82,27 @@ public class ClassificationServiceImpl implements ClassificationService {
     @Override
     public Classification queryOne(String uuid) {
         return cm.selectByPrimaryKey(uuid);
+    }
+
+    @Override
+    public List<ClassificationListModel> queryAndArticle(Classification classification) {
+        // 更具upId查询出所有的栏目
+        List<Classification> classificationList = cm.queryAll(classification);
+
+        List<ClassificationListModel> list = new ArrayList<>();
+        for(Classification i : classificationList) {
+            ClassificationListModel cml = new ClassificationListModel();
+            cml.setUuid(i.getUuid());
+            cml.setName(i.getName());
+
+            Articles a = new Articles();
+            a.setClassify(i.getUuid());
+            a.setPageNum(classification.getPageNum());
+            a.setPageSize(classification.getPageSize());
+            Page<Articles> page= am.queryAll(a);
+            cml.setArticlesList(page);
+            list.add(cml);
+        }
+        return list;
     }
 }

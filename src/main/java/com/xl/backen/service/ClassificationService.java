@@ -1,6 +1,7 @@
 package com.xl.backen.service;
 
 import com.xl.backen.entity.Classification;
+import com.xl.backen.model.ClassificationListModel;
 
 import java.util.List;
 
@@ -28,4 +29,11 @@ public interface ClassificationService {
      * @return
      */
     Classification queryOne(String uuid);
+
+    /**
+     * 查询栏目并带出相应文章
+     * @param classification
+     * @return
+     */
+    List<ClassificationListModel> queryAndArticle(Classification classification);
 }

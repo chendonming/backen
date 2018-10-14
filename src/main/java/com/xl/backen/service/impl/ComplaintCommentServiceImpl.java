@@ -1,9 +1,10 @@
 package com.xl.backen.service.impl;
 
+import com.xl.backen.dao.ComplaintMapper;
+import com.xl.backen.entity.Complaint;
 import com.xl.backen.entity.ComplaintComment;
 import com.xl.backen.dao.ComplaintCommentMapper;
 import com.xl.backen.service.ComplaintCommentService;
-import com.xl.backen.util.StringUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,17 +15,22 @@ import java.util.Date;
 import java.util.UUID;
 import com.xl.backen.handler.CommonConst;
 import com.xl.backen.handler.BusinessException;
+import com.xl.backen.util.StringUtil;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * (TbComplaintComment)表服务实现类
  *
  * @author chendm
- * @since 2018-09-23 20:31:00
+ * @since 2018-10-06 21:44:00
  */
 @Service
 public class ComplaintCommentServiceImpl implements ComplaintCommentService {
     @Resource
     private ComplaintCommentMapper complaintCommentDao;
+
+    @Resource
+    private ComplaintMapper cm;
 
     
     /**
@@ -57,11 +63,19 @@ public class ComplaintCommentServiceImpl implements ComplaintCommentService {
      * @return 实例对象
      */
     @Override
+    @Transactional
     public ComplaintComment insert(ComplaintComment complaintComment) {
         complaintComment.setUuid(UUID.randomUUID().toString().replace("-", ""));
         complaintComment.setUpdateTime(new Date());
         complaintComment.setCreateTime(new Date());
         complaintComment.setFlag(CommonConst.NORMAL_STATUS);
+
+        // 对建议投诉设置已回复
+        Complaint c = new Complaint();
+        c.setUuid(complaintComment.getComplaintUuid());
+        c.setStatus(2);
+        cm.update(c);
+
         this.complaintCommentDao.insert(complaintComment);
         return complaintComment;
     }

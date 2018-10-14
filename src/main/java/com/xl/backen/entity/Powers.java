@@ -31,6 +31,11 @@ public class Powers implements Serializable {
 
     private String frontPath;
 
+    /**
+     * 菜单类型 （1. 主菜单 2. 次级菜单）
+     */
+    private Integer meunType;
+
     @Override
     public String toString() {
         return "Powers{" +
@@ -46,6 +51,14 @@ public class Powers implements Serializable {
                 ", weight=" + weight +
                 ", frontPath='" + frontPath + '\'' +
                 '}';
+    }
+
+    public Integer getMeunType() {
+        return meunType;
+    }
+
+    public void setMeunType(Integer meunType) {
+        this.meunType = meunType;
     }
 
     public String getFrontPath() {
