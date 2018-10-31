@@ -5,8 +5,10 @@ import com.xl.backen.entity.Peoples;
 import com.xl.backen.model.PeoplesPageModel;
 import com.xl.backen.model.VolunteerModel;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @Repository
@@ -40,7 +42,11 @@ public interface PeoplesMapper {
 	 */
 	List<Peoples> queryAll(String communityId);
 
-	Peoples queryByOpenId(String openId);
+	Peoples queryByOpenId(@Param(value = "openId")String openId,
+						  @Param(value = "appId")String appId,
+						  @Param(value = "mobile") String mobile,
+						  @Param(value = "password") String password
+	);
 
 	Page<VolunteerModel> queryList(String communityId);
 

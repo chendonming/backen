@@ -8,7 +8,7 @@ import com.github.pagehelper.Page;
  * 优惠券(TbCoupon)表服务接口
  *
  * @author chendm
- * @since 2018-10-13 09:04:19
+ * @since 2018-10-25 20:50:44
  */
 public interface CouponService {
 

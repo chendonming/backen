@@ -11,6 +11,7 @@
     <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId"/>
   </resultMap>
 
   <!--根据openid查询是否存在用户-->
@@ -57,6 +58,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="appId != null">
+        app_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
@@ -76,6 +80,8 @@
       <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null"> #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appId != null"> #{appId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

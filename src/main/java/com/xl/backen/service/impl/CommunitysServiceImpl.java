@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.xl.backen.dao.CommunitysMapper;
 import com.xl.backen.dao.UsersMapper;
 import com.xl.backen.entity.Communitys;
+import com.xl.backen.entity.RolesPower;
 import com.xl.backen.entity.Users;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
@@ -12,6 +13,7 @@ import com.xl.backen.handler.CommonConst;
 import com.xl.backen.model.CommunitysForAddModel;
 import com.xl.backen.model.CommunitysPageModel;
 import com.xl.backen.service.CommunitysService;
+import com.xl.backen.service.RolesPowerService;
 import com.xl.backen.util.MD5;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +61,6 @@ public class CommunitysServiceImpl implements CommunitysService {
 
         //指定初始角色值
         users.setRoleId(CommonConst.COMMUNITY_ROLE);
-
-
         um.insertSelective(users);
 
         return 0;

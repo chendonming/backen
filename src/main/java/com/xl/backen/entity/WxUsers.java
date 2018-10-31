@@ -26,6 +26,8 @@ public class WxUsers implements Serializable {
 
     private Date updateTime;
 
+    private String appId;
+
     @Override
     public String toString() {
         return "WxUsers{" +
@@ -40,6 +42,14 @@ public class WxUsers implements Serializable {
           ", createTime=" + createTime +
           ", updateTime=" + updateTime +
           '}';
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getCode() {

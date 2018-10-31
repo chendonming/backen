@@ -33,7 +33,7 @@
     <if test="type != null and type != ''">
       type = #{type} and
     </if>
-    flag = 1 order by weight desc
+    flag = 1 order by weight desc, update_time desc
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

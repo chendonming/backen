@@ -16,17 +16,17 @@
         <result property="communityId" column="community_id" jdbcType="VARCHAR"/>
         <result property="flag" column="flag" jdbcType="INTEGER"/>
         <result property="truename" column="truename" jdbcType="VARCHAR"/>
-        <result property="headpic" column="headpic" jdbcType="VARCHAR"/>
+        <result property="headpic" column="head_pic" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="ComplaintMap">
         select
-          uuid, name, content, create_id, create_name, phone, files, status, create_time, update_time, community_id, flag
-        from db_backen.tb_complaint
+         c.*,p.head_pic as headpic
+        from db_backen.tb_complaint c left join tb_peoples p on c.create_id = p.uuid
         <where>
             <if test="uuid != null and uuid != ''">
-                and uuid = #{uuid}
+                and c.uuid = #{uuid}
             </if>
         </where>
     </select>
@@ -82,6 +82,7 @@
                 and c.flag = #{flag}
             </if>
         </where>
+        order by c.update_time desc
     </select>
 
     <!--新增所有列-->

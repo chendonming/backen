@@ -37,7 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
  * PeoplesServiceImpl
  */
 @Service
-@CacheConfig(cacheNames = "peoples")
 public class PeoplesServiceImpl implements PeoplesService {
 
 	private static Logger log = LoggerFactory.getLogger(PeoplesServiceImpl.class);
@@ -55,7 +54,6 @@ public class PeoplesServiceImpl implements PeoplesService {
 	private Long sessionTimeOut;
 
 	@Override
-	@CacheEvict(allEntries=true)
 	public int add(Peoples peoples) {
 		peoples.setUuid(UUID.randomUUID().toString().replace("-", ""));
 		peoples.setCreateTime(new Date());
@@ -70,7 +68,6 @@ public class PeoplesServiceImpl implements PeoplesService {
 	}
 
 	@Override
-	@CacheEvict(allEntries=true)
 	public int update(Peoples peoples) {
 		if(StringUtil.isEmpty(peoples.getUuid())) {
 			throw new BusinessException(BusinessStatus.UUID_REQ);
@@ -79,7 +76,6 @@ public class PeoplesServiceImpl implements PeoplesService {
 	}
 
 	@Override
-	@CacheEvict(allEntries=true)
 	public String exportPeople() throws IOException {
 		PeoplesPageModel pp = new PeoplesPageModel();
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
@@ -96,7 +92,6 @@ public class PeoplesServiceImpl implements PeoplesService {
 
 	@Override
 	@Transactional
-	@CacheEvict(allEntries=true)
 	public int importPeople(MultipartFile file) throws Exception {
 		Users u = (Users) SecurityUtils.getSubject().getPrincipal();
 		List<Peoples> peoples = PeoplesPOI.importUser(file);
@@ -134,7 +129,6 @@ public class PeoplesServiceImpl implements PeoplesService {
 	}
 
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Peoples> query(PeoplesPageModel model) {
 		if (model.getPageNum() != null && model.getPageSize() != null) {
 			PageHelper.startPage(model.getPageNum(), model.getPageSize());

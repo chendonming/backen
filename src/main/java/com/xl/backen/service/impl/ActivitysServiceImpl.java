@@ -60,7 +60,7 @@ public class ActivitysServiceImpl implements ActivitysService {
 
         Page<Activitys> activitys = as.query(model);
         for (Activitys i : activitys) {
-            int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
+            int flag = TimeUtil.compareTime(i.getJoinStartTime(), i.getJoinEndTime(), i.getStartTime(), i.getEndTime());
             i.setFlag(flag);
         }
         return activitys;

@@ -19,7 +19,6 @@ import com.xl.backen.entity.Powers;
 import com.xl.backen.service.PowersService;
 
 @Service
-@CacheConfig(cacheNames = "permiss")
 public class PowersServiceImpl implements PowersService {
 
 	@Autowired
@@ -28,7 +27,6 @@ public class PowersServiceImpl implements PowersService {
 	@Autowired
 	private ParentMenusMapper pmm;
 
-	@Cacheable(keyGenerator = "keyGenerator")
 	@Override
 	public List<Powers> queryAll() {
 
@@ -44,8 +42,6 @@ public class PowersServiceImpl implements PowersService {
 	}
 
 
-
-	@Cacheable(keyGenerator = "keyGenerator")
 	@Override
 	public List<Powers> queryByRoleId(String roleId) {
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
@@ -62,7 +58,6 @@ public class PowersServiceImpl implements PowersService {
 	 * @param roleId
 	 * @return
 	 */
-	@Cacheable(keyGenerator = "keyGenerator")
 	@Override
 	public List<ParentMenus> queryParentMenusByRoleId(String roleId) {
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
@@ -75,7 +70,6 @@ public class PowersServiceImpl implements PowersService {
 	}
 
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public List<ParentMenus> queryParentMenus() {
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
 		System.out.println(users);
@@ -83,7 +77,6 @@ public class PowersServiceImpl implements PowersService {
 	}
 
 	@Override
-	@CacheEvict(allEntries=true)
 	public int insertPowers(Powers powers) {
 			/* 主菜单 */
 		if(powers.getMeunType() == 1) {
@@ -114,7 +107,6 @@ public class PowersServiceImpl implements PowersService {
 	}
 
 	@Override
-	@CacheEvict(allEntries=true)
 	public int updatePowers(Powers powers) {
 		if(powers.getMeunType() == 1) {
 			ParentMenus parentMenus = new ParentMenus();
@@ -138,7 +130,6 @@ public class PowersServiceImpl implements PowersService {
 	}
 
 	@Override
-	@CacheEvict(allEntries=true)
 	public int delPowers(String uuid) {
 		return pm.deleteByPrimaryKey(uuid);
 	}

@@ -53,6 +53,8 @@ public class Peoples implements Serializable {
     private String identityFlag;
     private Integer loginType;
 
+    private String appId;
+
     public Integer getLoginType() {
         return loginType;
     }
@@ -92,6 +94,14 @@ public class Peoples implements Serializable {
                 ", identityFlag='" + identityFlag + '\'' +
                 ", isDistribute='" + isDistribute + '\'' +
                 '}';
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public Boolean getDistribute() {

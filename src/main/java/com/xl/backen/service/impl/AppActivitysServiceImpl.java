@@ -23,6 +23,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -41,13 +42,9 @@ public class AppActivitysServiceImpl implements AppActivitysService {
     public Page<Activitys> query(ActivitysPageModel model) {
         PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
-        Peoples users = (Peoples) SecurityUtils.getSubject().getPrincipal();
-        model.setCommunityId(users.getCommunityId());
-        model.setSysType(users.getSysType());
-
         Page<Activitys> activitys = as.query(model);
         for (Activitys i : activitys) {
-            int flag = TimeUtil.compareTime(i.getStartTime(), i.getEndTime(), i.getJoinStartTime(), i.getJoinEndTime());
+            int flag = TimeUtil.compareTime(i.getJoinStartTime(), i.getJoinEndTime(), i.getStartTime(), i.getEndTime());
             i.setFlag(flag);
 
             if (!StringUtil.isEmpty(i.getCoverpic())) {
@@ -60,9 +57,19 @@ public class AppActivitysServiceImpl implements AppActivitysService {
     }
 
     @Override
+    @Transactional
     public int joinAct(String actId) {
         if (StringUtil.isEmpty(actId)) {
             throw new BusinessException(BusinessStatus.UUID_REQ);
+        }
+
+        Map map = new HashMap();
+        map.put("peopleId", ((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
+        map.put("actId", actId);
+
+        int exist = apm.exist(map);
+        if (exist > 0) {
+            throw new BusinessException(500, "你已经报名过此活动");
         }
 
         ActivitysPeoples ap = new ActivitysPeoples();

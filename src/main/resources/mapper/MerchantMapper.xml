@@ -47,7 +47,7 @@
                 and uuid = #{uuid}
             </if>
             <if test="name != null and name != ''">
-                and name = #{name}
+                and name like CONCAT('%',#{name},'%')
             </if>
             <if test="address != null and address != ''">
                 and address = #{address}
@@ -77,9 +77,10 @@
                 and pic = #{pic}
             </if>
             <if test="classify != null and classify != ''">
-                and classify = #{classify}
+                and classify like CONCAT('%',#{classify},'%')
             </if>
         </where>
+        order by weight desc, update_time desc
     </select>
 
     <!--新增所有列-->

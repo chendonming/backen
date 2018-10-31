@@ -24,7 +24,6 @@ import com.xl.backen.handler.CommonConst;
 import com.xl.backen.service.RolesPowerService;
 
 @Service
-@CacheConfig(cacheNames = "permiss")
 public class RolesPowerServiceImpl implements RolesPowerService {
 	@Autowired
 	private PowersMapper pm;
@@ -37,7 +36,6 @@ public class RolesPowerServiceImpl implements RolesPowerService {
 	 */
 	@Override
 	@Transactional
-	@CacheEvict(allEntries=true)
 	public int givePermiss(RolesPowerModel model) throws Exception {
 		if (StringUtil.isEmpty(model.getRoleId())) {
 			throw new BusinessException(BusinessStatus.PARAMETER_ERROR);

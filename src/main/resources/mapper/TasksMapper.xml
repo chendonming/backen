@@ -94,7 +94,7 @@
     <if test="communityId != null and communityId != ''">
       t.community_id = #{communityId} and
     </if>
-    t.status=1 and u.sys_type = #{sysType}
+    t.status=1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

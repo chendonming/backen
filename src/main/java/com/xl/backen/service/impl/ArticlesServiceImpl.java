@@ -67,6 +67,8 @@ public class ArticlesServiceImpl implements ArticlesService {
         articles.setCreateTime(new Date());
         articles.setFlag(CommonConst.NORMAL_STATUS);
         articles.setCreateId(users.getUuid());
+        // 文章状态0 正常 1 推荐
+        articles.setStatus(0);
 
 
         this.articlesDao.insert(articles);

@@ -1,9 +1,21 @@
 package com.xl.backen.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 常量类
  */
 public class CommonConst {
+    public final static Map map = new HashMap();
+
+    // 定义公众号的appid  Secret
+    static {
+        map.put("wx424ae52992360d90", "aa606d15a892cad40ca0d466271c3b32");
+        map.put("wxf83b968d4ecdbfe7", "9029a45d9e97ded49be6a94927be8abf");
+    }
+
+
     public static final int NORMAL_STATUS = 1;
     
     public static final int DEL_STATUS = 2;
@@ -35,6 +47,8 @@ public class CommonConst {
     public static final int LOGIN_TYPE_APP = 3; //app登录
     public static final int LOGIN_TYPE_WX = 4; //wx登录
 
+    public static final int LOGIN_GZH = 5; //公众号登陆
+
 
     //社区默认的密码
     public static final String PASSWORD = "123456";
@@ -53,6 +67,11 @@ public class CommonConst {
     public static final String APPID = "wx6de76409aae82cdc";
     public static final String APPSECRET = "870320ddfec0ed3db24933b6a86abf56";
 
+    //公众号appid
+    public static final String WXGZH = "wx424ae52992360d90";
+
+    //公众号
+    public static final String WXAppSecret = "aa606d15a892cad40ca0d466271c3b32";
 
     /**
      * 积分

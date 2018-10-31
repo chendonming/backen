@@ -69,7 +69,7 @@
         where
         <trim>
             <if test="name != null and name != ''">
-                a.name like CONCAT(#{name},'%') and
+                a.name like CONCAT('%',#{name},'%') and
             </if>
             <!--<if test="flag != null and flag == 1">-->
                 <!--&lt;!&ndash; 报名未开始 &ndash;&gt;-->
@@ -95,7 +95,7 @@
                 a.community_id = #{communityId} and
             </if>
         </trim>
-        a.status = 1 and u.sys_type = #{sysType}
+        a.status = 1 order by a.update_time desc
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

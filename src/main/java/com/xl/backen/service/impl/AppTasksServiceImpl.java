@@ -44,10 +44,6 @@ public class AppTasksServiceImpl implements AppTasksService {
 	public Page<Tasks> query(TasksPageModel model) {
 		PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
-		Peoples usersModel = (Peoples) SecurityUtils.getSubject().getPrincipal();
-		model.setCommunityId(usersModel.getCommunityId());
-		model.setSysType(usersModel.getSysType());
-
 		Page<Tasks> tasks = tm.query(model);
 		for (Tasks i : tasks) {
 			i.setFlag(TimeUtil.compareTime(i.getStartTime(), i.getEndTime()));

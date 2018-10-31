@@ -19,7 +19,7 @@ import com.xl.backen.util.StringUtil;
  * 优惠券(TbCoupon)表服务实现类
  *
  * @author chendm
- * @since 2018-10-13 09:04:19
+ * @since 2018-10-25 20:50:44
  */
 @Service
 public class CouponServiceImpl implements CouponService {

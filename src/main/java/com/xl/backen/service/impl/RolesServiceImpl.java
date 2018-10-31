@@ -20,14 +20,12 @@ import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.service.RolesService;
 
 @Service
-@CacheConfig(cacheNames = "permiss")
 public class RolesServiceImpl implements RolesService{
 
 	@Autowired
 	private RolesMapper rm;
 	
 	@Override
-	@CacheEvict(allEntries=true)
 	public int insertSelective(Roles role) {
 		Date d = new Date();
 		Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
@@ -48,7 +46,6 @@ public class RolesServiceImpl implements RolesService{
 	}
 
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Roles> queryAll(int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum,pageSize);
 
@@ -67,13 +64,11 @@ public class RolesServiceImpl implements RolesService{
 	 * @return
 	 */
 	@Override
-	@CacheEvict(allEntries=true)
 	public int updateRole(Roles role) {
 		return rm.updateByPrimaryKeySelective(role);
 	}
 
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public Roles findById(Roles roles) {
 		return rm.selectByPrimaryKey(roles.getUuid());
 	}

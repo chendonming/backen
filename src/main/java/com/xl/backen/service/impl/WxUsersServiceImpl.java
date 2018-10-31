@@ -29,7 +29,6 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 
 @Service
-@CacheConfig(cacheNames = "peoples")
 public class WxUsersServiceImpl implements WxUsersService {
 
 	private static Logger logger = LoggerFactory.getLogger(WxUsersServiceImpl.class);
@@ -80,12 +79,51 @@ public class WxUsersServiceImpl implements WxUsersService {
 
 
 	/**
+	 * 微信公众号登陆
+	 * @param appid APPID
+	 * @param REDIRECT_URI 回调地址
+	 * @return
+	 */
+	@Override
+	public Peoples gzhLogin(String openid, String appid, Peoples peoples) {
+		peoples.setOpenId(openid);
+		peoples.setAppId(appid);
+
+		System.out.println("获取的peoples" + peoples.toString());
+
+		Subject subject = SecurityUtils.getSubject();
+		CustomizedToken token = null;
+
+		try {
+			token = new CustomizedToken();
+			token.setPeoples(peoples);
+			token.setLoginType(CommonConst.LOGIN_GZH);
+		} catch (Exception e) {
+			throw new BusinessException(BusinessStatus.MD5_ERROR);
+		}
+
+		try {
+			subject.login(token);
+			subject.getSession().setTimeout(sessionTimeOut);
+			Peoples p = (Peoples) subject.getPrincipal();
+
+			Object o = SecurityUtils.getSubject().getSession().getId();
+			p.setSessionId((String)o);
+			return p;
+		} catch (UnknownAccountException e) {
+			throw new BusinessException(BusinessStatus.USER_ERROR);
+		} catch (IncorrectCredentialsException e) {
+			throw new BusinessException(BusinessStatus.PASSWORD_ERROR);
+		}
+	}
+
+
+	/**
 	 * APP端实名认证
 	 * @param peoples
 	 * @return
 	 */
 	@Override
-	@CacheEvict(allEntries=true)
 	public int authentication(Peoples peoples) {
 		if(StringUtil.isEmpty(peoples.getMobile()) && StringUtil.isEmpty(peoples.getIdCard())) {
 			throw new BusinessException(BusinessStatus.AUTHC_APP_RQ);

@@ -45,6 +45,11 @@ public class UsersController {
 		return new Result<Users>(BusinessStatus.SUCCESS, usersModel);
 	}
 
+	@RequestMapping(value = "/gzhLogin", method = RequestMethod.GET)
+	public Result<Peoples> gzhLogin(String openid , String appid,Peoples peoples) {
+		return new Result<Peoples>(BusinessStatus.SUCCESS, uss.gzhLogin(openid,appid,peoples));
+	}
+
 	/**
 	 * 小程序登录接口
 	 */

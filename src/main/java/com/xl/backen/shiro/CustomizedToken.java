@@ -2,6 +2,7 @@ package com.xl.backen.shiro;
 
 import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.CommonConst;
+import com.xl.backen.util.StringUtil;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**
@@ -28,6 +29,8 @@ public class CustomizedToken extends UsernamePasswordToken {
     private String userName;
     private String passWord;
 
+    private String appid;
+
 
     /**
      * 重写getPrincipal方法
@@ -37,7 +40,7 @@ public class CustomizedToken extends UsernamePasswordToken {
         if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE || LoginType == CommonConst.LOGIN_TYPE_WX) {
             return getUserName();
         }else{
-            return getPeoples().getOpenId();
+            return StringUtil.isEmpty(getPeoples().getAppId()) ? getPeoples().getOpenId() : getPeoples().getAppId();
         }
     }
 
@@ -49,7 +52,7 @@ public class CustomizedToken extends UsernamePasswordToken {
         if(LoginType == CommonConst.LOGIN_TYPE_PC || LoginType == CommonConst.COMMUNITY_TYPE || LoginType == CommonConst.LOGIN_TYPE_WX) {
             return getPassWord();
         }else{
-            return getPeoples().getOpenId();
+            return StringUtil.isEmpty(getPeoples().getAppId()) ? getPeoples().getOpenId() : getPeoples().getAppId();
         }
     }
 
@@ -59,6 +62,14 @@ public class CustomizedToken extends UsernamePasswordToken {
     public CustomizedToken(String username, char[] password, int loginType) {
         super(username, password);
         LoginType = loginType;
+    }
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
     }
 
     public Peoples getPeoples() {

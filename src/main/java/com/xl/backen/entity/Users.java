@@ -48,6 +48,9 @@ public class Users implements Serializable {
 	
 	private Integer loginType;
 
+	// shiro token
+	private String token;
+
 	/**
 	 * 系统的标识
 	 */
@@ -75,6 +78,15 @@ public class Users implements Serializable {
 			", updateTime='" + getUpdateTime() + "'" +
 			"}";
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public String getCommunityName() {
 		return communityName;
 	}

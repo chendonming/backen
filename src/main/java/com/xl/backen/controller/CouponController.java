@@ -5,8 +5,6 @@ import com.xl.backen.service.CouponService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
-
 import com.github.pagehelper.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,7 @@ import com.xl.backen.handler.BusinessStatus;
  * 优惠券(TbCoupon)表控制层
  *
  * @author chendm
- * @since 2018-10-13 09:04:19
+ * @since 2018-10-25 20:50:44
  */
 @RestController
 @RequestMapping("/coupon")
@@ -52,7 +50,7 @@ public class CouponController {
      * @param 实体类
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Result<Coupon> add(@RequestBody @Valid Coupon coupon) {
+    public Result<Coupon> add(@RequestBody Coupon coupon) {
         log.info("新增,coupon={}", coupon);
 
         Coupon one = couponService.insert(coupon);

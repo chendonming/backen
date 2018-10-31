@@ -31,3 +31,7 @@ permission:
 server:
     session:
       timeout: 86400000
+    tomcat:
+      min-spare-threads: 20
+      max-threads: 100
+    connection-timeout: 5000

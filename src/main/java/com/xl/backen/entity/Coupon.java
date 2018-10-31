@@ -1,7 +1,6 @@
 package com.xl.backen.entity;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.io.Serializable;
@@ -10,11 +9,11 @@ import java.io.Serializable;
  * 优惠券(TbCoupon)实体类
  *
  * @author chendm
- * @since 2018-10-13 09:04:19
+ * @since 2018-10-25 20:50:44
  */
 public class Coupon implements Serializable {
-    private static final long serialVersionUID = -48295532506466976L;
-
+    private static final long serialVersionUID = 472316951165130293L;
+    
     private String uuid;
     
     private Date createTime;
@@ -23,8 +22,9 @@ public class Coupon implements Serializable {
 
     @NotBlank
     private String name;
-    
+
     private String description;
+
     //开始时间
     @NotNull
     private Date startTime;
@@ -33,24 +33,16 @@ public class Coupon implements Serializable {
     private Date endTime;
     
     private Integer flag;
-
-    @NotBlank
+    
     private String merchantId;
-
-    private String merchantName;
+    //社区id
+    private String communityId;
 
 	private Integer pageSize;
 
 	private Integer pageNum;
 
-    public String getMerchantName() {
-        return merchantName;
-    }
-
-    public void setMerchantName(String merchantName) {
-        this.merchantName = merchantName;
-    }
-
+    
     public String getUuid() {
         return uuid;
     }
@@ -121,6 +113,14 @@ public class Coupon implements Serializable {
 
     public void setMerchantId(String merchantId) {
         this.merchantId = merchantId;
+    }
+    
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 
 	public Integer getPageSize() {

@@ -17,7 +17,6 @@ import com.xl.backen.entity.UsersRole;
 import com.xl.backen.service.UsersRoleService;
 
 @Service
-@CacheConfig(cacheNames = "permiss")
 public class UsersRoleServiceImpl implements UsersRoleService{
 
 	@Autowired
@@ -31,7 +30,6 @@ public class UsersRoleServiceImpl implements UsersRoleService{
 	 */
 	@Override
 	@Transactional
-	@CacheEvict(allEntries=true)
 	public int allocationRole(UsersRole ur) {
 
 		Users users = new Users();
@@ -48,7 +46,6 @@ public class UsersRoleServiceImpl implements UsersRoleService{
 	 * @return
 	 */
 	@Override
-	@Cacheable(keyGenerator = "keyGenerator")
 	public List<Users> findByRoleId(String roleId) {
 		RolesModel rolesModel = urm.findByRoleId(roleId);
 		if(rolesModel != null) {

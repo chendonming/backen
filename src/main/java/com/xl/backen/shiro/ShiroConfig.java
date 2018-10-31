@@ -3,6 +3,7 @@ package com.xl.backen.shiro;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -45,8 +46,6 @@ public class ShiroConfig {
 
 		map.put("/user/**", "anon");
 
-		map.put("/app/**", "anon");
-
 		for (int i = 0; i < t.length; i++) {
 			if(t[i].equals("permiss")) {
 				map.put("/permiss/**/**", "authc,perms[permiss]");
@@ -60,6 +59,8 @@ public class ShiroConfig {
 			}
 		}
 
+		map.put("/app/**", "anon");
+
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 		return shiroFilterFactoryBean;
 	}
@@ -68,7 +69,8 @@ public class ShiroConfig {
 	public DefaultWebSecurityManager getDefaultWebSecurityManager(
 		@Qualifier("userRealm") UserRealm userRealm,
 		@Qualifier("peopleRealm") PeopleRealm peopleRealm,
-		@Qualifier("ehCacheManager") EhCacheManager ehCacheManager
+		@Qualifier("ehCacheManager") EhCacheManager ehCacheManager,
+		@Qualifier("sessionManager") SessionManager sessionManager
 	) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		// 关联realm
@@ -78,6 +80,7 @@ public class ShiroConfig {
 		securityManager.setRealms(realmList);
 
 		securityManager.setCacheManager(ehCacheManager);
+		securityManager.setSessionManager(sessionManager);
 		return securityManager;
 	}
 
@@ -114,6 +117,12 @@ public class ShiroConfig {
 		//配置Ehcache缓存配置文件,该缓存配置文件默认位置为“classpath:org/apache/shiro/cache/ehcache/ehcache.xml”
 		//ehCacheManager.setCacheManagerConfigFile(FileLocation)
 		return ehCacheManager;
+	}
+
+	@Bean
+	public SessionManager sessionManager() {
+		DefaultHeaderSessionManager sm = new DefaultHeaderSessionManager();
+		return sm;
 	}
 
 }

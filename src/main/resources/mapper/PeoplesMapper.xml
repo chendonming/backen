@@ -22,6 +22,8 @@
     <result column="role" jdbcType="INTEGER" property="role"/>
     <result column="description" jdbcType="VARCHAR" property="description"/>
     <result column="identity_flag" jdbcType="VARCHAR" property="identityFlag" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId"/>
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
   </resultMap>
 
   <resultMap id="VolunteerMap" type="com.xl.backen.model.VolunteerModel">
@@ -34,7 +36,7 @@
 
   <sql id="Base_Column_List">
     uuid, nickname, truename, head_pic, mobile, sex, password, is_real_name, id_card, 
-    community_id, total_integral, integral, status, create_time, update_time,open_id,sys_type,role,description,identity_flag
+    community_id, total_integral, integral, status, create_time, update_time,open_id,sys_type,role,description,identity_flag,open_id, app_id
   </sql>
 
   <!-- 查询志愿者 -->
@@ -83,11 +85,20 @@
     where s.community_id = #{communityId}
   </select>
 
-  <!--根据openid查询居民信息-->
+  <!--根据openid appid查询居民信息-->
   <select id="queryByOpenId" resultMap="BaseResultMap">
     select    <include refid="Base_Column_List" />
     from tb_peoples s
     where s.open_id=#{openId}
+    <if test="appId != null and appId != ''">
+      and s.app_id=#{appId}
+    </if>
+    <if test="mobile != null and mobile != ''">
+      and s.mobile=#{mobile}
+    </if>
+    <if test="password != null and password != ''">
+      and s.password=#{password}
+    </if>
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -170,6 +181,12 @@
       <if test="description != null">
         description,
       </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
@@ -212,6 +229,12 @@
       </if>
       <if test="description != null">
         #{description, jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId, jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId, jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

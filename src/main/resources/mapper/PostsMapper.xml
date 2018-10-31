@@ -15,19 +15,8 @@
     <result column="update_time" jdbcType="DATE" property="updateTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="createName" jdbcType="INTEGER" property="create_name" />
-    <result column="headPic" jdbcType="INTEGER" property="head_pic" />
+    <result column="head_pic" jdbcType="VARCHAR" property="headPic" />
   </resultMap>
-
-  <!-- 帖子及评论 -->
-  <!--<resultMap id="PostResultMap" type="com.xl.backen.model.PostModel" extends="BaseResultMap">-->
-    <!--<collection property="commentList" ofType="com.xl.backen.model.CommentModel">-->
-      <!--<result column="c_content" jdbcType="VARCHAR" property="content"/>-->
-      <!--<result column="c_create_time" jdbcType="TIMESTAMP" property="createTime"/>-->
-      <!--<result column="c_create_id" jdbcType="VARCHAR" property="createId"/>-->
-      <!--<result column="c_create_name" jdbcType="VARCHAR" property="createName"/>-->
-      <!--<result column="c_head_pic" jdbcType="VARCHAR" property="headPic"/>-->
-    <!--</collection>-->
-  <!--</resultMap>-->
 
   <sql id="Base_Column_List">
     uuid, title, content, picture, circle_id, create_id, thumbs, flag, create_time, update_time, 
@@ -56,9 +45,9 @@
       p.circle_id = #{circleId} and
     </if>
     <if test="status != null and status != ''">
-      p.status = #{status} and
+      p.status in (${status}) and
     </if>
-    p.flag = 1)
+    p.flag = 1 order by p.update_time desc)
 
     union
 
@@ -75,9 +64,9 @@
       p.circle_id = #{circleId} and
     </if>
     <if test="status != null and status != ''">
-      p.status = #{status} and
+      p.status in (${status}) and
     </if>
-    p.flag = 1)
+    p.flag = 1 order by p.update_time desc)
 
   </select>
 

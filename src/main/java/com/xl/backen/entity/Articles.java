@@ -26,7 +26,11 @@ public class Articles implements Serializable {
     //发布人
     private String createId;
 
+    // 发布人真实姓名
     private String createName;
+    
+    // 发布人昵称
+    private String createNickName;
 
     //所属分类
     private String classify;
@@ -47,8 +51,38 @@ public class Articles implements Serializable {
 	//内容类型（1. 无图 2. 1张图 3. 2张图  4.3张或以上  5.视频  6.音频）
 	private Integer contentType;
 
+	// 0正常   1 推荐
+	private Integer status;
+
+	// 所属社区
+	private String communityId;
+
+    public String getCreateNickName() {
+		return createNickName;
+	}
+
+	public void setCreateNickName(String createNickName) {
+		this.createNickName = createNickName;
+	}
+
+	public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
+    }
+
     public String getCreateName() {
         return createName;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public void setCreateName(String createName) {
