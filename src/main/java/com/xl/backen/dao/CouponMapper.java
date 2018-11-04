@@ -4,6 +4,7 @@ import com.xl.backen.entity.Coupon;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import com.github.pagehelper.Page;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -12,6 +13,7 @@ import com.github.pagehelper.Page;
  * @author chendm
  * @since 2018-10-25 20:50:44
  */
+@Repository
 public interface CouponMapper {
 
     /**

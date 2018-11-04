@@ -10,202 +10,213 @@ import java.io.Serializable;
  * @since 2018-10-04 19:50:09
  */
 public class Articles implements Serializable {
-    private static final long serialVersionUID = 356890968289930831L;
-    
-    private String uuid;
-    //标题
-    private String title;
-    
-    private Date createTime;
-    
-    private Date updateTime;
-    //内容
-    private String content;
-    //是否有效（1 ， 2）
-    private Integer flag;
-    //发布人
-    private String createId;
+  private static final long serialVersionUID = 356890968289930831L;
 
-    // 发布人真实姓名
-    private String createName;
-    
-    // 发布人昵称
-    private String createNickName;
+  private String uuid;
+  //标题
+  private String title;
 
-    //所属分类
-    private String classify;
-    private String className;
-    //类型（1. 网格 2.活动风采 ）
-    private Integer type;
+  private Date createTime;
 
-	private Integer pageSize;
+  private Date updateTime;
+  //内容
+  private String content;
+  //是否有效（1 ， 2）
+  private Integer flag;
+  //发布人
+  private String createId;
 
-	private Integer pageNum;
+  // 发布人真实姓名
+  private String createName;
 
-	// 图片
-	private String pic;
+  // 发布人昵称
+  private String createNickName;
 
-	// 描述
-	private String description;
+  //所属分类
+  private String classify;
+  private String className;
+  //类型（1. 网格 2.活动风采 ）
+  private Integer type;
 
-	//内容类型（1. 无图 2. 1张图 3. 2张图  4.3张或以上  5.视频  6.音频）
-	private Integer contentType;
+  private Integer pageSize;
 
-	// 0正常   1 推荐
-	private Integer status;
+  private Integer pageNum;
 
-	// 所属社区
-	private String communityId;
+  // 图片
+  private String pic;
 
-    public String getCreateNickName() {
-		return createNickName;
-	}
+  // 描述
+  private String description;
 
-	public void setCreateNickName(String createNickName) {
-		this.createNickName = createNickName;
-	}
+  //内容类型（1. 无图 2. 1张图 3. 2张图  4.3张或以上  5.视频  6.音频）
+  private Integer contentType;
 
-	public String getCommunityId() {
-        return communityId;
-    }
+  // 0正常   1 推荐
+  private Integer status;
 
-    public void setCommunityId(String communityId) {
-        this.communityId = communityId;
-    }
+  // 所属社区
+  private String communityId;
 
-    public String getCreateName() {
-        return createName;
-    }
+  // 权重
+  private Integer weight;
 
-    public Integer getStatus() {
-        return status;
-    }
+  public Integer getWeight() {
+    return weight;
+  }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+  public void setWeight(Integer weight) {
+    this.weight = weight;
+  }
 
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
+  public String getCreateNickName() {
+    return createNickName;
+  }
 
-    public String getPic() {
-        return pic;
-    }
+  public void setCreateNickName(String createNickName) {
+    this.createNickName = createNickName;
+  }
 
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
+  public String getCommunityId() {
+    return communityId;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setCommunityId(String communityId) {
+    this.communityId = communityId;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public String getCreateName() {
+    return createName;
+  }
 
-    public Integer getContentType() {
-        return contentType;
-    }
+  public Integer getStatus() {
+    return status;
+  }
 
-    public void setContentType(Integer contentType) {
-        this.contentType = contentType;
-    }
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
-    public String getClassName() {
-        return className;
-    }
+  public void setCreateName(String createName) {
+    this.createName = createName;
+  }
 
-    public void setClassName(String className) {
-        this.className = className;
-    }
+  public String getPic() {
+    return pic;
+  }
 
-    public String getUuid() {
-        return uuid;
-    }
+  public void setPic(String pic) {
+    this.pic = pic;
+  }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-    
-    public String getTitle() {
-        return title;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    public Date getCreateTime() {
-        return createTime;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+  public Integer getContentType() {
+    return contentType;
+  }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-    
-    public String getContent() {
-        return content;
-    }
+  public void setContentType(Integer contentType) {
+    this.contentType = contentType;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-    
-    public Integer getFlag() {
-        return flag;
-    }
+  public String getClassName() {
+    return className;
+  }
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
-    
-    public String getCreateId() {
-        return createId;
-    }
+  public void setClassName(String className) {
+    this.className = className;
+  }
 
-    public void setCreateId(String createId) {
-        this.createId = createId;
-    }
-    
-    public String getClassify() {
-        return classify;
-    }
+  public String getUuid() {
+    return uuid;
+  }
 
-    public void setClassify(String classify) {
-        this.classify = classify;
-    }
-    
-    public Integer getType() {
-        return type;
-    }
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-	public Integer getPageSize() {
-		return pageSize;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public Integer getPageNum() {
-		return pageNum;
-	}
+  public Date getCreateTime() {
+    return createTime;
+  }
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
 
-	public void setPageNum(Integer pageNum) {
-		this.pageNum = pageNum;
-	}
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Integer getFlag() {
+    return flag;
+  }
+
+  public void setFlag(Integer flag) {
+    this.flag = flag;
+  }
+
+  public String getCreateId() {
+    return createId;
+  }
+
+  public void setCreateId(String createId) {
+    this.createId = createId;
+  }
+
+  public String getClassify() {
+    return classify;
+  }
+
+  public void setClassify(String classify) {
+    this.classify = classify;
+  }
+
+  public Integer getType() {
+    return type;
+  }
+
+  public void setType(Integer type) {
+    this.type = type;
+  }
+
+  public Integer getPageSize() {
+    return pageSize;
+  }
+
+  public Integer getPageNum() {
+    return pageNum;
+  }
+
+  public void setPageSize(Integer pageSize) {
+    this.pageSize = pageSize;
+  }
+
+  public void setPageNum(Integer pageNum) {
+    this.pageNum = pageNum;
+  }
 }

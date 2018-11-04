@@ -1,33 +1,38 @@
 package com.xl.backen.entity;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.io.Serializable;
 
 /**
- * (TbCirclePeople)实体类
+ * 党员信息表(TbPartyRemember)实体类
  *
  * @author chendm
- * @since 2018-10-05 14:42:24
+ * @since 2018-11-01 22:08:03
  */
-public class CirclePeople implements Serializable {
-  private static final long serialVersionUID = 816185752204605041L;
+public class PartyRemember implements Serializable {
+  private static final long serialVersionUID = 435141074098036932L;
 
   private String uuid;
-  //圈子ID
-  private String circleId;
-  //加入圈子peopleID
-  private String peopleId;
+  //真实姓名
+  @NotBlank
+  private String truename;
+  //社区id
+  @NotBlank
+  private String communityId;
 
   private Date createTime;
 
   private Date updateTime;
-  //是否有效（1有效 2无效）
-  private Integer flag;
+  //用户id
+  private String userId;
+  //手机号码
+  @NotBlank
+  private String phone;
 
   private Integer pageSize;
 
   private Integer pageNum;
-
 
   public String getUuid() {
     return uuid;
@@ -37,20 +42,20 @@ public class CirclePeople implements Serializable {
     this.uuid = uuid;
   }
 
-  public String getCircleId() {
-    return circleId;
+  public String getTruename() {
+    return truename;
   }
 
-  public void setCircleId(String circleId) {
-    this.circleId = circleId;
+  public void setTruename(String truename) {
+    this.truename = truename;
   }
 
-  public String getPeopleId() {
-    return peopleId;
+  public String getCommunityId() {
+    return communityId;
   }
 
-  public void setPeopleId(String peopleId) {
-    this.peopleId = peopleId;
+  public void setCommunityId(String communityId) {
+    this.communityId = communityId;
   }
 
   public Date getCreateTime() {
@@ -69,12 +74,20 @@ public class CirclePeople implements Serializable {
     this.updateTime = updateTime;
   }
 
-  public Integer getFlag() {
-    return flag;
+  public String getUserId() {
+    return userId;
   }
 
-  public void setFlag(Integer flag) {
-    this.flag = flag;
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
   public Integer getPageSize() {

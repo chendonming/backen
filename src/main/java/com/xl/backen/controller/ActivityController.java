@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.Activitys;
+import com.xl.backen.entity.Peoples;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.handler.CommonConst;
@@ -74,4 +75,12 @@ public class ActivityController {
         Activitys acts = ts.findById(activitys.getUuid());
         return new Result<Activitys>(BusinessStatus.SUCCESS, acts);
     }
+
+  @RequestMapping(value = "/queryJoinPeople", method = RequestMethod.POST)
+  public ResultForPage<Peoples> queryJoinPeople(String uuid, Integer pageSize, Integer pageNum) {
+    log.info("查询活动下面的报名人,uuid={}", uuid);
+    Page<Peoples> peoplesPage = ts.findJoinPeoples(uuid, pageSize, pageNum);
+    PageInfo<Peoples> peoplesPageInfo = new PageInfo<>(peoplesPage);
+    return new ResultForPage<Peoples>(BusinessStatus.SUCCESS, peoplesPageInfo);
+  }
 }

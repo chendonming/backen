@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.backen.dao.PicturesMapper">
+
+    <resultMap type="com.xl.backen.entity.Pictures" id="PicturesMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="fUrl" column="f_url" jdbcType="VARCHAR"/>
+        <result property="flag" column="flag" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="position" column="position" jdbcType="INTEGER"/>
+        <result property="communityId" column="community_id" jdbcType="VARCHAR"/>
+        <result property="weight" column="weight" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PicturesMap">
+        select
+          uuid, url, f_url, flag, create_time, update_time, title, position, community_id, weight
+        from db_backen.tb_pictures
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+        </where>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="PicturesMap">
+        select
+        uuid, url, f_url, flag, create_time, update_time, title, position, community_id, weight
+        from db_backen.tb_pictures
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="PicturesMap">
+        select
+          uuid, url, f_url, flag, create_time, update_time, title, position, community_id, weight
+        from db_backen.tb_pictures
+        <where>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="fUrl != null and fUrl != ''">
+                and f_url = #{fUrl}
+            </if>
+            <if test="flag != null">
+                and flag = #{flag}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="position != null">
+                and position = #{position}
+            </if>
+            <if test="communityId != null and communityId != ''">
+                and community_id = #{communityId}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into  db_backen.tb_pictures(uuid,url, f_url, flag, create_time, update_time, title, position, community_id, weight)
+        values (#{uuid},#{url}, #{fUrl}, #{flag}, #{createTime}, #{updateTime}, #{title}, #{position}, #{communityId}, #{weight})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_backen.tb_pictures
+        <set>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="fUrl != null and fUrl != ''">
+                f_url = #{fUrl},
+            </if>
+            <if test="flag != null">
+                flag = #{flag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="position != null">
+                position = #{position},
+            </if>
+            <if test="communityId != null and communityId != ''">
+                community_id = #{communityId},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from db_backen.tb_pictures where uuid = #{uuid}
+    </delete>
+
+</mapper>

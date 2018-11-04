@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * POI excel 导入导出people
  */
+@SuppressWarnings("all")
 public class PeoplesPOI {
     /**
      * 写入excel
@@ -28,6 +29,10 @@ public class PeoplesPOI {
      * @throws IOException
      */
     public static String exportUser(File file, List<Peoples> peoples) throws IOException {
+        return getString(file, peoples);
+    }
+
+    public static String getString(File file, List<Peoples> peoples) throws IOException {
         String[] title = {"姓名", "性别", "手机号", "身份证号"};
 
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -72,7 +77,6 @@ public class PeoplesPOI {
         }
 
         return file.getName();
-
     }
 
     /**
@@ -84,6 +88,11 @@ public class PeoplesPOI {
         List<Peoples> users = new ArrayList<Peoples>();
 
         XSSFWorkbook workBook = null;
+        getExcel(file, users, workBook);
+        return users;
+    }
+
+    public static void getExcel(MultipartFile file, List<Peoples> users, XSSFWorkbook workBook) throws IOException {
         try {
             workBook = new XSSFWorkbook(file.getInputStream());
 
@@ -153,6 +162,5 @@ public class PeoplesPOI {
                 workBook.close();
             }
         }
-        return users;
     }
 }

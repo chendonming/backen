@@ -4,6 +4,7 @@ import com.xl.backen.entity.CirclePostComment;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import com.github.pagehelper.Page;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -12,6 +13,7 @@ import com.github.pagehelper.Page;
  * @author chendm
  * @since 2018-10-04 16:07:42
  */
+@Repository
 public interface CirclePostCommentMapper {
 
     /**

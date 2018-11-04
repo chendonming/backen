@@ -1,7 +1,9 @@
 package com.xl.backen.dao;
 
 import com.xl.backen.entity.Hotline;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface HotlineMapper {
     int deleteByPrimaryKey(String uuid);
 

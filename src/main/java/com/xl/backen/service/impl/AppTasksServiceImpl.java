@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@SuppressWarnings("unchecked")
 public class AppTasksServiceImpl implements AppTasksService {
 
 	@Autowired

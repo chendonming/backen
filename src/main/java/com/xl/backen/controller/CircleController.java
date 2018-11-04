@@ -24,7 +24,7 @@ public class CircleController {
     private CircleService cs;
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    public Result query(@RequestBody Map<String, Object> map) {
+    public Result<PageInfo<Circle>> query(@RequestBody Map<String, Object> map) {
         Page<Circle> circlePage = cs.query(map);
         PageInfo<Circle> pageInfo = new PageInfo<>(circlePage);
         return new Result(BusinessStatus.SUCCESS, pageInfo);

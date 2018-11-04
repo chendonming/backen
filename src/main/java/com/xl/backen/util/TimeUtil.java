@@ -45,7 +45,7 @@ public class TimeUtil {
 
 
 
-  public static int compareTime(Date sDate, Date eDate) {
+  public static Integer compareTime(Date sDate, Date eDate) {
     Long startTime = sDate.getTime();
     Long endTime = eDate.getTime();
     Long nowTime = new Date().getTime();

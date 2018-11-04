@@ -20,13 +20,14 @@
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="communityId" column="community_id" jdbcType="VARCHAR"/>
         <result property="createNickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="weight" column="weight" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="ArticlesMap">
         select
         a.*, p.truename as true_name, p.nickname as nick_name
-        from db_backen.tb_articles a left join tb_peoples p on a.create_id = p.uuid
+        from db_backen.tb_articles a left join tb_users p on a.create_id = p.uuid
         <where>
             <if test="uuid != null and uuid != ''">
                 and a.uuid = #{uuid}
@@ -53,7 +54,7 @@
                 and a.uuid = #{uuid}
             </if>
             <if test="title != null and title != ''">
-                and a.title = #{title}
+                and a.title like CONCAT('%',#{title},'%')
             </if>
             <if test="createTime != null">
                 and a.create_time = #{createTime}
@@ -77,13 +78,13 @@
                 and a.type = #{type}
             </if>
         </where>
-        order by a.update_time desc
+        order by a.status desc, a.weight desc ,a.update_time desc
     </select>
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into  db_backen.tb_articles(uuid,title, create_time, update_time, content, flag, create_id, classify, type, pic,description,content_type, status, community_id)
-        values (#{uuid},#{title}, #{createTime}, #{updateTime}, #{content}, #{flag}, #{createId}, #{classify}, #{type},#{pic}, #{description}, #{contentType}, #{status}, #{communityId})
+        insert into  db_backen.tb_articles(uuid,title, create_time, update_time, content, flag, create_id, classify, type, pic,description,content_type, status, community_id,weight)
+        values (#{uuid},#{title}, #{createTime}, #{updateTime}, #{content}, #{flag}, #{createId}, #{classify}, #{type},#{pic}, #{description}, #{contentType}, #{status}, #{communityId},#{weight})
     </insert>
 
     <!--通过主键修改数据-->
@@ -128,6 +129,9 @@
             </if>
             <if test="communityId != null and communityId != ''">
                 community_id = #{communityId},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
             </if>
         </set>
         where uuid = #{uuid}

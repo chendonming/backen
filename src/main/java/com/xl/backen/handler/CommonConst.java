@@ -16,38 +16,38 @@ public class CommonConst {
     }
 
 
-    public static final int NORMAL_STATUS = 1;
+    public static final Integer NORMAL_STATUS = 1;
     
-    public static final int DEL_STATUS = 2;
+    public static final Integer DEL_STATUS = 2;
 
     //任务，活动
-    public static final int NO_START = 1; //未开始
+    public static final Integer NO_START = 1; //未开始
 
-    public static final int IN_START = 2; //正在进行中
+    public static final Integer IN_START = 2; //正在进行中
 
-    public static final int OUT_START = 3; //已结束
+    public static final Integer OUT_START = 3; //已结束
 
-    public static final int ACTIVITY_IN_START = 4; //活动已开始
+    public static final Integer ACTIVITY_IN_START = 4; //活动已开始
 
-    public static final int ACTIVITY_OUT_START = 5; //活动结束
+    public static final Integer ACTIVITY_OUT_START = 5; //活动结束
 
     //居民
-    public static final int IS_REAL_NAME = 1; //已经实名
-    public static final int NO_REAL_NAME = 2; //未实名
+    public static final Integer IS_REAL_NAME = 1; //已经实名
+    public static final Integer NO_REAL_NAME = 2; //未实名
 
     //APP登录身份
-    public static final int NOMARL_USER = 1; //普通居民
-    public static final int VOLUNTEER_USER = 2; //志愿者
-    public static final int COMMUNITY_WORK_USER = 3; //社工
+    public static final Integer NOMARL_USER = 1; //普通居民
+    public static final Integer VOLUNTEER_USER = 2; //志愿者
+    public static final Integer COMMUNITY_WORK_USER = 3; //社工
 
     //登录
-    public static final int LOGIN_TYPE_PC = 1; //pc后台登录
-    public static final int LOGIN_TYPE_COMMUNITY = 2; //pc社区
+    public static final Integer LOGIN_TYPE_PC = 1; //pc后台登录
+    public static final Integer LOGIN_TYPE_COMMUNITY = 2; //pc社区
 
-    public static final int LOGIN_TYPE_APP = 3; //app登录
-    public static final int LOGIN_TYPE_WX = 4; //wx登录
+    public static final Integer LOGIN_TYPE_APP = 3; //app登录
+    public static final Integer LOGIN_TYPE_WX = 4; //wx登录
 
-    public static final int LOGIN_GZH = 5; //公众号登陆
+    public static final Integer LOGIN_GZH = 5; //公众号登陆
 
 
     //社区默认的密码

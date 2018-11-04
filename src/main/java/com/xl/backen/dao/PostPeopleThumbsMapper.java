@@ -3,9 +3,11 @@ package com.xl.backen.dao;
 import com.github.pagehelper.Page;
 import com.xl.backen.entity.PostPeopleThumbs;
 import com.xl.backen.entity.Posts;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface PostPeopleThumbsMapper {
     int deleteByPrimaryKey(String uuid);
 

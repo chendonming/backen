@@ -9,7 +9,6 @@ import com.xl.backen.dao.PeoplesIntegralIntMapper;
 import com.xl.backen.entity.Activitys;
 import com.xl.backen.entity.ActivitysPeoples;
 import com.xl.backen.entity.Peoples;
-import com.xl.backen.entity.Tasks;
 import com.xl.backen.handler.BusinessException;
 import com.xl.backen.handler.BusinessStatus;
 import com.xl.backen.model.*;
@@ -19,9 +18,6 @@ import com.xl.backen.util.StringUtil;
 import com.xl.backen.util.TimeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,13 +59,20 @@ public class AppActivitysServiceImpl implements AppActivitysService {
             throw new BusinessException(BusinessStatus.UUID_REQ);
         }
 
-        Map map = new HashMap();
+        Map<String,String> map = new HashMap<>();
         map.put("peopleId", ((Peoples) SecurityUtils.getSubject().getPrincipal()).getUuid());
         map.put("actId", actId);
 
         int exist = apm.exist(map);
         if (exist > 0) {
             throw new BusinessException(500, "你已经报名过此活动");
+        }
+
+        Activitys activitys = as.selectByPrimaryKey(actId);
+        // 获取限制人数
+        Integer lint =  activitys.getLimitPeople();
+        if(lint != null && lint <= exist) {
+            throw new BusinessException(500, "活动报名人数已达上限!");
         }
 
         ActivitysPeoples ap = new ActivitysPeoples();

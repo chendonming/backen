@@ -99,6 +99,7 @@ public class ClassificationServiceImpl implements ClassificationService {
             a.setClassify(i.getUuid());
             a.setPageNum(classification.getPageNum());
             a.setPageSize(classification.getPageSize());
+            a.setFlag(CommonConst.NORMAL_STATUS);
             Page<Articles> page= am.queryAll(a);
             cml.setArticlesList(page);
             list.add(cml);
