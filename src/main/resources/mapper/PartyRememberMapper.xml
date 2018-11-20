@@ -10,12 +10,13 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="userId" column="user_id" jdbcType="VARCHAR"/>
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="PartyRememberMap">
         select
-          uuid, truename, community_id, create_time, update_time, user_id, phone
+          uuid, truename, community_id, create_time, update_time, user_id, phone, type
         from db_backen.tb_party_remember
         <where>
             <if test="uuid != null and uuid != ''">
@@ -27,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="PartyRememberMap">
         select
-        uuid, truename, community_id, create_time, update_time, user_id, phone
+        uuid, truename, community_id, create_time, update_time, user_id, phone, type
         from db_backen.tb_party_remember
         limit #{offset}, #{limit}
     </select>
@@ -35,14 +36,14 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="PartyRememberMap">
         select
-          uuid, truename, community_id, create_time, update_time, user_id, phone
+          uuid, truename, community_id, create_time, update_time, user_id, phone, type
         from db_backen.tb_party_remember
         <where>
             <if test="uuid != null and uuid != ''">
                 and uuid = #{uuid}
             </if>
             <if test="truename != null and truename != ''">
-                and truename like CONCAT('%', #{truename}, '%')
+                and truename = #{truename}
             </if>
             <if test="communityId != null and communityId != ''">
                 and community_id = #{communityId}
@@ -59,14 +60,16 @@
             <if test="phone != null and phone != ''">
                 and phone = #{phone}
             </if>
-            order by update_time desc
+            <if test="type != null">
+                and type = #{type}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into  db_backen.tb_party_remember(uuid,truename, community_id, create_time, update_time, user_id, phone)
-        values (#{uuid},#{truename}, #{communityId}, #{createTime}, #{updateTime}, #{userId}, #{phone})
+        insert into  db_backen.tb_party_remember(uuid,truename, community_id, create_time, update_time, user_id, phone, type)
+        values (#{uuid},#{truename}, #{communityId}, #{createTime}, #{updateTime}, #{userId}, #{phone}, #{type})
     </insert>
 
     <!--通过主键修改数据-->
@@ -90,6 +93,9 @@
             </if>
             <if test="phone != null and phone != ''">
                 phone = #{phone},
+            </if>
+            <if test="type != null">
+                type = #{type},
             </if>
         </set>
         where uuid = #{uuid}

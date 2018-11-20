@@ -12,130 +12,130 @@ import java.io.Serializable;
  * @since 2018-10-25 20:50:44
  */
 public class Coupon implements Serializable {
-    private static final long serialVersionUID = 472316951165130293L;
-    
-    private String uuid;
-    
-    private Date createTime;
-    
-    private Date updateTime;
+  private static final long serialVersionUID = 472316951165130293L;
 
-    @NotBlank
-    private String name;
+  private String uuid;
 
-    private String description;
+  private Date createTime;
 
-    //开始时间
-    @NotNull
-    private Date startTime;
-    //结束时间
-    @NotNull
-    private Date endTime;
-    
-    private Integer flag;
-    
-    private String merchantId;
-    //社区id
-    private String communityId;
+  private Date updateTime;
 
-	private Integer pageSize;
+  @NotBlank
+  private String name;
 
-	private Integer pageNum;
+  private String description;
 
-    
-    public String getUuid() {
-        return uuid;
-    }
+  //开始时间
+  @NotNull
+  private Date startTime;
+  //结束时间
+  @NotNull
+  private Date endTime;
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-    
-    public Date getCreateTime() {
-        return createTime;
-    }
+  private Integer flag;
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+  private String merchantId;
+  //社区id
+  private String communityId;
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-    
-    public String getName() {
-        return name;
-    }
+  private Integer pageSize;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
+  private Integer pageNum;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public Date getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-    
-    public Date getEndTime() {
-        return endTime;
-    }
+  public String getUuid() {
+    return uuid;
+  }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-    
-    public Integer getFlag() {
-        return flag;
-    }
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
-    
-    public String getMerchantId() {
-        return merchantId;
-    }
+  public Date getCreateTime() {
+    return createTime;
+  }
 
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-    
-    public String getCommunityId() {
-        return communityId;
-    }
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
 
-    public void setCommunityId(String communityId) {
-        this.communityId = communityId;
-    }
+  public Date getUpdateTime() {
+    return updateTime;
+  }
 
-	public Integer getPageSize() {
-		return pageSize;
-	}
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
 
-	public Integer getPageNum() {
-		return pageNum;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setPageNum(Integer pageNum) {
-		this.pageNum = pageNum;
-	}
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Date getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(Date startTime) {
+    this.startTime = startTime;
+  }
+
+  public Date getEndTime() {
+    return endTime;
+  }
+
+  public void setEndTime(Date endTime) {
+    this.endTime = endTime;
+  }
+
+  public Integer getFlag() {
+    return flag;
+  }
+
+  public void setFlag(Integer flag) {
+    this.flag = flag;
+  }
+
+  public String getMerchantId() {
+    return merchantId;
+  }
+
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
+  }
+
+  public String getCommunityId() {
+    return communityId;
+  }
+
+  public void setCommunityId(String communityId) {
+    this.communityId = communityId;
+  }
+
+  public Integer getPageSize() {
+    return pageSize;
+  }
+
+  public Integer getPageNum() {
+    return pageNum;
+  }
+
+  public void setPageSize(Integer pageSize) {
+    this.pageSize = pageSize;
+  }
+
+  public void setPageNum(Integer pageNum) {
+    this.pageNum = pageNum;
+  }
 }

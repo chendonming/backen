@@ -1,304 +1,337 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xl.backen.dao.PeoplesMapper">
-  <resultMap id="BaseResultMap" type="com.xl.backen.entity.Peoples">
-    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="truename" jdbcType="VARCHAR" property="truename" />
-    <result column="head_pic" jdbcType="VARCHAR" property="headPic" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="is_real_name" jdbcType="INTEGER" property="isRealName" />
-    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
-    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
-    <result column="community_name" jdbcType="VARCHAR" property="communityName" />
-    <result column="total_integral" jdbcType="INTEGER" property="totalIntegral" />
-    <result column="integral" jdbcType="INTEGER" property="integral" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
-    <result column="role" jdbcType="INTEGER" property="role"/>
-    <result column="description" jdbcType="VARCHAR" property="description"/>
-    <result column="identity_flag" jdbcType="VARCHAR" property="identityFlag" />
-    <result column="app_id" jdbcType="VARCHAR" property="appId"/>
-    <result column="open_id" jdbcType="VARCHAR" property="openId" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.xl.backen.entity.Peoples">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="truename" jdbcType="VARCHAR" property="truename"/>
+        <result column="head_pic" jdbcType="VARCHAR" property="headPic"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="is_real_name" jdbcType="INTEGER" property="isRealName"/>
+        <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="community_id" jdbcType="VARCHAR" property="communityId"/>
+        <result column="community_name" jdbcType="VARCHAR" property="communityName"/>
+        <result column="total_integral" jdbcType="INTEGER" property="totalIntegral"/>
+        <result column="integral" jdbcType="INTEGER" property="integral"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="sys_type" jdbcType="VARCHAR" property="sysType"/>
+        <result column="role" jdbcType="INTEGER" property="role"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="identity_flag" jdbcType="VARCHAR" property="identityFlag"/>
+        <result column="app_id" jdbcType="VARCHAR" property="appId"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="birth_day" jdbcType="TIMESTAMP" property="birthDay"/>
+        <result column="unit" jdbcType="unit" property="unit"/>
+    </resultMap>
 
-  <resultMap id="VolunteerMap" type="com.xl.backen.model.VolunteerModel">
-    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
-    <result column="truename" jdbcType="VARCHAR" property="truename" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="role" jdbcType="VARCHAR" property="role"/>
-    <result column="description" jdbcType="VARCHAR" property="description"/>
-  </resultMap>
+    <resultMap id="VolunteerMap" type="com.xl.backen.model.VolunteerModel">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="truename" jdbcType="VARCHAR" property="truename"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="role" jdbcType="VARCHAR" property="role"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
 
-  <sql id="Base_Column_List">
+    <sql id="Base_Column_List">
     uuid, nickname, truename, head_pic, mobile, sex, password, is_real_name, id_card, 
-    community_id, total_integral, integral, status, create_time, update_time,open_id,sys_type,role,description,identity_flag,open_id, app_id
+    community_id, total_integral, integral, status, create_time, update_time,open_id,
+    sys_type,role,description,identity_flag,open_id, app_id, address, birth_day, unit
   </sql>
 
-  <!-- 查询志愿者 -->
-  <select id="queryList" resultMap="VolunteerMap">
+    <!-- 查询志愿者 -->
+    <select id="queryList" resultMap="VolunteerMap">
     select uuid, truename,mobile,role,description,identity_flag
     from tb_peoples
     where role = 2 and community_id=#{communityId}
   </select>
 
-  <!--通过手机号码查找用户信息-->
-  <select id="findByMobile" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tb_peoples
-    where mobile=#{mobile} and status=1
-  </select>
+    <!--通过手机号码查找用户信息-->
+    <select id="findByMobile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_peoples
+        where mobile=#{mobile} and status=1
+    </select>
 
-  <!--根据peopleId查询积分-->
-  <select id="queryIntegral" resultType="java.lang.Integer">
+    <!--根据peopleId查询积分-->
+    <select id="queryIntegral" resultType="java.lang.Integer">
     select integral
     from tb_peoples
     where uuid = #{peopleId}
   </select>
 
-  <!-- 条件分页查询 -->
-  <select id="query" resultMap="BaseResultMap">
-  	select
-  	  p.* ,c.name as community_name
-  	from tb_peoples p left join tb_communitys c on c.uuid = p.community_id
-    where
-    <if test="truename != null and truename != ''">
-        p.truename like CONCAT(#{truename},'%') and
-    </if>
-    <if test="sex != null and sex != ''"> p.sex=#{sex} and
-    </if>
-    <if test="communityId != null and communityId != ''"> p.community_id=#{communityId} and
-    </if>
-    <if test="isRealName != null and isRealName != ''"> p.is_real_name=#{isRealName} and
-    </if> p.status=1
-  </select>
+    <!-- 条件分页查询 -->
+    <select id="query" resultMap="BaseResultMap">
+        select
+        p.* ,c.name as community_name
+        from tb_peoples p left join tb_communitys c on c.uuid = p.community_id
+        where
+        <if test="truename != null and truename != ''">
+            p.truename like CONCAT(#{truename},'%') and
+        </if>
+        <if test="sex != null and sex != ''">p.sex=#{sex} and
+        </if>
+        <if test="communityId != null and communityId != ''">p.community_id=#{communityId} and
+        </if>
+        <if test="isRealName != null and isRealName != ''">p.is_real_name=#{isRealName} and
+        </if>
+        p.status=1
+    </select>
 
-  <!--查询社区下的所有居民信息-->
-  <select id="queryAll" resultMap="BaseResultMap">
-    select    <include refid="Base_Column_List" />
-    from tb_peoples s
-    where s.community_id = #{communityId}
-  </select>
+    <!--查询社区下的所有居民信息-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_peoples s
+        where s.community_id = #{communityId}
+    </select>
 
-  <!--根据openid appid查询居民信息-->
-  <select id="queryByOpenId" resultMap="BaseResultMap">
-    select    <include refid="Base_Column_List" />
-    from tb_peoples s
-    where s.open_id=#{openId}
-    <if test="appId != null and appId != ''">
-      and s.app_id=#{appId}
-    </if>
-    <if test="mobile != null and mobile != ''">
-      and s.mobile=#{mobile}
-    </if>
-    <if test="password != null and password != ''">
-      and s.password=#{password}
-    </if>
-  </select>
+    <!--根据openid appid查询居民信息-->
+    <select id="queryByOpenId" resultMap="BaseResultMap">
+        select s.*,c.name as community_name
+        from tb_peoples s left join tb_communitys c on c.uuid = s.community_id
+        where s.open_id=#{openId}
+        <if test="appId != null and appId != ''">
+            and s.app_id=#{appId}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and s.mobile=#{mobile}
+        </if>
+        <if test="password != null and password != ''">
+            and s.password=#{password}
+        </if>
+    </select>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tb_peoples
-    where uuid = #{uuid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_peoples
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_peoples
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.xl.backen.entity.Peoples">
+    <insert id="insert" parameterType="com.xl.backen.entity.Peoples">
     insert into tb_peoples (uuid, nickname, truename, 
       head_pic, mobile, sex, 
       password, is_real_name, id_card, 
       community_id, total_integral, integral, 
-      status, create_time, update_time
+      status, create_time, update_time,unit
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, #{headPic,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{isRealName,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{totalIntegral,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    values (#{uuid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, #{headPic,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{isRealName,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{totalIntegral,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{unit, jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xl.backen.entity.Peoples">
-    insert into tb_peoples
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uuid != null">
-        uuid,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="truename != null">
-        truename,
-      </if>
-      <if test="headPic != null">
-        head_pic,
-      </if>
-      <if test="mobile != null">
-        mobile,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="isRealName != null">
-        is_real_name,
-      </if>
-      <if test="idCard != null">
-        id_card,
-      </if>
-      <if test="communityId != null">
-        community_id,
-      </if>
-      <if test="totalIntegral != null">
-        total_integral,
-      </if>
-      <if test="integral != null">
-        integral,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="sysType != null">
-        sys_type,
-      </if>
-      <if test="role != null">
-        role,
-      </if>
-      <if test="identityFlag != null">
-        identity_flag,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="appId != null">
-        app_id,
-      </if>
-      <if test="openId != null">
-        open_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uuid != null"> #{uuid,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null"> #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="truename != null"> #{truename,jdbcType=VARCHAR},
-      </if>
-      <if test="headPic != null"> #{headPic,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null"> #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null"> #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="password != null"> #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="isRealName != null"> #{isRealName,jdbcType=INTEGER},
-      </if>
-      <if test="idCard != null"> #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="communityId != null"> #{communityId,jdbcType=VARCHAR},
-      </if>
-      <if test="totalIntegral != null"> #{totalIntegral,jdbcType=INTEGER},
-      </if>
-      <if test="integral != null"> #{integral,jdbcType=INTEGER},
-      </if>
-      <if test="status != null"> #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null"> #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sysType!= null"> #{sysType,jdbcType=VARCHAR},
-      </if>
-      <if test="role != null">
-        #{role, jdbcType=INTEGER},
-      </if>
-      <if test="identityFlag != null">
-        #{identityFlag, jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description, jdbcType=VARCHAR},
-      </if>
-      <if test="appId != null">
-        #{appId, jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null">
-        #{openId, jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Peoples">
-    update tb_peoples
-    <set>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="truename != null">
-        truename = #{truename,jdbcType=VARCHAR},
-      </if>
-      <if test="headPic != null">
-        head_pic = #{headPic,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        mobile = #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="isRealName != null">
-        is_real_name = #{isRealName,jdbcType=INTEGER},
-      </if>
-      <if test="idCard != null">
-        id_card = #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="communityId != null">
-        community_id = #{communityId,jdbcType=VARCHAR},
-      </if>
-      <if test="totalIntegral != null">
-        total_integral = #{totalIntegral,jdbcType=INTEGER},
-      </if>
-      <if test="integral != null">
-        integral = #{integral,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="role != null">
-        role = #{role, jdbcType=INTEGER},
-      </if>
-      <if test="openId != null">
-        open_id = #{openId, jdbcType=VARCHAR},
-      </if>
-      <if test="description != null and description != ''">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="identityFlag != null">
-        identity_flag = #{identityFlag, jdbcType=VARCHAR},
-      </if>
-    </set>
-    where uuid = #{uuid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Peoples">
+    <insert id="insertSelective" parameterType="com.xl.backen.entity.Peoples">
+        insert into tb_peoples
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="truename != null">
+                truename,
+            </if>
+            <if test="headPic != null">
+                head_pic,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="isRealName != null">
+                is_real_name,
+            </if>
+            <if test="idCard != null">
+                id_card,
+            </if>
+            <if test="communityId != null">
+                community_id,
+            </if>
+            <if test="totalIntegral != null">
+                total_integral,
+            </if>
+            <if test="integral != null">
+                integral,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="sysType != null">
+                sys_type,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="identityFlag != null">
+                identity_flag,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="birthDay != null">
+                birth_day,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">#{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">#{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="truename != null">#{truename,jdbcType=VARCHAR},
+            </if>
+            <if test="headPic != null">#{headPic,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">#{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">#{sex,jdbcType=INTEGER},
+            </if>
+            <if test="password != null">#{password,jdbcType=VARCHAR},
+            </if>
+            <if test="isRealName != null">#{isRealName,jdbcType=INTEGER},
+            </if>
+            <if test="idCard != null">#{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="communityId != null">#{communityId,jdbcType=VARCHAR},
+            </if>
+            <if test="totalIntegral != null">#{totalIntegral,jdbcType=INTEGER},
+            </if>
+            <if test="integral != null">#{integral,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">#{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sysType!= null">#{sysType,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role, jdbcType=INTEGER},
+            </if>
+            <if test="identityFlag != null">
+                #{identityFlag, jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description, jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId, jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId, jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="birthDay != null">
+                #{birthDay, jdbcType=TIMESTAMP},
+            </if>
+            <if test="unit != null">
+                #{unit, jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xl.backen.entity.Peoples">
+        update tb_peoples
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="truename != null">
+                truename = #{truename,jdbcType=VARCHAR},
+            </if>
+            <if test="headPic != null">
+                head_pic = #{headPic,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="isRealName != null">
+                is_real_name = #{isRealName,jdbcType=INTEGER},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="communityId != null">
+                community_id = #{communityId,jdbcType=VARCHAR},
+            </if>
+            <if test="totalIntegral != null">
+                total_integral = #{totalIntegral,jdbcType=INTEGER},
+            </if>
+            <if test="integral != null">
+                integral = #{integral,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="role != null">
+                role = #{role, jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                open_id = #{openId, jdbcType=VARCHAR},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="identityFlag != null">
+                identity_flag = #{identityFlag, jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="birthDay != null">
+                birth_day = #{birthDay, jdbcType=TIMESTAMP},
+            </if>
+            <if test="unit != null">
+                unit = #{unit, jdbcType=VARCHAR}
+            </if>
+        </set>
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xl.backen.entity.Peoples">
     update tb_peoples
     set nickname = #{nickname,jdbcType=VARCHAR},
       truename = #{truename,jdbcType=VARCHAR},
@@ -314,7 +347,10 @@
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      description = #{description,jdbcType=VARCHAR}
+      description = #{description,jdbcType=VARCHAR},
+      address = #{address, jdbcType=VARCHAR},
+      birth_day = #{birthDay, jdbcType=TIMESTAMP},
+      unit = #{unit, jdbcType=VARCHAR}
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
 </mapper>

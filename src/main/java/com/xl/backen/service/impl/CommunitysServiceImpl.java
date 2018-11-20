@@ -25,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -32,87 +34,99 @@ import java.util.UUID;
 @CacheConfig(cacheNames = "community")
 public class CommunitysServiceImpl implements CommunitysService {
 
-    @Autowired
-    private CommunitysMapper cm;
+  @Autowired
+  private CommunitysMapper cm;
 
-    @Autowired
-    private UsersMapper um;
+  @Autowired
+  private UsersMapper um;
 
-    @Override
-    @CacheEvict(allEntries=true)
-    public int add(CommunitysForAddModel communitys) throws Exception {
-        Users model = (Users) SecurityUtils.getSubject().getPrincipal();
-        //新增
-        String uuid = addCommunity(communitys);
+  @Override
+  @CacheEvict(allEntries = true)
+  public Users add(CommunitysForAddModel communitys) throws Exception {
+    Users model = (Users) SecurityUtils.getSubject().getPrincipal();
 
-        //指定管理员
-        Users users = new Users();
-        users.setUuid(UUID.randomUUID().toString().replace("-", ""));
-        users.setCommunityId(uuid);
-        users.setMobile(communitys.getMobile());
-        users.setNickname(communitys.getCommunityLeader());
-        users.setTruename(communitys.getCommunityLeader());
-        users.setCreateTime(new Date());
-        users.setUpdateTime(new Date());
-        users.setPassword(MD5.md5(CommonConst.PASSWORD));
-        users.setSysType(model.getSysType());
-        users.setStatus(CommonConst.NORMAL_STATUS);
+    //新增
+    CommunitysForAddModel communitysForAddModel = addCommunity(communitys);
 
+    Map<String, String> map = new HashMap<>();
+    map.put("mobile", communitysForAddModel.getMobile());
+    Users u = um.findByMobile(map);
 
-        //指定初始角色值
-        users.setRoleId(CommonConst.COMMUNITY_ROLE);
-        um.insertSelective(users);
+    if (u == null) {
+      //指定管理员
+      Users users = new Users();
+      Map<String, String> map1 = new HashMap<>();
+      map1.put("mobile", communitys.getMobile());
+      map1.put("communityId", "");
+      if (um.findByMobile(map1) != null) {
+        // 存在手机号码重复
+        throw new BusinessException(500, "手机号码重复");
+      }
 
-        return 0;
+      users.setUuid(UUID.randomUUID().toString().replace("-", ""));
+      users.setCommunityId(communitysForAddModel.getUuid());
+      users.setMobile(communitys.getMobile());
+      users.setNickname(communitys.getCommunityLeader());
+      users.setTruename(communitys.getCommunityLeader());
+      users.setCreateTime(new Date());
+      users.setUpdateTime(new Date());
+      users.setPassword(MD5.md5(CommonConst.PASSWORD));
+      users.setSysType(model.getSysType());
+      users.setStatus(CommonConst.NORMAL_STATUS);
+      um.insertSelective(users);
+      return users;
     }
 
-    @Override
-    @CacheEvict(allEntries=true)
-    public int update(Communitys communitys) {
-        if (StringUtils.isEmpty(communitys.getUuid())) {
-            throw new BusinessException(BusinessStatus.UUID_REQ);
-        }
-        return cm.updateByPrimaryKeySelective(communitys);
+    return u;
+  }
+
+  @Override
+  @CacheEvict(allEntries = true)
+  public int update(Communitys communitys) {
+    if (StringUtils.isEmpty(communitys.getUuid())) {
+      throw new BusinessException(BusinessStatus.UUID_REQ);
     }
+    return cm.updateByPrimaryKeySelective(communitys);
+  }
 
-    @Override
-    @Cacheable(keyGenerator = "keyGenerator")
-    public Page<Communitys> query(CommunitysPageModel model) {
-        PageHelper.startPage(model.getPageNum(), model.getPageSize());
+  @Override
+  @Cacheable(keyGenerator = "keyGenerator")
+  public Page<Communitys> query(CommunitysPageModel model) {
+    PageHelper.startPage(model.getPageNum(), model.getPageSize());
 
-        Users usersModel = (Users)SecurityUtils.getSubject().getPrincipal();
+    Users usersModel = (Users) SecurityUtils.getSubject().getPrincipal();
 
-        model.setSysType(usersModel.getSysType());
+    model.setSysType(usersModel.getSysType());
 
-        return cm.query(model);
+    return cm.query(model);
+  }
+
+  @Override
+  @Cacheable(keyGenerator = "keyGenerator")
+  public Communitys findById(String uuid) {
+    if (StringUtils.isEmpty(uuid)) {
+      throw new BusinessException(BusinessStatus.UUID_REQ);
     }
+    return cm.selectByPrimaryKey(uuid);
+  }
 
-    @Override
-    @Cacheable(keyGenerator = "keyGenerator")
-    public Communitys findById(String uuid) {
-        if (StringUtils.isEmpty(uuid)) {
-            throw new BusinessException(BusinessStatus.UUID_REQ);
-        }
-        return cm.selectByPrimaryKey(uuid);
-    }
+  public CommunitysForAddModel addCommunity(CommunitysForAddModel communitys) {
+    Users model = (Users) SecurityUtils.getSubject().getPrincipal();
 
-    public String addCommunity(CommunitysForAddModel communitys) {
-        Users model = (Users) SecurityUtils.getSubject().getPrincipal();
+    String uuid = UUID.randomUUID().toString().replace("-", "");
 
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-
-        communitys.setUuid(uuid);
-        communitys.setStatus(CommonConst.NORMAL_STATUS);
-        communitys.setCreateTime(new Date());
-        communitys.setUpdateTime(new Date());
-        communitys.setSysType(model.getSysType());
-        communitys.setLeaderName(communitys.getCommunityLeader());
-        communitys.setLeaderMobile(communitys.getMobile());
+    communitys.setUuid(uuid);
+    communitys.setStatus(CommonConst.NORMAL_STATUS);
+    communitys.setCreateTime(new Date());
+    communitys.setUpdateTime(new Date());
+    communitys.setSysType(model.getSysType());
+    communitys.setLeaderName(communitys.getCommunityLeader());
+    communitys.setLeaderMobile(communitys.getMobile());
 
 
-        communitys.setCreateUser(model.getUuid());
-        cm.insertSelective(communitys);
+    communitys.setCreateUser(model.getUuid());
+    cm.insertSelective(communitys);
 
-        return uuid;
-    }
+    return communitys;
+  }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * 党员信息表(TbPartyRemember)表数据库访问层
  *
  * @author chendm
- * @since 2018-11-01 22:08:03
+ * @since 2018-11-15 00:20:59
  */
 @Repository
 public interface PartyRememberMapper {

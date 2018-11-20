@@ -1,6 +1,5 @@
 package com.xl.backen.entity;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -8,17 +7,15 @@ import java.io.Serializable;
  * 党员信息表(TbPartyRemember)实体类
  *
  * @author chendm
- * @since 2018-11-01 22:08:03
+ * @since 2018-11-15 00:20:59
  */
 public class PartyRemember implements Serializable {
-  private static final long serialVersionUID = 435141074098036932L;
+  private static final long serialVersionUID = 756235740351665610L;
 
   private String uuid;
   //真实姓名
-  @NotBlank
   private String truename;
   //社区id
-  @NotBlank
   private String communityId;
 
   private Date createTime;
@@ -27,12 +24,24 @@ public class PartyRemember implements Serializable {
   //用户id
   private String userId;
   //手机号码
-  @NotBlank
   private String phone;
+  //党员类型1.直管党员 2.在职党员 3.退休党员
+  private Integer type;
+
+  // 1.通过 2.驳回
+  private Integer status;
 
   private Integer pageSize;
 
   private Integer pageNum;
+
+  public Integer getStatus() {
+    return status;
+  }
+
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
   public String getUuid() {
     return uuid;
@@ -88,6 +97,14 @@ public class PartyRemember implements Serializable {
 
   public void setPhone(String phone) {
     this.phone = phone;
+  }
+
+  public Integer getType() {
+    return type;
+  }
+
+  public void setType(Integer type) {
+    this.type = type;
   }
 
   public Integer getPageSize() {

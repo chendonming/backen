@@ -26,7 +26,7 @@ public interface PeoplesService {
    * 导入居民信息
  * @throws Exception
    */
-  int importPeople(MultipartFile file) throws Exception;
+  int importPeople(MultipartFile file, Integer isparty) throws Exception;
   
   /**
    * 条件查询居民分页

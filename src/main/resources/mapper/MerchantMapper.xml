@@ -15,12 +15,13 @@
         <result property="description" column="description" jdbcType="VARCHAR"/>
         <result property="pic" column="pic" jdbcType="VARCHAR"/>
         <result property="classify" column="classify" jdbcType="VARCHAR"/>
+        <result property="communityId" column="community_id" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="MerchantMap">
         select
-          uuid, name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify
+          uuid, name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify, community_id
         from db_backen.tb_merchant
         <where>
             <if test="uuid != null and uuid != ''">
@@ -32,7 +33,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MerchantMap">
         select
-        uuid, name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify
+        uuid, name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify, community_id
         from db_backen.tb_merchant
         limit #{offset}, #{limit}
     </select>
@@ -40,14 +41,14 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="MerchantMap">
         select
-          uuid, name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify
+          uuid, name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify, community_id
         from db_backen.tb_merchant
         <where>
             <if test="uuid != null and uuid != ''">
                 and uuid = #{uuid}
             </if>
             <if test="name != null and name != ''">
-                and name like CONCAT('%',#{name},'%')
+                and name = #{name}
             </if>
             <if test="address != null and address != ''">
                 and address = #{address}
@@ -77,16 +78,18 @@
                 and pic = #{pic}
             </if>
             <if test="classify != null and classify != ''">
-                and classify like CONCAT('%',#{classify},'%')
+                and classify = #{classify}
+            </if>
+            <if test="communityId != null and communityId != ''">
+                and community_id = #{communityId}
             </if>
         </where>
-        order by weight desc, update_time desc
     </select>
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into  db_backen.tb_merchant(uuid,name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify)
-        values (#{uuid},#{name}, #{address}, #{phone}, #{label}, #{createTime}, #{updateTime}, #{flag}, #{weight}, #{description}, #{pic}, #{classify})
+        insert into  db_backen.tb_merchant(uuid,name, address, phone, label, create_time, update_time, flag, weight, description, pic, classify, community_id)
+        values (#{uuid},#{name}, #{address}, #{phone}, #{label}, #{createTime}, #{updateTime}, #{flag}, #{weight}, #{description}, #{pic}, #{classify}, #{communityId})
     </insert>
 
     <!--通过主键修改数据-->
@@ -125,6 +128,9 @@
             </if>
             <if test="classify != null and classify != ''">
                 classify = #{classify},
+            </if>
+            <if test="communityId != null and communityId != ''">
+                community_id = #{communityId},
             </if>
         </set>
         where uuid = #{uuid}

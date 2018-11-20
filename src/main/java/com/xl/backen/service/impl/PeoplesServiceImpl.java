@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
  * PeoplesServiceImpl
  */
 @Service
+@CacheConfig(cacheNames = "peoples")
 public class PeoplesServiceImpl implements PeoplesService {
 
 	private static Logger log = LoggerFactory.getLogger(PeoplesServiceImpl.class);
@@ -54,6 +55,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 	private Long sessionTimeOut;
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public int add(Peoples peoples) {
 		peoples.setUuid(UUID.randomUUID().toString().replace("-", ""));
 		peoples.setCreateTime(new Date());
@@ -68,14 +70,26 @@ public class PeoplesServiceImpl implements PeoplesService {
 	}
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public int update(Peoples peoples) {
 		if(StringUtil.isEmpty(peoples.getUuid())) {
 			throw new BusinessException(BusinessStatus.UUID_REQ);
 		}
+
+		String code = (String) SecurityUtils.getSubject().getSession().getAttribute("code");
+		if(StringUtil.isEmpty(code)) {
+		  throw new BusinessException(500, "验证码过期");
+    }
+
+    if(!code.equals(peoples.getCode())) {
+      throw new BusinessException(500, "验证码不匹配");
+    }
+
 		return pm.updateByPrimaryKeySelective(peoples);
 	}
 
 	@Override
+	@CacheEvict(allEntries=true)
 	public String exportPeople() throws IOException {
 		PeoplesPageModel pp = new PeoplesPageModel();
 		Users users = (Users)SecurityUtils.getSubject().getPrincipal();
@@ -92,7 +106,8 @@ public class PeoplesServiceImpl implements PeoplesService {
 
 	@Override
 	@Transactional
-	public int importPeople(MultipartFile file) throws Exception {
+	@CacheEvict(allEntries=true)
+	public int importPeople(MultipartFile file, Integer isparty) throws Exception {
 		Users u = (Users) SecurityUtils.getSubject().getPrincipal();
 		List<Peoples> peoples = PeoplesPOI.importUser(file);
 		List<Peoples> servicePeoples = pm.queryAll(u.getCommunityId());
@@ -120,7 +135,11 @@ public class PeoplesServiceImpl implements PeoplesService {
 			//默认密码(微信登录不需要)
 			i.setPassword(MD5.md5(CommonConst.PASSWORD));
 			//默认是普通居民
-			i.setRole(CommonConst.NOMARL_USER);
+      if(!StringUtil.isEmpty(isparty)) {
+        i.setRole(isparty);
+      }else{
+        i.setRole(CommonConst.NOMARL_USER);
+      }
 
 			add(i);
 		}
@@ -129,6 +148,7 @@ public class PeoplesServiceImpl implements PeoplesService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "keyGenerator")
 	public Page<Peoples> query(PeoplesPageModel model) {
 		if (model.getPageNum() != null && model.getPageSize() != null) {
 			PageHelper.startPage(model.getPageNum(), model.getPageSize());

@@ -6,7 +6,9 @@ import com.github.pagehelper.Page;
 import com.xl.backen.handler.PageInfo;
 import com.xl.backen.handler.ResultForPage;
 import com.xl.backen.model.PeoplesPageModel;
+import com.xl.backen.service.ShortMessageService;
 import com.xl.backen.service.WxUsersService;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,79 +32,99 @@ import com.xl.backen.service.PeoplesService;
 @RestController
 @RequestMapping("/people")
 public class PeoplesController {
-    private static Logger log = LoggerFactory.getLogger(PeoplesController.class);
+  private static Logger log = LoggerFactory.getLogger(PeoplesController.class);
 
-    @Autowired
-    private PeoplesService ps;
+  @Autowired
+  private PeoplesService ps;
 
-    @Autowired
-    private WxUsersService uss;
+  @Autowired
+  private WxUsersService uss;
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Result<Object> add(@RequestBody Peoples pe) {
-        log.info("居民新增: peoples={}",pe);
-        ps.add(pe);
-        return new Result<>(BusinessStatus.SUCCESS);
-    }
+  @Autowired
+  private ShortMessageService sms;
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result<Object> update(@RequestBody Peoples pe) {
-        log.info("居民修改: peoples={}",pe);
-        ps.update(pe);
-        return new Result<>(BusinessStatus.SUCCESS);
-    }
+  @RequestMapping(value = "/verify", method = RequestMethod.GET)
+  public Result<Object> verify(String mobile) {
+    sms.verify(mobile);
+    return new Result<>(BusinessStatus.SUCCESS, SecurityUtils.getSubject().getSession().getAttribute("code"));
+  }
 
-    @RequestMapping(value = "/queryByExport", method = RequestMethod.GET)
-    public Result<String> exportPeople() throws IOException {
-        log.info("居民导出----------------");
-        String file = ps.exportPeople();
-        return new Result<String>(BusinessStatus.SUCCESS, file);
-    }
+  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public Result<Object> add(@RequestBody Peoples pe) {
+    log.info("居民新增: peoples={}", pe);
+    ps.add(pe);
+    return new Result<>(BusinessStatus.SUCCESS);
+  }
 
-    @RequestMapping(value = "/addByImport", method = RequestMethod.POST)
-    public Result<String> importPeople(@RequestParam("file") MultipartFile file) throws Exception {
-        log.info("居民导入---------------");
-        int count = ps.importPeople(file);
-        return new Result<String>(BusinessStatus.SUCCESS, count + "条记录改变");
-    }
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public Result<Object> update(@RequestBody Peoples pe) {
+    log.info("居民修改: peoples={}", pe);
+    ps.update(pe);
+    return new Result<>(BusinessStatus.SUCCESS);
+  }
 
-    @RequestMapping(value = "/query", method = RequestMethod.POST)
-    public ResultForPage<Peoples> query(@RequestBody PeoplesPageModel model) {
-        Page<Peoples> peoples = ps.query(model);
-        PageInfo<Peoples> peoplesPageInfo = new PageInfo<Peoples>(peoples);
-        return new ResultForPage<Peoples>(BusinessStatus.SUCCESS, peoplesPageInfo);
-    }
+  @RequestMapping(value = "/queryByExport", method = RequestMethod.GET)
+  public Result<String> exportPeople() throws IOException {
+    log.info("居民导出----------------");
+    String file = ps.exportPeople();
+    return new Result<String>(BusinessStatus.SUCCESS, file);
+  }
+
+  @RequestMapping(value = "/addByImport", method = RequestMethod.POST)
+  public Result<String> importPeople(@RequestParam("file") MultipartFile file, Integer isparty) throws Exception {
+    log.info("居民导入---------------");
+    int count = ps.importPeople(file, isparty);
+    return new Result<String>(BusinessStatus.SUCCESS, count + "条记录改变");
+  }
 
 
-    /**
-     * APP实名认证
-     * @param
-     * @return
-     */
-    @RequestMapping(value = "/verified", method = RequestMethod.POST)
-    public Result<Object> verified(@RequestBody Peoples peoples){
-        uss.authentication(peoples);
-        return new Result<>(BusinessStatus.SUCCESS);
-    }
+  @RequestMapping(value = "/addByImportPartRemember", method = RequestMethod.POST)
+  public Result<String> importPeoplePartRemember(@RequestParam("file") MultipartFile file) throws Exception {
+    log.info("党员信息导入---------------");
+    int count = ps.importPeople(file, 1);
+    return new Result<String>(BusinessStatus.SUCCESS, count + "条记录改变");
+  }
 
-    /**
-     * 根据peoples查询剩余积分
-     * @param
-     * @return
-     */
-    @RequestMapping(value = "/queryIntegral", method = RequestMethod.GET)
-    public Result<Object> queryIntegral(@RequestParam("peopleId") String peopleId){
-        return new Result<>(BusinessStatus.SUCCESS,ps.queryIntegral(peopleId));
-    }
+  @RequestMapping(value = "/query", method = RequestMethod.POST)
+  public ResultForPage<Peoples> query(@RequestBody PeoplesPageModel model) {
+    Page<Peoples> peoples = ps.query(model);
+    PageInfo<Peoples> peoplesPageInfo = new PageInfo<Peoples>(peoples);
+    return new ResultForPage<Peoples>(BusinessStatus.SUCCESS, peoplesPageInfo);
+  }
 
-    /**
-     * 查询单个
-     * @param
-     * @return
-     */
-    @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
-    public Result<Object> queryOne(@RequestParam("peopleId") String peopleId){
-        return new Result<>(BusinessStatus.SUCCESS,ps.queryOne(peopleId));
-    }
+
+  /**
+   * APP实名认证
+   *
+   * @param
+   * @return
+   */
+  @RequestMapping(value = "/verified", method = RequestMethod.POST)
+  public Result<Object> verified(@RequestBody Peoples peoples) {
+    uss.authentication(peoples);
+    return new Result<>(BusinessStatus.SUCCESS);
+  }
+
+  /**
+   * 根据peoples查询剩余积分
+   *
+   * @param
+   * @return
+   */
+  @RequestMapping(value = "/queryIntegral", method = RequestMethod.GET)
+  public Result<Object> queryIntegral(@RequestParam("peopleId") String peopleId) {
+    return new Result<>(BusinessStatus.SUCCESS, ps.queryIntegral(peopleId));
+  }
+
+  /**
+   * 查询单个
+   *
+   * @param
+   * @return
+   */
+  @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
+  public Result<Object> queryOne(@RequestParam("peopleId") String peopleId) {
+    return new Result<>(BusinessStatus.SUCCESS, ps.queryOne(peopleId));
+  }
 
 }

@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (TbMerchant)实体类
  *
  * @author chendm
- * @since 2018-10-07 21:55:18
+ * @since 2018-11-14 21:24:46
  */
 public class Merchant implements Serializable {
-    private static final long serialVersionUID = -60702213394482416L;
+    private static final long serialVersionUID = 634228480292968207L;
     
     private String uuid;
     //店铺名称
@@ -35,6 +35,8 @@ public class Merchant implements Serializable {
     private String pic;
     //所属分类
     private String classify;
+    
+    private String communityId;
 
 	private Integer pageSize;
 
@@ -135,6 +137,14 @@ public class Merchant implements Serializable {
 
     public void setClassify(String classify) {
         this.classify = classify;
+    }
+    
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 
 	public Integer getPageSize() {

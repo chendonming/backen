@@ -39,7 +39,7 @@
     <if test="orgid != null and orgid != ''">
         orgId = #{orgid} and
     </if>
-    flag = 1
+    flag = 1 order by update_time desc
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

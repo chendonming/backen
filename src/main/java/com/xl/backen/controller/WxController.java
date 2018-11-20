@@ -90,7 +90,7 @@ public class WxController {
     public Object getUser() {
         Object obj = SecurityUtils.getSubject().getPrincipal();
         if(obj == null) {
-            throw new BusinessException(BusinessStatus.ERROR);
+            throw new BusinessException(500, "没有获取到用户信息");
         }
         return obj;
     }

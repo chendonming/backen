@@ -8,7 +8,7 @@ import com.github.pagehelper.Page;
  * (TbMerchant)表服务接口
  *
  * @author chendm
- * @since 2018-10-07 21:55:18
+ * @since 2018-11-14 21:24:46
  */
 public interface MerchantService {
 

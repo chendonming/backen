@@ -27,7 +27,7 @@ entity_package: com.xl.backen.entity
 
 # 权限菜单配置
 permission:
-  menusModel: task,activity,community,permiss,trash,people,volunteer,shop,app,notices,articles,classification,circle,post,merchant,partyRemember
+  menusModel: task,activity,community,permiss,trash,people,volunteer,shop,app,notices,articles,classification,circle,post,merchant,partyRemember,shortMessage
 server:
     session:
       timeout: 86400000
@@ -35,3 +35,5 @@ server:
       min-spare-threads: 20
       max-threads: 100
     connection-timeout: 5000
+AccessKeyID: LTAIsJkgyhMyqrxo
+AccessKeySecret: 7mD973459JeMczhKXR5sKb2le9CjqU

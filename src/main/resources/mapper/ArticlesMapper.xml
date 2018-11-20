@@ -77,6 +77,9 @@
             <if test="type != null">
                 and a.type = #{type}
             </if>
+            <if test="communityId != null and communityId != ''">
+                and a.community_id = #{communityId}
+            </if>
         </where>
         order by a.status desc, a.weight desc ,a.update_time desc
     </select>
