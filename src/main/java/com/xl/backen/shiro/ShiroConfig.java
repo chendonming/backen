@@ -89,7 +89,6 @@ public class ShiroConfig {
 
   @Bean(name = "userRealm")
   public UserRealm userRealm() {
-    UserRealm ur = new UserRealm();
     return new UserRealm();
   }
 

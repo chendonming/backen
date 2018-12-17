@@ -36,7 +36,7 @@ public class FileController {
     public Result<String> upload(@RequestParam("file") MultipartFile file) {
         log.info("文件上传: file: {}", file);
         String newFileName = UUID.randomUUID().toString().replace("-", "");
-        String fileName = file.getOriginalFilename();
+         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         Calendar now = Calendar.getInstance();

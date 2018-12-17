@@ -60,7 +60,7 @@ public class PeoplesController {
   public Result<Object> update(@RequestBody Peoples pe) {
     log.info("居民修改: peoples={}", pe);
     ps.update(pe);
-    return new Result<>(BusinessStatus.SUCCESS);
+    return new Result<>(BusinessStatus.SUCCESS, SecurityUtils.getSubject().getPrincipal());
   }
 
   @RequestMapping(value = "/queryByExport", method = RequestMethod.GET)

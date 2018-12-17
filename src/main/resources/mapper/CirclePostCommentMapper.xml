@@ -38,7 +38,7 @@
     <select id="queryAll" resultMap="CirclePostCommentMap">
         select
           c.*,p.truename as true_name, p.head_pic as head_pic
-        from db_backen.tb_circle_post_comment c left join tb_peoples p on p.uuid = c.create_id
+        from db_backen.tb_circle_post_comment c left join tb_peoples p on p.uuid = c.create_id left join tb_communitys i on i.uuid = p.community_id
         <where>
             <if test="uuid != null and uuid != ''">
                 and c.uuid = #{uuid}
@@ -60,6 +60,9 @@
             </if>
             <if test="postId != null and postId != ''">
                 and c.post_id = #{postId}
+            </if>
+            <if test="communityId != null and communityId != ''">
+                and i.uuid = #{communityId}
             </if>
         </where>
     </select>

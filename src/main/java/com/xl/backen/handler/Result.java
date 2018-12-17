@@ -26,7 +26,7 @@ public class Result<T> {
                 "code=" + code +
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
-                '}';
+                 '}';
     }
 
     public Result(BusinessStatus businessStatus) {

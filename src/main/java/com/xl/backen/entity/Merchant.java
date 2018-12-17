@@ -1,5 +1,6 @@
 package com.xl.backen.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -10,156 +11,165 @@ import java.io.Serializable;
  * @since 2018-11-14 21:24:46
  */
 public class Merchant implements Serializable {
-    private static final long serialVersionUID = 634228480292968207L;
-    
-    private String uuid;
-    //店铺名称
-    private String name;
-    //店铺地址
-    private String address;
-    //电话
-    private String phone;
-    //标签
-    private String label;
-    
-    private Date createTime;
-    
-    private Date updateTime;
-    //是否有效（1.有效 2.无效）
-    private Integer flag;
-    //权重
-    private Integer weight;
-    //描述
-    private String description;
-    //商家图标
-    private String pic;
-    //所属分类
-    private String classify;
-    
-    private String communityId;
+  private static final long serialVersionUID = 634228480292968207L;
 
-	private Integer pageSize;
+  private String uuid;
+  //店铺名称
+  private String name;
+  //店铺地址
+  private String address;
+  //电话
+  private String phone;
+  //标签
+  private String label;
 
-	private Integer pageNum;
+  private Date createTime;
 
-    
-    public String getUuid() {
-        return uuid;
-    }
+  private Date updateTime;
+  //是否有效（1.有效 2.无效）
+  private Integer flag;
+  //权重
+  private Integer weight;
+  //描述
+  private String description;
+  //商家图标
+  private String pic;
+  //所属分类
+  private String classify;
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-    
-    public String getName() {
-        return name;
-    }
+  private String communityId;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getAddress() {
-        return address;
-    }
+  private Integer pageSize;
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    
-    public String getPhone() {
-        return phone;
-    }
+  private Integer pageNum;
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    
-    public String getLabel() {
-        return label;
-    }
+  private Coupon coupon;
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
-    
-    public Date getCreateTime() {
-        return createTime;
-    }
+  public Coupon getCoupon() {
+    return coupon;
+  }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+  public void setCoupon(Coupon coupon) {
+    this.coupon = coupon;
+  }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-    
-    public Integer getFlag() {
-        return flag;
-    }
+  public String getUuid() {
+    return uuid;
+  }
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
-    
-    public Integer getWeight() {
-        return weight;
-    }
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
 
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public String getPic() {
-        return pic;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-    
-    public String getClassify() {
-        return classify;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public void setClassify(String classify) {
-        this.classify = classify;
-    }
-    
-    public String getCommunityId() {
-        return communityId;
-    }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-    public void setCommunityId(String communityId) {
-        this.communityId = communityId;
-    }
+  public String getPhone() {
+    return phone;
+  }
 
-	public Integer getPageSize() {
-		return pageSize;
-	}
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-	public Integer getPageNum() {
-		return pageNum;
-	}
+  public String getLabel() {
+    return label;
+  }
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+  public void setLabel(String label) {
+    this.label = label;
+  }
 
-	public void setPageNum(Integer pageNum) {
-		this.pageNum = pageNum;
-	}
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  public Integer getFlag() {
+    return flag;
+  }
+
+  public void setFlag(Integer flag) {
+    this.flag = flag;
+  }
+
+  public Integer getWeight() {
+    return weight;
+  }
+
+  public void setWeight(Integer weight) {
+    this.weight = weight;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getPic() {
+    return pic;
+  }
+
+  public void setPic(String pic) {
+    this.pic = pic;
+  }
+
+  public String getClassify() {
+    return classify;
+  }
+
+  public void setClassify(String classify) {
+    this.classify = classify;
+  }
+
+  public String getCommunityId() {
+    return communityId;
+  }
+
+  public void setCommunityId(String communityId) {
+    this.communityId = communityId;
+  }
+
+  public Integer getPageSize() {
+    return pageSize;
+  }
+
+  public Integer getPageNum() {
+    return pageNum;
+  }
+
+  public void setPageSize(Integer pageSize) {
+    this.pageSize = pageSize;
+  }
+
+  public void setPageNum(Integer pageNum) {
+    this.pageNum = pageNum;
+  }
 }

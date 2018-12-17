@@ -57,7 +57,6 @@ public class CommunitysServiceImpl implements CommunitysService {
       Users users = new Users();
       Map<String, String> map1 = new HashMap<>();
       map1.put("mobile", communitys.getMobile());
-      map1.put("communityId", "");
       if (um.findByMobile(map1) != null) {
         // 存在手机号码重复
         throw new BusinessException(500, "手机号码重复");

@@ -3,7 +3,9 @@ package com.xl.backen.service.impl;
 import com.xl.backen.dao.PostsMapper;
 import com.xl.backen.entity.CirclePostComment;
 import com.xl.backen.dao.CirclePostCommentMapper;
+import com.xl.backen.entity.Peoples;
 import com.xl.backen.service.CirclePostCommentService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -68,6 +70,8 @@ public class CirclePostCommentServiceImpl implements CirclePostCommentService {
         circlePostComment.setUpdateTime(new Date());
         circlePostComment.setCreateTime(new Date());
         circlePostComment.setFlag(CommonConst.NORMAL_STATUS);
+        Peoples peoples = (Peoples) SecurityUtils.getSubject().getPrincipal();
+        circlePostComment.setCreateId(peoples.getUuid());
         this.circlePostCommentDao.insert(circlePostComment);
         return circlePostComment;
     }

@@ -13,6 +13,8 @@ public class CommonConst {
   static {
     map.put("wx424ae52992360d90", "aa606d15a892cad40ca0d466271c3b32");
     map.put("wxf83b968d4ecdbfe7", "9029a45d9e97ded49be6a94927be8abf");
+    map.put("wx7a508dea6ff12bfe", "cdb84375093ebe3bee3ad7a690df8c33");
+    map.put("wx5d1dcad7a2e6d6b5", "7fb4a3b7144e8eae2c923d1122ae141a");
   }
 
 

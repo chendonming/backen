@@ -74,7 +74,6 @@
             c.orgId = #{communityId} and
         </if>
         p.flag = 1 order by p.update_time desc)
-
     </select>
 
 

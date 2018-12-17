@@ -26,7 +26,7 @@
         <result column="open_id" jdbcType="VARCHAR" property="openId"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="birth_day" jdbcType="TIMESTAMP" property="birthDay"/>
-        <result column="unit" jdbcType="unit" property="unit"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
     </resultMap>
 
     <resultMap id="VolunteerMap" type="com.xl.backen.model.VolunteerModel">
